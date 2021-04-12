@@ -41,7 +41,7 @@ Public Class home
         Dim username As String = "root"
         Dim host As String = "localhost"
         Dim password As String = ""
-        cs = "Database=" & database & ";Data Source=" & host & ";User Id=" & username & ";Password=" & password & ""
+        cs = "Database=" & database & ";Data Source=" & host & ";User Id=" & username & ";Password=" & password & ";Convert Zero Datetime=True"
         conn.ConnectionString = cs
         Try
             conn.Open()
@@ -276,7 +276,7 @@ Public Class home
         tabDataBarang.Controls.Add(hapusBarang)
         tabDataBarang.Controls.Add(dgv_databarang)
 
-        'Dim sql As String = "SELECT KODE_BRG, NAMA,SATUAN,Stock,HargaBeli,HargaPokok,RpJumlah FROM `barang`"
+        'Dim sql As String = "SELECT KODE_BRG, NAMA,SATUAN,Stock,rak,TglBeli,HargaBeli,HargaPokok,RpJumlah FROM `barang`"
         Dim sql As String = "SELECT * FROM barang"
         Try
             dataSetBarang.Clear()
@@ -299,15 +299,36 @@ Public Class home
     End Sub
 
     Private Sub tambahBarang_Clicked()
+        Dim diabar As New dialogEditBarang
+        diabar.Show()
         Console.WriteLine("tambah barang clicked")
     End Sub
 
     Private Sub editBarang_Clicked()
+        Dim diabar As New dialogEditBarang With {.kodeBarang = dgv_databarang.CurrentRow.Cells(0).Value.ToString}
+        diabar.Show()
+        AddHandler diabar.Disposed, AddressOf diabarDisposed
         Console.WriteLine("edit barang clicked")
     End Sub
 
     Private Sub hapusBarang_clicked()
         Console.WriteLine("hapus barang clicked")
+    End Sub
+
+    Private Sub diabarDisposed()
+        updateDatabarangDataSource()
+    End Sub
+
+    Private Sub updateDatabarangDataSource()
+        Dim sql As String = "SELECT * FROM barang"
+        Try
+            Dim da_po As New MySqlDataAdapter(sql, conn)
+            dss.Tables("tabel_barang").Clear()
+            da_po.Fill(dss, "tabel_barang")
+            dgv_databarang.Refresh()
+        Catch ex As Exception
+
+        End Try
     End Sub
     '==================================== DAFTAR BARANG =================================
 End Class
