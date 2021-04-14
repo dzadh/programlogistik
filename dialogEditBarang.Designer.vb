@@ -56,13 +56,13 @@ Partial Class dialogEditBarang
         Me.tbhargabeli = New System.Windows.Forms.TextBox()
         Me.tb_hargapokok = New System.Windows.Forms.TextBox()
         Me.tb_stock = New System.Windows.Forms.TextBox()
-        Me.rp_jumlah = New System.Windows.Forms.TextBox()
-        Me.tb_tglbeli = New System.Windows.Forms.TextBox()
-        Me.tgl_pakai = New System.Windows.Forms.TextBox()
+        Me.tb_rp_jumlah = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.tb_keterangan = New System.Windows.Forms.TextBox()
         Me.b_save = New System.Windows.Forms.Button()
         Me.b_cancel = New System.Windows.Forms.Button()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -251,119 +251,105 @@ Partial Class dialogEditBarang
         Me.tb_kodebarang.Location = New System.Drawing.Point(133, 68)
         Me.tb_kodebarang.Name = "tb_kodebarang"
         Me.tb_kodebarang.Size = New System.Drawing.Size(189, 20)
-        Me.tb_kodebarang.TabIndex = 20
+        Me.tb_kodebarang.TabIndex = 1
         '
         'tb_barcode
         '
         Me.tb_barcode.Location = New System.Drawing.Point(133, 97)
         Me.tb_barcode.Name = "tb_barcode"
         Me.tb_barcode.Size = New System.Drawing.Size(189, 20)
-        Me.tb_barcode.TabIndex = 21
+        Me.tb_barcode.TabIndex = 2
         '
         'tb_namabarang
         '
         Me.tb_namabarang.Location = New System.Drawing.Point(133, 124)
         Me.tb_namabarang.Name = "tb_namabarang"
         Me.tb_namabarang.Size = New System.Drawing.Size(189, 20)
-        Me.tb_namabarang.TabIndex = 21
+        Me.tb_namabarang.TabIndex = 3
         '
         'tb_satuan
         '
         Me.tb_satuan.Location = New System.Drawing.Point(133, 151)
         Me.tb_satuan.Name = "tb_satuan"
         Me.tb_satuan.Size = New System.Drawing.Size(189, 20)
-        Me.tb_satuan.TabIndex = 21
+        Me.tb_satuan.TabIndex = 4
         '
         'tb_group
         '
         Me.tb_group.Location = New System.Drawing.Point(133, 177)
         Me.tb_group.Name = "tb_group"
         Me.tb_group.Size = New System.Drawing.Size(189, 20)
-        Me.tb_group.TabIndex = 21
+        Me.tb_group.TabIndex = 5
         '
         'tb_subgroup
         '
         Me.tb_subgroup.Location = New System.Drawing.Point(133, 203)
         Me.tb_subgroup.Name = "tb_subgroup"
         Me.tb_subgroup.Size = New System.Drawing.Size(189, 20)
-        Me.tb_subgroup.TabIndex = 21
+        Me.tb_subgroup.TabIndex = 6
         '
         'tb_sname
         '
         Me.tb_sname.Location = New System.Drawing.Point(133, 231)
         Me.tb_sname.Name = "tb_sname"
         Me.tb_sname.Size = New System.Drawing.Size(189, 20)
-        Me.tb_sname.TabIndex = 21
+        Me.tb_sname.TabIndex = 7
         '
         'tb_pakaiacc
         '
         Me.tb_pakaiacc.Location = New System.Drawing.Point(133, 258)
         Me.tb_pakaiacc.Name = "tb_pakaiacc"
         Me.tb_pakaiacc.Size = New System.Drawing.Size(189, 20)
-        Me.tb_pakaiacc.TabIndex = 21
+        Me.tb_pakaiacc.TabIndex = 8
         '
         'tb_rak
         '
         Me.tb_rak.Location = New System.Drawing.Point(133, 282)
         Me.tb_rak.Name = "tb_rak"
         Me.tb_rak.Size = New System.Drawing.Size(189, 20)
-        Me.tb_rak.TabIndex = 21
+        Me.tb_rak.TabIndex = 9
         '
         'tb_stockmin
         '
         Me.tb_stockmin.Location = New System.Drawing.Point(133, 309)
         Me.tb_stockmin.Name = "tb_stockmin"
         Me.tb_stockmin.Size = New System.Drawing.Size(189, 20)
-        Me.tb_stockmin.TabIndex = 21
+        Me.tb_stockmin.TabIndex = 10
         '
         'tb_stockmax
         '
         Me.tb_stockmax.Location = New System.Drawing.Point(133, 336)
         Me.tb_stockmax.Name = "tb_stockmax"
         Me.tb_stockmax.Size = New System.Drawing.Size(189, 20)
-        Me.tb_stockmax.TabIndex = 21
+        Me.tb_stockmax.TabIndex = 11
         '
         'tbhargabeli
         '
         Me.tbhargabeli.Location = New System.Drawing.Point(453, 68)
         Me.tbhargabeli.Name = "tbhargabeli"
         Me.tbhargabeli.Size = New System.Drawing.Size(189, 20)
-        Me.tbhargabeli.TabIndex = 21
+        Me.tbhargabeli.TabIndex = 12
         '
         'tb_hargapokok
         '
         Me.tb_hargapokok.Location = New System.Drawing.Point(453, 97)
         Me.tb_hargapokok.Name = "tb_hargapokok"
         Me.tb_hargapokok.Size = New System.Drawing.Size(189, 20)
-        Me.tb_hargapokok.TabIndex = 21
+        Me.tb_hargapokok.TabIndex = 13
         '
         'tb_stock
         '
         Me.tb_stock.Location = New System.Drawing.Point(453, 124)
         Me.tb_stock.Name = "tb_stock"
         Me.tb_stock.Size = New System.Drawing.Size(189, 20)
-        Me.tb_stock.TabIndex = 21
+        Me.tb_stock.TabIndex = 14
         '
-        'rp_jumlah
+        'tb_rp_jumlah
         '
-        Me.rp_jumlah.Location = New System.Drawing.Point(453, 150)
-        Me.rp_jumlah.Name = "rp_jumlah"
-        Me.rp_jumlah.Size = New System.Drawing.Size(189, 20)
-        Me.rp_jumlah.TabIndex = 21
-        '
-        'tb_tglbeli
-        '
-        Me.tb_tglbeli.Location = New System.Drawing.Point(453, 177)
-        Me.tb_tglbeli.Name = "tb_tglbeli"
-        Me.tb_tglbeli.Size = New System.Drawing.Size(189, 20)
-        Me.tb_tglbeli.TabIndex = 21
-        '
-        'tgl_pakai
-        '
-        Me.tgl_pakai.Location = New System.Drawing.Point(453, 203)
-        Me.tgl_pakai.Name = "tgl_pakai"
-        Me.tgl_pakai.Size = New System.Drawing.Size(189, 20)
-        Me.tgl_pakai.TabIndex = 21
+        Me.tb_rp_jumlah.Location = New System.Drawing.Point(453, 150)
+        Me.tb_rp_jumlah.Name = "tb_rp_jumlah"
+        Me.tb_rp_jumlah.Size = New System.Drawing.Size(189, 20)
+        Me.tb_rp_jumlah.TabIndex = 15
         '
         'PictureBox1
         '
@@ -378,14 +364,14 @@ Partial Class dialogEditBarang
         Me.tb_keterangan.Location = New System.Drawing.Point(453, 339)
         Me.tb_keterangan.Name = "tb_keterangan"
         Me.tb_keterangan.Size = New System.Drawing.Size(189, 20)
-        Me.tb_keterangan.TabIndex = 21
+        Me.tb_keterangan.TabIndex = 18
         '
         'b_save
         '
         Me.b_save.Location = New System.Drawing.Point(453, 406)
         Me.b_save.Name = "b_save"
         Me.b_save.Size = New System.Drawing.Size(75, 23)
-        Me.b_save.TabIndex = 23
+        Me.b_save.TabIndex = 20
         Me.b_save.Text = "Save"
         Me.b_save.UseVisualStyleBackColor = True
         '
@@ -394,22 +380,36 @@ Partial Class dialogEditBarang
         Me.b_cancel.Location = New System.Drawing.Point(551, 406)
         Me.b_cancel.Name = "b_cancel"
         Me.b_cancel.Size = New System.Drawing.Size(75, 23)
-        Me.b_cancel.TabIndex = 23
+        Me.b_cancel.TabIndex = 19
         Me.b_cancel.Text = "Cancel"
         Me.b_cancel.UseVisualStyleBackColor = True
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Location = New System.Drawing.Point(453, 177)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(189, 20)
+        Me.DateTimePicker1.TabIndex = 23
+        '
+        'DateTimePicker2
+        '
+        Me.DateTimePicker2.Location = New System.Drawing.Point(453, 205)
+        Me.DateTimePicker2.Name = "DateTimePicker2"
+        Me.DateTimePicker2.Size = New System.Drawing.Size(189, 20)
+        Me.DateTimePicker2.TabIndex = 24
         '
         'dialogEditBarang
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(654, 455)
+        Me.Controls.Add(Me.DateTimePicker2)
+        Me.Controls.Add(Me.DateTimePicker1)
         Me.Controls.Add(Me.b_cancel)
         Me.Controls.Add(Me.b_save)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.tb_keterangan)
-        Me.Controls.Add(Me.tgl_pakai)
-        Me.Controls.Add(Me.tb_tglbeli)
-        Me.Controls.Add(Me.rp_jumlah)
+        Me.Controls.Add(Me.tb_rp_jumlah)
         Me.Controls.Add(Me.tb_stock)
         Me.Controls.Add(Me.tb_hargapokok)
         Me.Controls.Add(Me.tbhargabeli)
@@ -486,11 +486,11 @@ Partial Class dialogEditBarang
     Friend WithEvents tbhargabeli As TextBox
     Friend WithEvents tb_hargapokok As TextBox
     Friend WithEvents tb_stock As TextBox
-    Friend WithEvents rp_jumlah As TextBox
-    Friend WithEvents tb_tglbeli As TextBox
-    Friend WithEvents tgl_pakai As TextBox
+    Friend WithEvents tb_rp_jumlah As TextBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents tb_keterangan As TextBox
     Friend WithEvents b_save As Button
     Friend WithEvents b_cancel As Button
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents DateTimePicker2 As DateTimePicker
 End Class

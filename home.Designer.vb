@@ -32,6 +32,7 @@ Partial Class home
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.dgv_databagian = New System.Windows.Forms.DataGridView()
         Me.dgv_databarang = New System.Windows.Forms.DataGridView()
+        Me.dgv_datasupplier = New System.Windows.Forms.DataGridView()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.MasterDataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DataBagianToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -156,6 +157,15 @@ Partial Class home
         Me.dgv_databarang.Size = New System.Drawing.Size(803, 290)
         Me.dgv_databarang.TabIndex = 0
         '
+        'dgv_datasupplier
+        '
+        Me.dgv_datasupplier.Location = New System.Drawing.Point(6.6)
+        Me.dgv_datasupplier.Name = "dgv_datasupplier"
+        Me.dgv_datasupplier.ReadOnly = True
+        Me.dgv_datasupplier.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_datasupplier.Size = New System.Drawing.Size(803, 290)
+        Me.dgv_datasupplier.TabIndex = 0
+        '
         'MenuStrip1
         '
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MasterDataToolStripMenuItem})
@@ -232,6 +242,7 @@ Partial Class home
     Friend WithEvents DataGridView2 As DataGridView
     Friend WithEvents dgv_databagian As DataGridView
     Friend WithEvents dgv_databarang As DataGridView
+    Friend WithEvents dgv_datasupplier As DataGridView
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents MasterDataToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DataBagianToolStripMenuItem As ToolStripMenuItem

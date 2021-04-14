@@ -7,6 +7,7 @@ Public Class home
     Public currentCellValue As String
     Public dss As New DataSet
     Public dataSetBarang As New DataSet
+    Public datasetSupplier As New DataSet
 
     Public Sub b_addtab_Click(sender As Object, e As EventArgs)
         Dim newtab As New TabPage
@@ -242,8 +243,6 @@ Public Class home
         Dim editBarang As New Button
         Dim hapusBarang As New Button
 
-
-
         tabDataBarang.Name = "tabelBarang"
         tabDataBarang.Text = "Tabel Barang"
         dgv_databarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left + AnchorStyles.Right + AnchorStyles.Top
@@ -302,6 +301,7 @@ Public Class home
         Dim diabar As New dialogEditBarang
         diabar.Show()
         Console.WriteLine("tambah barang clicked")
+        AddHandler diabar.Disposed, AddressOf diabarDisposed
     End Sub
 
     Private Sub editBarang_Clicked()
@@ -312,7 +312,29 @@ Public Class home
     End Sub
 
     Private Sub hapusBarang_clicked()
-        Console.WriteLine("hapus barang clicked")
+        'Console.WriteLine("hapus barang clicked")
+        Dim namabar = dgv_databarang.CurrentRow.Cells(2).Value.ToString
+        Dim kodebar = dgv_databarang.CurrentRow.Cells(0).Value.ToString
+        DialogResult = MsgBox("Apakah anda yakin akan menghapus " & namabar & "?", MsgBoxStyle.OkCancel)
+        Dim sql As String
+        If DialogResult Then
+            sql = "DELETE FROM `barang` WHERE `KODE_BRG`='" & kodebar & "'"
+            Try
+                Dim cmd As New MySqlCommand
+                Dim tr As MySqlTransaction
+                tr = conn.BeginTransaction
+                cmd.Connection = conn
+                cmd.CommandText = sql
+                cmd.ExecuteNonQuery()
+                tr.Commit()
+                MsgBox("data berhasil dihapus..")
+                diabarDisposed()
+
+            Catch ex As Exception
+                Console.WriteLine("err : " & ex.ToString)
+                MsgBox("data gagal dihapus : " & ex.ToString)
+            End Try
+        End If
     End Sub
 
     Private Sub diabarDisposed()
@@ -323,12 +345,60 @@ Public Class home
         Dim sql As String = "SELECT * FROM barang"
         Try
             Dim da_po As New MySqlDataAdapter(sql, conn)
-            dss.Tables("tabel_barang").Clear()
-            da_po.Fill(dss, "tabel_barang")
+            dataSetBarang.Clear()
+            da_po.Fill(dataSetBarang, "tabel_barang")
             dgv_databarang.Refresh()
         Catch ex As Exception
+            Console.WriteLine("err : " & ex.ToString)
+            MsgBox("err : " & ex.ToString)
 
         End Try
     End Sub
-    '==================================== DAFTAR BARANG =================================
+
+    Private Sub DataSupplierToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataSupplierToolStripMenuItem.Click
+        Dim tabDataSupplier As New TabPage
+        Dim closeDataSupplier As New Button
+        Dim tambahSupplier As New Button
+        Dim editSupplier As New Button
+        Dim hapusSupplier As New Button
+
+        tabDataSupplier.Name = "tableSupplier"
+        tabDataSupplier.Text = "Tabel Supplier"
+        dgv_datasupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Top + AnchorStyles.Left + AnchorStyles.Right
+
+        closeDataSupplier.Name = "closeDataSupplier"
+        closeDataSupplier.Text = "Tutup tab"
+        closeDataSupplier.Location = New Point(6, 302)
+        closeDataSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+
+        tambahSupplier.Name = "tambahSupplier"
+        tambahSupplier.Text = "Tambah Supplier"
+        tambahSupplier.Location = New Point(91, 302)
+        tambahSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+
+        editSupplier.Name = "editSupplier"
+        editSupplier.Text = "Edit Supplier"
+        editSupplier.Location = New Point(176, 302)
+        editSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+
+        hapusSupplier.Name = "hapusSupplier"
+        hapusSupplier.Text = "Hapus Supplier"
+        hapusSupplier.Location = New Point(261, 302)
+        hapusSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+
+        Me.TabControl1.TabPages.Add(tabDataSupplier)
+        Me.TabControl1.TabPages
+
+
+
+    End Sub
+
+    'Private Sub diabardisposed()
+    '    Console.WriteLine("diabar disposed")
+    'End Sub
+
+    'Private Sub update_dgvdatabrang()
+    '    Console.WriteLine("update datagrid data barang")
+    'End Sub
+    '==================================== END OF DAFTAR BARANG =================================
 End Class
