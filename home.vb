@@ -315,9 +315,10 @@ Public Class home
         'Console.WriteLine("hapus barang clicked")
         Dim namabar = dgv_databarang.CurrentRow.Cells(2).Value.ToString
         Dim kodebar = dgv_databarang.CurrentRow.Cells(0).Value.ToString
-        DialogResult = MsgBox("Apakah anda yakin akan menghapus " & namabar & "?", MsgBoxStyle.OkCancel)
+        Dim DialogResult As DialogResult = MsgBox("Apakah anda yakin akan menghapus " & namabar & "?", MsgBoxStyle.OkCancel)
         Dim sql As String
-        If DialogResult Then
+        Console.WriteLine(DialogResult)
+        If DialogResult = 1 Then
             sql = "DELETE FROM `barang` WHERE `KODE_BRG`='" & kodebar & "'"
             Try
                 Dim cmd As New MySqlCommand
@@ -355,6 +356,10 @@ Public Class home
         End Try
     End Sub
 
+    '==================================== END OF DAFTAR BARANG =================================
+
+    '==================================== TAB DAFTAR SUPPLIER ====================================
+
     Private Sub DataSupplierToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataSupplierToolStripMenuItem.Click
         Dim tabDataSupplier As New TabPage
         Dim closeDataSupplier As New Button
@@ -387,18 +392,89 @@ Public Class home
         hapusSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         Me.TabControl1.TabPages.Add(tabDataSupplier)
-        Me.TabControl1.TabPages
+        Me.TabControl1.SelectedIndex = TabControl1.TabCount - 1
 
+        tabDataSupplier.Controls.Add(dgv_datasupplier)
+        tabDataSupplier.Controls.Add(closeDataSupplier)
+        tabDataSupplier.Controls.Add(tambahSupplier)
+        tabDataSupplier.Controls.Add(editSupplier)
+        tabDataSupplier.Controls.Add(hapusSupplier)
 
+        Dim sql As String = "SELECT * FROM supplier"
+        Try
+            datasetSupplier.Clear()
+            Dim da_supplier As New MySqlDataAdapter(sql, conn)
+            da_supplier.Fill(datasetSupplier, "data_supplier")
+            dgv_datasupplier.DataSource = datasetSupplier.Tables("data_supplier")
+
+        Catch ex As Exception
+            Console.WriteLine("error :" & ex.ToString)
+            MsgBox("error : " & ex.ToString)
+        End Try
+
+        AddHandler closeDataSupplier.Click, AddressOf tutupDaftarSupplier
+        AddHandler tambahSupplier.Click, AddressOf tambahSupplier_clicked
+        AddHandler editSupplier.Click, AddressOf editSupplier_clicked
+        AddHandler hapusSupplier.Click, AddressOf hapusSupplier_clicked
 
     End Sub
 
-    'Private Sub diabardisposed()
-    '    Console.WriteLine("diabar disposed")
-    'End Sub
+    Private Sub tutupDaftarSupplier()
+        Me.TabControl1.TabPages.Remove(Me.TabControl1.SelectedTab)
+    End Sub
 
-    'Private Sub update_dgvdatabrang()
-    '    Console.WriteLine("update datagrid data barang")
-    'End Sub
-    '==================================== END OF DAFTAR BARANG =================================
+    Private Sub tambahSupplier_clicked()
+        Console.WriteLine("tambah supplier")
+        Dim diasupp As New dialogSupplier
+        diasupp.Show()
+        AddHandler diasupp.Disposed, AddressOf diasuppDisposed
+    End Sub
+
+    Private Sub editSupplier_clicked()
+        Console.WriteLine("edit supplier")
+        Dim diasupp As New dialogSupplier With {.kodeSupplier = dgv_datasupplier.CurrentRow.Cells(0).Value.ToString}
+        diasupp.Show()
+        AddHandler diasupp.Disposed, AddressOf diasuppDisposed
+    End Sub
+
+    Private Sub hapusSupplier_clicked()
+
+        Dim namaSupp = dgv_datasupplier.CurrentRow.Cells(1).Value.ToString
+        Dim kodeSupp = dgv_datasupplier.CurrentRow.Cells(0).Value.ToString
+        Dim DialogResult As DialogResult = MsgBox("Apakah anda yakin akan menghapus " & namaSupp & "?", MsgBoxStyle.OkCancel)
+        Console.WriteLine(DialogResult)
+        Dim sql As String
+        If DialogResult = 1 Then
+            sql = "DELETE FROM `supplier` WHERE `KODE_SUPL`='" & kodeSupp & "'"
+            Try
+                'Dim cmd As New MySqlCommand
+                'Dim tr As MySqlTransaction
+                'tr = conn.BeginTransaction
+                'cmd.Connection = conn
+                'cmd.CommandText = sql
+                'cmd.ExecuteNonQuery()
+                'tr.Commit()
+                MsgBox("data berhasil dihapus..")
+                diasuppDisposed()
+            Catch ex As Exception
+                Console.WriteLine("err : " & ex.ToString)
+                MsgBox("data gagal dihapus : " & ex.ToString)
+            End Try
+        End If
+    End Sub
+
+    Private Sub diasuppDisposed()
+        Dim sql As String = "SELECT * FROM supplier"
+        Try
+            datasetSupplier.Clear()
+            Dim da_supplier As New MySqlDataAdapter(sql, conn)
+            da_supplier.Fill(datasetSupplier, "data_supplier")
+            dgv_datasupplier.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("err : " & ex.ToString)
+            MsgBox("err : " & ex.ToString)
+        End Try
+    End Sub
+    '=========================================== END OF DAFTAR SUPPLIER ===================================
+
 End Class

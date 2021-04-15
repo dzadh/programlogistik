@@ -24,3 +24,4 @@ C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\pro
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.vbproj.programlogistik.exe.config
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialog_editbagian.resources
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialogEditBarang.resources
+C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialogSupplier.resources

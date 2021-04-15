@@ -82,6 +82,12 @@
     <Compile Include="dialogEditBarang.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="dialogSupplier.Designer.vb">
+      <DependentUpon>dialogSupplier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dialogSupplier.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="dialog_editbagian.Designer.vb">
       <DependentUpon>dialog_editbagian.vb</DependentUpon>
     </Compile>
@@ -114,6 +120,9 @@
   <ItemGroup>
     <EmbeddedResource Include="dialogEditBarang.resx">
       <DependentUpon>dialogEditBarang.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dialogSupplier.resx">
+      <DependentUpon>dialogSupplier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dialog_editbagian.resx">
       <DependentUpon>dialog_editbagian.vb</DependentUpon>
