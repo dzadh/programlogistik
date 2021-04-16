@@ -1,4 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports PlaceHoldingTextBox1
 
 Public Class home
     Dim da As MySqlDataAdapter
@@ -8,6 +9,7 @@ Public Class home
     Public dss As New DataSet
     Public dataSetBarang As New DataSet
     Public datasetSupplier As New DataSet
+    Public dataSetPP As New DataSet
 
     Public Sub b_addtab_Click(sender As Object, e As EventArgs)
         Dim newtab As New TabPage
@@ -54,12 +56,11 @@ Public Class home
         End Try
 
         Dim sql As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '2021-02-1' AND '2021-02-27'"
-        Dim ds As New DataSet
+
         Try
             Dim daa As New MySqlDataAdapter(sql, conn)
-            daa.Fill(ds, "singo")
-            Me.DataGridView1.DataSource = ds.Tables("singo")
-
+            daa.Fill(dataSetPP, "singo")
+            Me.DataGridView1.DataSource = dataSetPP.Tables("singo")
         Catch ex As Exception
             Console.WriteLine(ex.ToString)
         End Try
@@ -74,8 +75,8 @@ Public Class home
         Catch ex As Exception
             Console.WriteLine("error : " & ex.ToString)
         End Try
-
     End Sub
+
 
     'suppose to be tabcontrolex1
     Private Sub b_tambahtab2_Click(sender As Object, e As EventArgs) Handles b_tambahtab2.Click
@@ -236,6 +237,7 @@ Public Class home
         End Try
     End Sub
     '============================== DAFTAR BARANG ===========================================
+
     Private Sub DataBarangToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBarangToolStripMenuItem.Click
         Dim tabDataBarang As New TabPage
         Dim closeButton As New Button
@@ -476,5 +478,17 @@ Public Class home
         End Try
     End Sub
     '=========================================== END OF DAFTAR SUPPLIER ===================================
+    Private Sub cb_filterTanggal_CheckedChanged(sender As Object, e As EventArgs) Handles cb_filterTanggal.CheckedChanged
+        If cb_filterTanggal.Checked Then
+            gb_filterTanggal.Visible = True
+        Else
+            gb_filterTanggal.Visible = False
+        End If
+    End Sub
 
+    Private Sub tb_searchbyNomorNota(sender As Object, e As EventArgs) Handles tb_searchppbynota.TextChanged
+        Console.WriteLine(tb_searchppbynota.Text)
+        Dim dv As DataView
+        dv = DataView(dataSetPP(singo), FileAttr)
+    End Sub
 End Class
