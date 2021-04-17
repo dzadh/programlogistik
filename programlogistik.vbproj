@@ -79,6 +79,11 @@
     <Compile Include="Class1.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="dblogistikDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dblogistikDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dialogEditBarang.Designer.vb">
       <DependentUpon>dialogEditBarang.vb</DependentUpon>
     </Compile>
@@ -141,6 +146,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="dblogistikDataSet.xsc">
+      <DependentUpon>dblogistikDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="dblogistikDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dblogistikDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dblogistikDataSet.xss">
+      <DependentUpon>dblogistikDataSet.xsd</DependentUpon>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

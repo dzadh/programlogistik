@@ -22,5 +22,70 @@ programlogistik
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="T:programlogistik.dblogistikDataSet">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:programlogistik.dblogistikDataSet.pp_headerDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:programlogistik.dblogistikDataSet.pp_headerRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:programlogistik.dblogistikDataSet.pp_headerRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:programlogistik.dblogistikDataSetTableAdapters.pp_headerTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager.UpdateUpdatedRows(programlogistik.dblogistikDataSet,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager.UpdateInsertedRows(programlogistik.dblogistikDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager.UpdateDeletedRows(programlogistik.dblogistikDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager.UpdateAll(programlogistik.dblogistikDataSet)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:programlogistik.dblogistikDataSetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
 </members>
 </doc>

@@ -28,6 +28,17 @@ Partial Class home
         Me.b_tambahtab2 = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.gb_filterTanggal = New System.Windows.Forms.GroupBox()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dp_filtermulai = New System.Windows.Forms.DateTimePicker()
+        Me.cb_filterTanggal = New System.Windows.Forms.CheckBox()
+        Me.l_bagian = New System.Windows.Forms.Label()
+        Me.l_nomorNota = New System.Windows.Forms.Label()
+        Me.tb_searchppbynota = New System.Windows.Forms.TextBox()
+        Me.tb_searchppbybagian = New System.Windows.Forms.TextBox()
+        Me.l_pencarian = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
@@ -40,20 +51,10 @@ Partial Class home
         Me.DataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DataBarangToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DataSupplierToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.l_pencarian = New System.Windows.Forms.Label()
-        Me.tb_searchppbybagian = New System.Windows.Forms.TextBox()
-        Me.tb_searchppbynota = New System.Windows.Forms.TextBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.l_nomorNota = New System.Windows.Forms.Label()
-        Me.l_bagian = New System.Windows.Forms.Label()
-        Me.cb_filterTanggal = New System.Windows.Forms.CheckBox()
-        Me.gb_filterTanggal = New System.Windows.Forms.GroupBox()
-        Me.dp_filtermulai = New System.Windows.Forms.DateTimePicker()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.gb_filterTanggal.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,7 +62,6 @@ Partial Class home
         CType(Me.dgv_databarang, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_datasupplier, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
-        Me.gb_filterTanggal.SuspendLayout()
         Me.SuspendLayout()
         '
         'l_statusdb
@@ -124,6 +124,108 @@ Partial Class home
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Daftar Permintaan Pembelian"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'gb_filterTanggal
+        '
+        Me.gb_filterTanggal.Controls.Add(Me.DateTimePicker1)
+        Me.gb_filterTanggal.Controls.Add(Me.Label2)
+        Me.gb_filterTanggal.Controls.Add(Me.Label1)
+        Me.gb_filterTanggal.Controls.Add(Me.dp_filtermulai)
+        Me.gb_filterTanggal.Location = New System.Drawing.Point(21, 217)
+        Me.gb_filterTanggal.Name = "gb_filterTanggal"
+        Me.gb_filterTanggal.Size = New System.Drawing.Size(170, 100)
+        Me.gb_filterTanggal.TabIndex = 6
+        Me.gb_filterTanggal.TabStop = False
+        Me.gb_filterTanggal.Visible = False
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker1.Location = New System.Drawing.Point(5, 70)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(159, 20)
+        Me.DateTimePicker1.TabIndex = 3
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(5, 53)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(79, 13)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "sampai dengan"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(7, 10)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(32, 13)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Mulai"
+        '
+        'dp_filtermulai
+        '
+        Me.dp_filtermulai.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dp_filtermulai.Location = New System.Drawing.Point(5, 29)
+        Me.dp_filtermulai.Name = "dp_filtermulai"
+        Me.dp_filtermulai.Size = New System.Drawing.Size(157, 20)
+        Me.dp_filtermulai.TabIndex = 0
+        Me.dp_filtermulai.Value = New Date(2021, 4, 1, 0, 0, 0, 0)
+        '
+        'cb_filterTanggal
+        '
+        Me.cb_filterTanggal.AutoSize = True
+        Me.cb_filterTanggal.Location = New System.Drawing.Point(21, 194)
+        Me.cb_filterTanggal.Name = "cb_filterTanggal"
+        Me.cb_filterTanggal.Size = New System.Drawing.Size(90, 17)
+        Me.cb_filterTanggal.TabIndex = 5
+        Me.cb_filterTanggal.Text = "Filter Tanggal"
+        Me.cb_filterTanggal.UseVisualStyleBackColor = True
+        '
+        'l_bagian
+        '
+        Me.l_bagian.AutoSize = True
+        Me.l_bagian.Location = New System.Drawing.Point(17, 95)
+        Me.l_bagian.Name = "l_bagian"
+        Me.l_bagian.Size = New System.Drawing.Size(40, 13)
+        Me.l_bagian.TabIndex = 4
+        Me.l_bagian.Text = "Bagian"
+        '
+        'l_nomorNota
+        '
+        Me.l_nomorNota.AutoSize = True
+        Me.l_nomorNota.Location = New System.Drawing.Point(18, 45)
+        Me.l_nomorNota.Name = "l_nomorNota"
+        Me.l_nomorNota.Size = New System.Drawing.Size(64, 13)
+        Me.l_nomorNota.TabIndex = 3
+        Me.l_nomorNota.Text = "Nomor Nota"
+        '
+        'tb_searchppbynota
+        '
+        Me.tb_searchppbynota.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_searchppbynota.Location = New System.Drawing.Point(20, 62)
+        Me.tb_searchppbynota.Name = "tb_searchppbynota"
+        Me.tb_searchppbynota.Size = New System.Drawing.Size(163, 24)
+        Me.tb_searchppbynota.TabIndex = 2
+        '
+        'tb_searchppbybagian
+        '
+        Me.tb_searchppbybagian.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_searchppbybagian.Location = New System.Drawing.Point(20, 113)
+        Me.tb_searchppbybagian.Name = "tb_searchppbybagian"
+        Me.tb_searchppbybagian.Size = New System.Drawing.Size(163, 24)
+        Me.tb_searchppbybagian.TabIndex = 2
+        '
+        'l_pencarian
+        '
+        Me.l_pencarian.AutoSize = True
+        Me.l_pencarian.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l_pencarian.Location = New System.Drawing.Point(17, 17)
+        Me.l_pencarian.Name = "l_pencarian"
+        Me.l_pencarian.Size = New System.Drawing.Size(93, 18)
+        Me.l_pencarian.TabIndex = 1
+        Me.l_pencarian.Text = "PENCARIAN"
         '
         'DataGridView1
         '
@@ -229,112 +331,10 @@ Partial Class home
         Me.DataSupplierToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
         Me.DataSupplierToolStripMenuItem.Text = "Data Supplier"
         '
-        'l_pencarian
-        '
-        Me.l_pencarian.AutoSize = True
-        Me.l_pencarian.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.l_pencarian.Location = New System.Drawing.Point(17, 17)
-        Me.l_pencarian.Name = "l_pencarian"
-        Me.l_pencarian.Size = New System.Drawing.Size(93, 18)
-        Me.l_pencarian.TabIndex = 1
-        Me.l_pencarian.Text = "PENCARIAN"
-        '
-        'tb_searchppbybagian
-        '
-        Me.tb_searchppbybagian.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tb_searchppbybagian.Location = New System.Drawing.Point(20, 113)
-        Me.tb_searchppbybagian.Name = "tb_searchppbybagian"
-        Me.tb_searchppbybagian.Size = New System.Drawing.Size(163, 24)
-        Me.tb_searchppbybagian.TabIndex = 2
-        '
-        'tb_searchppbynota
-        '
-        Me.tb_searchppbynota.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tb_searchppbynota.Location = New System.Drawing.Point(20, 62)
-        Me.tb_searchppbynota.Name = "tb_searchppbynota"
-        Me.tb_searchppbynota.Size = New System.Drawing.Size(163, 24)
-        Me.tb_searchppbynota.TabIndex = 2
-        '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
-        '
-        'l_nomorNota
-        '
-        Me.l_nomorNota.AutoSize = True
-        Me.l_nomorNota.Location = New System.Drawing.Point(18, 45)
-        Me.l_nomorNota.Name = "l_nomorNota"
-        Me.l_nomorNota.Size = New System.Drawing.Size(64, 13)
-        Me.l_nomorNota.TabIndex = 3
-        Me.l_nomorNota.Text = "Nomor Nota"
-        '
-        'l_bagian
-        '
-        Me.l_bagian.AutoSize = True
-        Me.l_bagian.Location = New System.Drawing.Point(17, 95)
-        Me.l_bagian.Name = "l_bagian"
-        Me.l_bagian.Size = New System.Drawing.Size(40, 13)
-        Me.l_bagian.TabIndex = 4
-        Me.l_bagian.Text = "Bagian"
-        '
-        'cb_filterTanggal
-        '
-        Me.cb_filterTanggal.AutoSize = True
-        Me.cb_filterTanggal.Location = New System.Drawing.Point(21, 194)
-        Me.cb_filterTanggal.Name = "cb_filterTanggal"
-        Me.cb_filterTanggal.Size = New System.Drawing.Size(90, 17)
-        Me.cb_filterTanggal.TabIndex = 5
-        Me.cb_filterTanggal.Text = "Filter Tanggal"
-        Me.cb_filterTanggal.UseVisualStyleBackColor = True
-        '
-        'gb_filterTanggal
-        '
-        Me.gb_filterTanggal.Controls.Add(Me.DateTimePicker1)
-        Me.gb_filterTanggal.Controls.Add(Me.Label2)
-        Me.gb_filterTanggal.Controls.Add(Me.Label1)
-        Me.gb_filterTanggal.Controls.Add(Me.dp_filtermulai)
-        Me.gb_filterTanggal.Location = New System.Drawing.Point(21, 217)
-        Me.gb_filterTanggal.Name = "gb_filterTanggal"
-        Me.gb_filterTanggal.Size = New System.Drawing.Size(170, 100)
-        Me.gb_filterTanggal.TabIndex = 6
-        Me.gb_filterTanggal.TabStop = False
-        Me.gb_filterTanggal.Visible = False
-        '
-        'dp_filtermulai
-        '
-        Me.dp_filtermulai.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dp_filtermulai.Location = New System.Drawing.Point(5, 29)
-        Me.dp_filtermulai.Name = "dp_filtermulai"
-        Me.dp_filtermulai.Size = New System.Drawing.Size(157, 20)
-        Me.dp_filtermulai.TabIndex = 0
-        Me.dp_filtermulai.Value = New Date(2021, 4, 1, 0, 0, 0, 0)
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(7, 10)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(32, 13)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Mulai"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(5, 53)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(79, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "sampai dengan"
-        '
-        'DateTimePicker1
-        '
-        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(5, 70)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(159, 20)
-        Me.DateTimePicker1.TabIndex = 3
         '
         'home
         '
@@ -353,6 +353,8 @@ Partial Class home
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        Me.gb_filterTanggal.ResumeLayout(False)
+        Me.gb_filterTanggal.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -361,8 +363,6 @@ Partial Class home
         CType(Me.dgv_datasupplier, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        Me.gb_filterTanggal.ResumeLayout(False)
-        Me.gb_filterTanggal.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

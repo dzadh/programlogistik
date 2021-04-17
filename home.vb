@@ -56,7 +56,7 @@ Public Class home
         End Try
 
         Dim sql As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '2021-02-1' AND '2021-02-27'"
-
+        Dim sql As String = "SELECT * FROM pp_header"
         Try
             Dim daa As New MySqlDataAdapter(sql, conn)
             daa.Fill(dataSetPP, "singo")
@@ -487,8 +487,40 @@ Public Class home
     End Sub
 
     Private Sub tb_searchbyNomorNota(sender As Object, e As EventArgs) Handles tb_searchppbynota.TextChanged
-        Console.WriteLine(tb_searchppbynota.Text)
-        Dim dv As DataView
-        dv = DataView(dataSetPP(singo), FileAttr)
+        'Console.WriteLine(tb_searchppbynota.Text)
+        If String.IsNullOrEmpty(tb_searchppbybagian.Text) Then
+            dataSetPP.Clear()
+            Dim sql As String = "SELECT * FROM `pp_header` WHERE Nota LIKE '%" & tb_searchppbynota.Text & "%'"
+            Console.WriteLine(sql)
+            Dim daa As New MySqlDataAdapter(sql, conn)
+            daa.Fill(dataSetPP, "singo")
+            DataGridView1.Refresh()
+        Else
+            dataSetPP.Tables("singo").DefaultView.RowFilter = "Nota LIKE '*" & tb_searchppbynota.Text & "*'"
+            DataGridView1.Refresh()
+        End If
+
+    End Sub
+
+    Private Sub searchPPbyBagian(sender As Object, e As EventArgs) Handles tb_searchppbybagian.TextChanged
+        If String.IsNullOrEmpty(tb_searchppbynota.Text) Then
+            dataSetPP.Clear()
+            Dim query As String = "SELECT * FROM pp_header WHERE Bagian LIKE '%" & tb_searchppbybagian.Text & "%'"
+            Console.WriteLine(query)
+            Dim da As New MySqlDataAdapter(query, conn)
+            da.Fill(dataSetPP, "singo")
+            DataGridView1.Refresh()
+        Else
+            dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian LIKE '*" & tb_searchppbybagian.Text & "*'"
+            DataGridView1.Refresh()
+        End If
+    End Sub
+
+    Private Sub dp_filtermulai_ValueChanged(sender As Object, e As EventArgs) Handles dp_filtermulai.ValueChanged
+        If cb_filterTanggal.Checked Then
+            dataSetPP.Clear()
+            Dim query As String = "select * from pp_h"
+        End If
+
     End Sub
 End Class
