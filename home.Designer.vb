@@ -29,10 +29,10 @@ Partial Class home
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.gb_filterTanggal = New System.Windows.Forms.GroupBox()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.dp_filterDateEnd = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.dp_filtermulai = New System.Windows.Forms.DateTimePicker()
+        Me.dp_filterDateStart = New System.Windows.Forms.DateTimePicker()
         Me.cb_filterTanggal = New System.Windows.Forms.CheckBox()
         Me.l_bagian = New System.Windows.Forms.Label()
         Me.l_nomorNota = New System.Windows.Forms.Label()
@@ -52,6 +52,9 @@ Partial Class home
         Me.DataBarangToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DataSupplierToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.b_buatPP = New System.Windows.Forms.Button()
+        Me.b_ubahPP = New System.Windows.Forms.Button()
+        Me.b_hapusPP = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.gb_filterTanggal.SuspendLayout()
@@ -109,6 +112,9 @@ Partial Class home
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.b_hapusPP)
+        Me.TabPage1.Controls.Add(Me.b_ubahPP)
+        Me.TabPage1.Controls.Add(Me.b_buatPP)
         Me.TabPage1.Controls.Add(Me.gb_filterTanggal)
         Me.TabPage1.Controls.Add(Me.cb_filterTanggal)
         Me.TabPage1.Controls.Add(Me.l_bagian)
@@ -127,10 +133,10 @@ Partial Class home
         '
         'gb_filterTanggal
         '
-        Me.gb_filterTanggal.Controls.Add(Me.DateTimePicker1)
+        Me.gb_filterTanggal.Controls.Add(Me.dp_filterDateEnd)
         Me.gb_filterTanggal.Controls.Add(Me.Label2)
         Me.gb_filterTanggal.Controls.Add(Me.Label1)
-        Me.gb_filterTanggal.Controls.Add(Me.dp_filtermulai)
+        Me.gb_filterTanggal.Controls.Add(Me.dp_filterDateStart)
         Me.gb_filterTanggal.Location = New System.Drawing.Point(21, 217)
         Me.gb_filterTanggal.Name = "gb_filterTanggal"
         Me.gb_filterTanggal.Size = New System.Drawing.Size(170, 100)
@@ -138,13 +144,13 @@ Partial Class home
         Me.gb_filterTanggal.TabStop = False
         Me.gb_filterTanggal.Visible = False
         '
-        'DateTimePicker1
+        'dp_filterDateEnd
         '
-        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(5, 70)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(159, 20)
-        Me.DateTimePicker1.TabIndex = 3
+        Me.dp_filterDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dp_filterDateEnd.Location = New System.Drawing.Point(5, 70)
+        Me.dp_filterDateEnd.Name = "dp_filterDateEnd"
+        Me.dp_filterDateEnd.Size = New System.Drawing.Size(159, 20)
+        Me.dp_filterDateEnd.TabIndex = 3
         '
         'Label2
         '
@@ -164,14 +170,15 @@ Partial Class home
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Mulai"
         '
-        'dp_filtermulai
+        'dp_filterDateStart
         '
-        Me.dp_filtermulai.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dp_filtermulai.Location = New System.Drawing.Point(5, 29)
-        Me.dp_filtermulai.Name = "dp_filtermulai"
-        Me.dp_filtermulai.Size = New System.Drawing.Size(157, 20)
-        Me.dp_filtermulai.TabIndex = 0
-        Me.dp_filtermulai.Value = New Date(2021, 4, 1, 0, 0, 0, 0)
+        Me.dp_filterDateStart.CustomFormat = ""
+        Me.dp_filterDateStart.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dp_filterDateStart.Location = New System.Drawing.Point(5, 29)
+        Me.dp_filterDateStart.Name = "dp_filterDateStart"
+        Me.dp_filterDateStart.Size = New System.Drawing.Size(157, 20)
+        Me.dp_filterDateStart.TabIndex = 0
+        Me.dp_filterDateStart.Value = New Date(2021, 4, 1, 0, 0, 0, 0)
         '
         'cb_filterTanggal
         '
@@ -336,6 +343,42 @@ Partial Class home
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
+        'b_buatPP
+        '
+        Me.b_buatPP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.b_buatPP.Location = New System.Drawing.Point(210, 562)
+        Me.b_buatPP.Name = "b_buatPP"
+        Me.b_buatPP.Size = New System.Drawing.Size(75, 39)
+        Me.b_buatPP.TabIndex = 7
+        Me.b_buatPP.Text = "Buat PP"
+        Me.b_buatPP.UseVisualStyleBackColor = True
+        '
+        'b_ubahPP
+        '
+        Me.b_ubahPP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.b_ubahPP.Location = New System.Drawing.Point(291, 562)
+        Me.b_ubahPP.Name = "b_ubahPP"
+        Me.b_ubahPP.Size = New System.Drawing.Size(75, 39)
+        Me.b_ubahPP.TabIndex = 7
+        Me.b_ubahPP.Text = "Ubah PP"
+        Me.b_ubahPP.UseVisualStyleBackColor = True
+        '
+        'b_hapusPP
+        '
+        Me.b_hapusPP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.b_hapusPP.Location = New System.Drawing.Point(372, 562)
+        Me.b_hapusPP.Name = "b_hapusPP"
+        Me.b_hapusPP.Size = New System.Drawing.Size(75, 39)
+        Me.b_hapusPP.TabIndex = 7
+        Me.b_hapusPP.Text = "Hapus PP"
+        Me.b_hapusPP.UseVisualStyleBackColor = True
+        '
         'home
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -349,7 +392,6 @@ Partial Class home
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "home"
         Me.Text = " "
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -389,11 +431,14 @@ Partial Class home
     Friend WithEvents tb_searchppbybagian As TextBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents gb_filterTanggal As GroupBox
-    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents dp_filterDateEnd As DateTimePicker
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents dp_filtermulai As DateTimePicker
+    Friend WithEvents dp_filterDateStart As DateTimePicker
     Friend WithEvents cb_filterTanggal As CheckBox
     Friend WithEvents l_bagian As Label
     Friend WithEvents l_nomorNota As Label
+    Friend WithEvents b_hapusPP As Button
+    Friend WithEvents b_ubahPP As Button
+    Friend WithEvents b_buatPP As Button
 End Class

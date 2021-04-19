@@ -55,7 +55,7 @@ Public Class home
             MsgBox("connection failed " & ex.ToString)
         End Try
 
-        Dim sql As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '2021-02-1' AND '2021-02-27'"
+        'Dim sql As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '2021-02-1' AND '2021-02-27'"
         Dim sql As String = "SELECT * FROM pp_header"
         Try
             Dim daa As New MySqlDataAdapter(sql, conn)
@@ -98,18 +98,6 @@ Public Class home
         Me.TabControl1.SelectedIndex = Me.TabControl1.TabCount - 1
     End Sub
     ' end of suppose to be tabcontrolex1
-
-
-    Private Sub datagridView_KeyDown(sender As Object, x As DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
-        If x.RowIndex >= 0 Then
-            Dim row As DataGridViewRow = DataGridView1.Rows(x.RowIndex)
-            Console.WriteLine(row.Cells(0).Value.ToString)
-            'txtID.Text = row.Cells(0).Value.ToString
-            'txtName.Text = row.Cells(1).Value.ToString
-            'txtCountry.Text = row.Cells(2).Value.ToString
-        End If
-    End Sub
-
 
     Friend Sub DataBagianToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBagianToolStripMenuItem.Click
         Dim newtab As New TabPage
@@ -478,6 +466,8 @@ Public Class home
         End Try
     End Sub
     '=========================================== END OF DAFTAR SUPPLIER ===================================
+
+    '============================================== TAB PP START : DATAGRIDVIEW1 ==========================================
     Private Sub cb_filterTanggal_CheckedChanged(sender As Object, e As EventArgs) Handles cb_filterTanggal.CheckedChanged
         If cb_filterTanggal.Checked Then
             gb_filterTanggal.Visible = True
@@ -487,40 +477,88 @@ Public Class home
     End Sub
 
     Private Sub tb_searchbyNomorNota(sender As Object, e As EventArgs) Handles tb_searchppbynota.TextChanged
-        'Console.WriteLine(tb_searchppbynota.Text)
-        If String.IsNullOrEmpty(tb_searchppbybagian.Text) Then
-            dataSetPP.Clear()
-            Dim sql As String = "SELECT * FROM `pp_header` WHERE Nota LIKE '%" & tb_searchppbynota.Text & "%'"
-            Console.WriteLine(sql)
-            Dim daa As New MySqlDataAdapter(sql, conn)
-            daa.Fill(dataSetPP, "singo")
-            DataGridView1.Refresh()
-        Else
+        If cb_filterTanggal.Checked Then
             dataSetPP.Tables("singo").DefaultView.RowFilter = "Nota LIKE '*" & tb_searchppbynota.Text & "*'"
             DataGridView1.Refresh()
+        Else
+            If String.IsNullOrEmpty(tb_searchppbybagian.Text) Then
+                dataSetPP.Clear()
+                Dim sql As String = "SELECT * FROM `pp_header` WHERE Nota LIKE '%" & tb_searchppbynota.Text & "%'"
+                Console.WriteLine(sql)
+                Dim daa As New MySqlDataAdapter(sql, conn)
+                daa.Fill(dataSetPP, "singo")
+                DataGridView1.Refresh()
+            Else
+                dataSetPP.Tables("singo").DefaultView.RowFilter = "Nota LIKE '*" & tb_searchppbynota.Text & "*'"
+                DataGridView1.Refresh()
+            End If
         End If
-
     End Sub
 
     Private Sub searchPPbyBagian(sender As Object, e As EventArgs) Handles tb_searchppbybagian.TextChanged
-        If String.IsNullOrEmpty(tb_searchppbynota.Text) Then
+        If cb_filterTanggal.Checked Then
+            dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian Like '*" & tb_searchppbybagian.Text & "*'"
+            DataGridView1.Refresh()
+        Else
+            If String.IsNullOrEmpty(tb_searchppbynota.Text) Then
+                dataSetPP.Clear()
+                Dim query As String = "SELECT * FROM pp_header WHERE Bagian LIKE '%" & tb_searchppbybagian.Text & "%'"
+                Console.WriteLine(query)
+                Dim da As New MySqlDataAdapter(query, conn)
+                da.Fill(dataSetPP, "singo")
+                DataGridView1.Refresh()
+            Else
+                dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian LIKE '*" & tb_searchppbybagian.Text & "*'"
+                DataGridView1.Refresh()
+            End If
+        End If
+    End Sub
+
+    Private Sub dp_filtermulai_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterDateStart.ValueChanged
+        Console.WriteLine(dp_filterDateStart.Value.ToString("yyyy-MM-dd"))
+        If cb_filterTanggal.Checked Then
             dataSetPP.Clear()
-            Dim query As String = "SELECT * FROM pp_header WHERE Bagian LIKE '%" & tb_searchppbybagian.Text & "%'"
-            Console.WriteLine(query)
+            Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
             Dim da As New MySqlDataAdapter(query, conn)
             da.Fill(dataSetPP, "singo")
             DataGridView1.Refresh()
-        Else
-            dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian LIKE '*" & tb_searchppbybagian.Text & "*'"
+        End If
+
+    End Sub
+
+    Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterDateEnd.ValueChanged
+        If cb_filterTanggal.Checked Then
+            dataSetPP.Clear()
+            Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
+            Dim da As New MySqlDataAdapter(query, conn)
+            da.Fill(dataSetPP, "singo")
             DataGridView1.Refresh()
         End If
     End Sub
 
-    Private Sub dp_filtermulai_ValueChanged(sender As Object, e As EventArgs) Handles dp_filtermulai.ValueChanged
-        If cb_filterTanggal.Checked Then
-            dataSetPP.Clear()
-            Dim query As String = "select * from pp_h"
+    Private Sub datagridView_KeyDown(sender As Object, x As DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
+        If x.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = DataGridView1.Rows(x.RowIndex)
+            Console.WriteLine(row.Cells(0).Value.ToString)
+            'txtID.Text = row.Cells(0).Value.ToString
+            'txtName.Text = row.Cells(1).Value.ToString
+            'txtCountry.Text = row.Cells(2).Value.ToString
         End If
+    End Sub
+
+    Private Sub b_buatPP_Click(sender As Object, e As EventArgs) Handles b_buatPP.Click
+        Dim diaPP As New dialogPP
+        diaPP.Show()
 
     End Sub
+
+    Private Sub b_ubahPP_Click(sender As Object, e As EventArgs) Handles b_ubahPP.Click
+
+    End Sub
+
+    Private Sub b_hapusPP_Click(sender As Object, e As EventArgs) Handles b_hapusPP.Click
+
+    End Sub
+
+    '============================================== END OF TAB PP =======================================
 End Class
