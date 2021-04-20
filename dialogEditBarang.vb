@@ -56,10 +56,12 @@ Public Class dialogEditBarang
                     DateTimePicker2.Text = reader.GetString(16)
                     tb_keterangan.Text = reader.GetString(17)
                 End While
+                reader.Close()
             Catch ex As Exception
                 Console.WriteLine("error : " & ex.ToString)
                 MsgBox("err : " & ex.ToString)
             End Try
+
         End If
     End Sub
 
