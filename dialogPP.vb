@@ -6,6 +6,7 @@ Public Class dialogPP
     Dim autoSatuan As New AutoCompleteStringCollection
     Dim lastEditedCellRow As Int16
     Dim lastEditedCellColumn As Int16
+    Public nomorNota As String
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
@@ -38,22 +39,33 @@ Public Class dialogPP
         Dim daa As New MySqlDataAdapter(cmda)
         Dim dtt As New DataTable
         daa.Fill(dtt)
+        Console.WriteLine(dtt.Columns(0).ColumnName)
         For i As Integer = 0 To dtt.Rows.Count - 1
             autoBagian.Add(dtt.Rows(i)("Bagian"))
         Next
 
         'autocomSatuan
-        Dim cmdd As New MySqlCommand("SELECT DISTINCT SATUAN FROM `barang`", conn)
-        Dim daaa As New MySqlDataAdapter(cmdd)
-        Dim dttt As New DataTable
-        daaa.Fill(dttt)
-        For i As Integer = 0 To dttt.Rows.Count - 1
-            autoSatuan.Add(dttt.Rows(i)("Satuan"))
+        Dim cmd_autosatuan As New MySqlCommand("select distinct satuan from barang", conn)
+        Dim da_autosatuan As New MySqlDataAdapter(cmd_autosatuan)
+        Dim dt_autosatuan As New DataTable
+        da_autosatuan.Fill(dt_autosatuan)
+        For i As Integer = 0 To dt_autosatuan.Rows.Count - 1
+            autoSatuan.Add(dt_autosatuan.Rows(i)("satuan").ToString)
         Next
+
+        tb_bagian.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        tb_bagian.AutoCompleteSource = AutoCompleteSource.CustomSource
+        tb_bagian.AutoCompleteCustomSource = autoBagian
+        'createNomerPP:iyaa sabar,nanti buat fungsi
+        tb_nomorPP.Text = "0000000"
+        tb_nomorPP.Enabled = False
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
     Private Sub dialogPP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If String.IsNullOrEmpty(Kode_BRG) Then
+
+        End If
 
     End Sub
 
@@ -71,16 +83,22 @@ Public Class dialogPP
         If dgv_rincianBrgPP.CurrentCell.ColumnIndex = 2 Then
             Dim autoText As TextBox = TryCast(e.Control, TextBox)
             If autoText IsNot Nothing Then
-                autoText.AutoCompleteMode = AutoCompleteMode.Suggest
+                autoText.AutoCompleteMode = AutoCompleteMode.SuggestAppend
                 autoText.AutoCompleteSource = AutoCompleteSource.CustomSource
                 autoText.AutoCompleteCustomSource = a
             End If
             AddHandler dgv_rincianBrgPP.CellEndEdit, AddressOf fillKodeBarang
         ElseIf dgv_rincianBrgPP.CurrentCell.ColumnIndex = 3 Then
-            Dim text As TextBox = TryCast(e.Control, TextBox)
-            text.AutoCompleteCustomSource = autoSatuan
-            text.AutoCompleteSource = AutoCompleteSource.CustomSource
-            text.AutoCompleteMode = AutoCompleteMode.Suggest
+            Dim text1 As TextBox = TryCast(e.Control, TextBox)
+            text1.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+            text1.AutoCompleteSource = AutoCompleteSource.CustomSource
+            text1.AutoCompleteCustomSource = autoSatuan
+
+        ElseIf dgv_rincianBrgPP.CurrentCell.ColumnIndex = 5 Then
+            Dim text2 As TextBox = TryCast(e.Control, TextBox)
+            text2.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+            text2.AutoCompleteSource = AutoCompleteSource.CustomSource
+            text2.AutoCompleteCustomSource = autoBagian
         Else
             Dim text As TextBox = TryCast(e.Control, TextBox)
             text.AutoCompleteCustomSource = Nothing
@@ -104,23 +122,74 @@ Public Class dialogPP
     End Sub
 
     Private Sub fillKodeBarang()
-        Console.WriteLine(lastEditedCellRow & "  " & lastEditedCellColumn)
-        Dim cmd As New MySqlCommand("select kode_brg from barang where nama = '" & dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
-        Dim reader As MySqlDataReader = cmd.ExecuteReader
-        While reader.Read
-            dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
-        End While
-        dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
-        reader.Close()
+        Try
+            Dim cmd As New MySqlCommand("select kode_brg from barang where nama = '" & dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
+            Dim reader As MySqlDataReader = cmd.ExecuteReader
+            While reader.Read
+                dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
+            End While
+            dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
+            reader.Close()
+        Catch ex As Exception
+            MsgBox("error : masukan nama barang dengan benar")
+            dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value = "NULL"
+        End Try
+
     End Sub
 
     Private Sub b_simpan_Click(sender As Object, e As EventArgs) Handles b_simpan.Click
         Dim rowCount As Int16 = dgv_rincianBrgPP.RowCount
         Dim columnCount As Int16 = dgv_rincianBrgPP.ColumnCount
         Dim nota As String = tb_nomorPP.Text
-        Dim query As String = "INSERT INTO `pp_header`(`Nota`, `Tanggal`, `Bagian`, `Catatan`, `Status`, `UserID`) VALUES (" & nota & "," & dp_tglPermitaalPembelian.Value.ToString("yyyy-MM-dd") & ",[value-3],[value-4],[value-5],[value-6])"
+        Dim query As String = "INSERT INTO `pp_header`(`Nota`, `Tanggal`, `Bagian`, `Catatan`, `Status`, `UserID`) VALUES ('" & nota & "','" & dp_tglPermitaalPembelian.Value.ToString("yyyy-MM-dd") & "','" & tb_bagian.Text.ToString & "','Ini catatan','0','singo')"
+        Dim cmd As New MySqlCommand
+        Dim tr As MySqlTransaction
+        tr = conn.BeginTransaction
+        Console.WriteLine(query)
+        Try
+            cmd.Connection = conn
+            cmd.CommandText = query
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            MsgBox("Data gagal disimpan, err : " & ex.ToString)
+        End Try
+
         For i = 0 To rowCount - 2
+            Dim nomor = dgv_rincianBrgPP.Rows(i).Cells(0).Value.ToString
+            Dim kodeBar = dgv_rincianBrgPP.Rows(i).Cells(1).Value.ToString
+            Dim nama = dgv_rincianBrgPP.Rows(i).Cells(2).Value.ToString
+            Dim santuan = dgv_rincianBrgPP.Rows(i).Cells(3).Value.ToString
+            Dim stkmin = 101
+            Dim stock = 101
+            Dim qty = dgv_rincianBrgPP.Rows(i).Cells(4).Value.ToString
+            Dim sisa = dgv_rincianBrgPP.Rows(i).Cells(4).Value.ToString
+            Dim ket As String = ""
+            Try
+                ket = dgv_rincianBrgPP.Rows(i).Cells(6).Value.ToString
+            Catch ex As Exception
+                dgv_rincianBrgPP.Rows(i).Cells(6).Value = "NULL"
+            End Try
+
+            Dim flag = 0
+            Dim userid = "singo"
             Console.WriteLine(dgv_rincianBrgPP.Rows(i).Cells(1).Value.ToString & "  " & dgv_rincianBrgPP.Rows(i).Cells(2).Value.ToString)
+            Dim quer As String = "INSERT INTO `pp_detail`(`Nota`, `Tanggal`, `Bagian`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `StkMin`, `Stock`, `Qty`, `Sisa`, `Keterangan`, `Flag`, `UserID`, `Jam`) VALUES ('" & nota & "','" & dp_tglPermitaalPembelian.Value.ToString("yyyy-MM-dd") & "','" & dgv_rincianBrgPP.Rows(i).Cells(5).Value.ToString & "','" & nomor & "','" & kodeBar & "','" & nama & "','" & santuan & "'," & stkmin & "," & stock & "," & qty & "," & sisa & ",'" & ket & "'," & flag & ",'" & userid & "','""')"
+            Console.WriteLine(quer)
+            Dim cmdd As New MySqlCommand
+            Try
+                cmdd.Connection = conn
+                cmdd.CommandText = quer
+                cmdd.ExecuteNonQuery()
+                Console.WriteLine("data berhasil di simpan")
+            Catch ex As Exception
+                Console.WriteLine("err " & ex.ToString)
+                MsgBox("err : " & ex.ToString)
+            End Try
         Next
+
+        tr.Commit()
+        MsgBox("data berhasil disimpan")
+        Me.Dispose()
+        Me.Close()
     End Sub
 End Class

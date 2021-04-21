@@ -39,12 +39,13 @@ Partial Class dialogPP
         Me.b_cancel = New System.Windows.Forms.Button()
         Me.l_bagian = New System.Windows.Forms.Label()
         Me.tb_bagian = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         CType(Me.dgv_rincianBrgPP, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tb_nomorPP
         '
-        Me.tb_nomorPP.Location = New System.Drawing.Point(660, 9)
+        Me.tb_nomorPP.Location = New System.Drawing.Point(660, 59)
         Me.tb_nomorPP.Name = "tb_nomorPP"
         Me.tb_nomorPP.Size = New System.Drawing.Size(112, 20)
         Me.tb_nomorPP.TabIndex = 0
@@ -52,7 +53,7 @@ Partial Class dialogPP
         'l_nomorPP
         '
         Me.l_nomorPP.AutoSize = True
-        Me.l_nomorPP.Location = New System.Drawing.Point(557, 12)
+        Me.l_nomorPP.Location = New System.Drawing.Point(557, 62)
         Me.l_nomorPP.Name = "l_nomorPP"
         Me.l_nomorPP.Size = New System.Drawing.Size(61, 13)
         Me.l_nomorPP.TabIndex = 1
@@ -62,7 +63,7 @@ Partial Class dialogPP
         '
         Me.dgv_rincianBrgPP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_rincianBrgPP.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.Kode_BRG, Me.Nama, Me.Satuan, Me.Qty, Me.Bagian, Me.Keterangan})
-        Me.dgv_rincianBrgPP.Location = New System.Drawing.Point(12, 78)
+        Me.dgv_rincianBrgPP.Location = New System.Drawing.Point(12, 128)
         Me.dgv_rincianBrgPP.Name = "dgv_rincianBrgPP"
         Me.dgv_rincianBrgPP.Size = New System.Drawing.Size(760, 227)
         Me.dgv_rincianBrgPP.TabIndex = 2
@@ -113,7 +114,7 @@ Partial Class dialogPP
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(557, 48)
+        Me.Label1.Location = New System.Drawing.Point(557, 98)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(87, 13)
         Me.Label1.TabIndex = 3
@@ -123,7 +124,7 @@ Partial Class dialogPP
         '
         Me.dp_tglPermitaalPembelian.CustomFormat = "dd-MM-yyyy"
         Me.dp_tglPermitaalPembelian.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dp_tglPermitaalPembelian.Location = New System.Drawing.Point(660, 42)
+        Me.dp_tglPermitaalPembelian.Location = New System.Drawing.Point(660, 92)
         Me.dp_tglPermitaalPembelian.Name = "dp_tglPermitaalPembelian"
         Me.dp_tglPermitaalPembelian.Size = New System.Drawing.Size(112, 20)
         Me.dp_tglPermitaalPembelian.TabIndex = 4
@@ -131,7 +132,7 @@ Partial Class dialogPP
         'l_rincianBarang
         '
         Me.l_rincianBarang.AutoSize = True
-        Me.l_rincianBarang.Location = New System.Drawing.Point(13, 62)
+        Me.l_rincianBarang.Location = New System.Drawing.Point(13, 112)
         Me.l_rincianBarang.Name = "l_rincianBarang"
         Me.l_rincianBarang.Size = New System.Drawing.Size(82, 13)
         Me.l_rincianBarang.TabIndex = 5
@@ -139,7 +140,7 @@ Partial Class dialogPP
         '
         'b_simpan
         '
-        Me.b_simpan.Location = New System.Drawing.Point(605, 326)
+        Me.b_simpan.Location = New System.Drawing.Point(605, 376)
         Me.b_simpan.Name = "b_simpan"
         Me.b_simpan.Size = New System.Drawing.Size(75, 23)
         Me.b_simpan.TabIndex = 6
@@ -148,7 +149,7 @@ Partial Class dialogPP
         '
         'b_cancel
         '
-        Me.b_cancel.Location = New System.Drawing.Point(697, 326)
+        Me.b_cancel.Location = New System.Drawing.Point(697, 376)
         Me.b_cancel.Name = "b_cancel"
         Me.b_cancel.Size = New System.Drawing.Size(75, 23)
         Me.b_cancel.TabIndex = 6
@@ -158,7 +159,7 @@ Partial Class dialogPP
         'l_bagian
         '
         Me.l_bagian.AutoSize = True
-        Me.l_bagian.Location = New System.Drawing.Point(13, 16)
+        Me.l_bagian.Location = New System.Drawing.Point(13, 66)
         Me.l_bagian.Name = "l_bagian"
         Me.l_bagian.Size = New System.Drawing.Size(40, 13)
         Me.l_bagian.TabIndex = 7
@@ -166,16 +167,28 @@ Partial Class dialogPP
         '
         'tb_bagian
         '
-        Me.tb_bagian.Location = New System.Drawing.Point(16, 33)
+        Me.tb_bagian.Location = New System.Drawing.Point(16, 83)
         Me.tb_bagian.Name = "tb_bagian"
         Me.tb_bagian.Size = New System.Drawing.Size(117, 20)
         Me.tb_bagian.TabIndex = 8
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(271, 9)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(241, 18)
+        Me.Label2.TabIndex = 9
+        Me.Label2.Text = "Tambah Permintaan Pembelian"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'dialogPP
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(784, 361)
+        Me.ClientSize = New System.Drawing.Size(784, 413)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.tb_bagian)
         Me.Controls.Add(Me.l_bagian)
         Me.Controls.Add(Me.b_cancel)
@@ -211,4 +224,5 @@ Partial Class dialogPP
     Friend WithEvents Keterangan As DataGridViewTextBoxColumn
     Friend WithEvents l_bagian As Label
     Friend WithEvents tb_bagian As TextBox
+    Friend WithEvents Label2 As Label
 End Class
