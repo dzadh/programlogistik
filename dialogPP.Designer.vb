@@ -39,7 +39,7 @@ Partial Class dialogPP
         Me.b_cancel = New System.Windows.Forms.Button()
         Me.l_bagian = New System.Windows.Forms.Label()
         Me.tb_bagian = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.l_title = New System.Windows.Forms.Label()
         CType(Me.dgv_rincianBrgPP, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -172,23 +172,23 @@ Partial Class dialogPP
         Me.tb_bagian.Size = New System.Drawing.Size(117, 20)
         Me.tb_bagian.TabIndex = 8
         '
-        'Label2
+        'l_title
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(271, 9)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(241, 18)
-        Me.Label2.TabIndex = 9
-        Me.Label2.Text = "Tambah Permintaan Pembelian"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.l_title.AutoSize = True
+        Me.l_title.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l_title.Location = New System.Drawing.Point(271, 9)
+        Me.l_title.Name = "l_title"
+        Me.l_title.Size = New System.Drawing.Size(241, 18)
+        Me.l_title.TabIndex = 9
+        Me.l_title.Text = "Tambah Permintaan Pembelian"
+        Me.l_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'dialogPP
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 413)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.l_title)
         Me.Controls.Add(Me.tb_bagian)
         Me.Controls.Add(Me.l_bagian)
         Me.Controls.Add(Me.b_cancel)
@@ -224,5 +224,5 @@ Partial Class dialogPP
     Friend WithEvents Keterangan As DataGridViewTextBoxColumn
     Friend WithEvents l_bagian As Label
     Friend WithEvents tb_bagian As TextBox
-    Friend WithEvents Label2 As Label
+    Friend WithEvents l_title As Label
 End Class

@@ -23,7 +23,6 @@ Public Class home
         newbutt.Location = New Point(20, 30)
         newbutt.AutoSize = True
 
-
         newtextbox.Text = "New textbox on new tab " & tabcount.ToString
         tabcount += 1
         AddHandler newbutt.Click, AddressOf newbutt_click
@@ -50,7 +49,7 @@ Public Class home
             conn.Open()
             'MsgBox("connection success")
             l_statusdb.Text = "Connected"
-            Console.WriteLine(conn.State)
+            'Console.WriteLine(conn.State)
         Catch ex As Exception
             MsgBox("connection failed " & ex.ToString)
         End Try
@@ -63,10 +62,12 @@ Public Class home
             Me.DataGridView1.DataSource = dataSetPP.Tables("singo")
         Catch ex As Exception
             Console.WriteLine(ex.ToString)
+            MsgBox("error : " & ex.ToString)
         End Try
 
         'ambil data table po header
         sql = "SELECT * FROM po_header WHERE Tanggal BETWEEN '2021-01-1' AND '2021-02-27'"
+        'sql = "SELECT * FROM po_header"
         Dim dss As New DataSet
         Try
             Dim da_po As New MySqlDataAdapter(sql, conn)
@@ -74,6 +75,7 @@ Public Class home
             Me.DataGridView2.DataSource = dss.Tables("tabel_po")
         Catch ex As Exception
             Console.WriteLine("error : " & ex.ToString)
+            MsgBox("error : " & ex.ToString)
         End Try
     End Sub
 
@@ -221,7 +223,8 @@ Public Class home
             da_po.Fill(dss, "tabel_po")
             dgv_databagian.Refresh()
         Catch ex As Exception
-
+            MsgBox("error : " & ex.ToString)
+            Console.WriteLine("error : " & ex.ToString)
         End Try
     End Sub
     '============================== DAFTAR BARANG ===========================================
@@ -290,7 +293,7 @@ Public Class home
     Private Sub tambahBarang_Clicked()
         Dim diabar As New dialogEditBarang
         diabar.Show()
-        Console.WriteLine("tambah barang clicked")
+        'Console.WriteLine("tambah barang clicked")
         AddHandler diabar.Disposed, AddressOf diabarDisposed
     End Sub
 
@@ -298,7 +301,7 @@ Public Class home
         Dim diabar As New dialogEditBarang With {.kodeBarang = dgv_databarang.CurrentRow.Cells(0).Value.ToString}
         diabar.Show()
         AddHandler diabar.Disposed, AddressOf diabarDisposed
-        Console.WriteLine("edit barang clicked")
+        'Console.WriteLine("edit barang clicked")
     End Sub
 
     Private Sub hapusBarang_clicked()
@@ -307,7 +310,7 @@ Public Class home
         Dim kodebar = dgv_databarang.CurrentRow.Cells(0).Value.ToString
         Dim DialogResult As DialogResult = MsgBox("Apakah anda yakin akan menghapus " & namabar & "?", MsgBoxStyle.OkCancel)
         Dim sql As String
-        Console.WriteLine(DialogResult)
+        'Console.WriteLine(DialogResult)
         If DialogResult = 1 Then
             sql = "DELETE FROM `barang` WHERE `KODE_BRG`='" & kodebar & "'"
             Try
@@ -342,7 +345,6 @@ Public Class home
         Catch ex As Exception
             Console.WriteLine("err : " & ex.ToString)
             MsgBox("err : " & ex.ToString)
-
         End Try
     End Sub
 
@@ -396,7 +398,6 @@ Public Class home
             Dim da_supplier As New MySqlDataAdapter(sql, conn)
             da_supplier.Fill(datasetSupplier, "data_supplier")
             dgv_datasupplier.DataSource = datasetSupplier.Tables("data_supplier")
-
         Catch ex As Exception
             Console.WriteLine("error :" & ex.ToString)
             MsgBox("error : " & ex.ToString)
@@ -414,25 +415,25 @@ Public Class home
     End Sub
 
     Private Sub tambahSupplier_clicked()
-        Console.WriteLine("tambah supplier")
+        'Console.WriteLine("tambah supplier")
         Dim diasupp As New dialogSupplier
         diasupp.Show()
         AddHandler diasupp.Disposed, AddressOf diasuppDisposed
     End Sub
 
     Private Sub editSupplier_clicked()
-        Console.WriteLine("edit supplier")
+        'Console.WriteLine("edit supplier")
         Dim diasupp As New dialogSupplier With {.kodeSupplier = dgv_datasupplier.CurrentRow.Cells(0).Value.ToString}
         diasupp.Show()
         AddHandler diasupp.Disposed, AddressOf diasuppDisposed
     End Sub
 
-    Private Sub hapusSupplier_clicked()
 
+    Private Sub hapusSupplier_clicked() 'BELUM MENGHPUS MASIH DI COMMENT
         Dim namaSupp = dgv_datasupplier.CurrentRow.Cells(1).Value.ToString
         Dim kodeSupp = dgv_datasupplier.CurrentRow.Cells(0).Value.ToString
         Dim DialogResult As DialogResult = MsgBox("Apakah anda yakin akan menghapus " & namaSupp & "?", MsgBoxStyle.OkCancel)
-        Console.WriteLine(DialogResult)
+        'Console.WriteLine(DialogResult)
         Dim sql As String
         If DialogResult = 1 Then
             sql = "DELETE FROM `supplier` WHERE `KODE_SUPL`='" & kodeSupp & "'"
@@ -484,7 +485,7 @@ Public Class home
             If String.IsNullOrEmpty(tb_searchppbybagian.Text) Then
                 dataSetPP.Clear()
                 Dim sql As String = "SELECT * FROM `pp_header` WHERE Nota LIKE '%" & tb_searchppbynota.Text & "%'"
-                Console.WriteLine(sql)
+                'Console.WriteLine(sql)
                 Dim daa As New MySqlDataAdapter(sql, conn)
                 daa.Fill(dataSetPP, "singo")
                 DataGridView1.Refresh()
@@ -503,7 +504,7 @@ Public Class home
             If String.IsNullOrEmpty(tb_searchppbynota.Text) Then
                 dataSetPP.Clear()
                 Dim query As String = "SELECT * FROM pp_header WHERE Bagian LIKE '%" & tb_searchppbybagian.Text & "%'"
-                Console.WriteLine(query)
+                'Console.WriteLine(query)
                 Dim da As New MySqlDataAdapter(query, conn)
                 da.Fill(dataSetPP, "singo")
                 DataGridView1.Refresh()
@@ -515,7 +516,7 @@ Public Class home
     End Sub
 
     Private Sub dp_filtermulai_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterDateStart.ValueChanged
-        Console.WriteLine(dp_filterDateStart.Value.ToString("yyyy-MM-dd"))
+        'Console.WriteLine(dp_filterDateStart.Value.ToString("yyyy-MM-dd"))
         If cb_filterTanggal.Checked Then
             dataSetPP.Clear()
             Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
@@ -539,7 +540,7 @@ Public Class home
     Private Sub datagridView_KeyDown(sender As Object, x As DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
         If x.RowIndex >= 0 Then
             Dim row As DataGridViewRow = DataGridView1.Rows(x.RowIndex)
-            Console.WriteLine(row.Cells(0).Value.ToString)
+            'Console.WriteLine(row.Cells(0).Value.ToString)
             'txtID.Text = row.Cells(0).Value.ToString
             'txtName.Text = row.Cells(1).Value.ToString
             'txtCountry.Text = row.Cells(2).Value.ToString
@@ -552,13 +553,52 @@ Public Class home
 
     End Sub
 
-    Private Sub b_ubahPP_Click(sender As Object, e As EventArgs) Handles b_ubahPP.Click
-
+    Private Sub b_ubahPP_Click(sender As Object, e As EventArgs) Handles b_ubahPP.Click 'todo : eksep tidak ada row yang dipilih
+        Dim diaPP As New dialogPP With {.nomorNota = DataGridView1.CurrentRow.Cells(0).Value.ToString}
+        diaPP.Show()
     End Sub
 
     Private Sub b_hapusPP_Click(sender As Object, e As EventArgs) Handles b_hapusPP.Click
 
+        Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PP nomor " & DataGridView1.CurrentRow.Cells(0).Value.ToString & " ?", MsgBoxStyle.OkCancel)
+        If dialog_result = 1 Then
+            Dim quer As String = "DELETE FROM `pp_header` WHERE Nota = '" & DataGridView1.CurrentRow.Cells(0).Value.ToString & "'"
+            Try
+                Dim cmd As New MySqlCommand
+                Dim tr As MySqlTransaction
+                tr = conn.BeginTransaction
+                cmd.Connection = conn
+                cmd.CommandText = quer
+                cmd.ExecuteNonQuery()
+                cmd.CommandText = "DELETE FROM `pp_detail` WHERE Nota = '" & DataGridView1.CurrentRow.Cells(0).Value.ToString & "'"
+                cmd.ExecuteNonQuery()
+                tr.Commit()
+                MsgBox("Data berhasil dihapus")
+            Catch ex As Exception
+                MsgBox("Data gagal dihapus : " & ex.ToString)
+                Console.WriteLine("data gagal dihapus " & ex.ToString)
+            End Try
+        End If
     End Sub
 
+
     '============================================== END OF TAB PP =======================================
+
+    '============================================ TAB PO STAR ===========================================
+    Private Sub cb_filterTanggalPo_CheckedChanged(sender As Object, e As EventArgs) Handles cb_filterTanggalPo.CheckedChanged
+        If cb_filterTanggalPo.Checked Then
+            gb_filterTglPo.Visible = True
+        Else
+            gb_filterTglPo.Visible = False
+        End If
+    End Sub
+
+    Private Sub dp_filterTanggalPo_ValChanged(sender As Object, e As EventArgs) Handles dp_filterTglPOStart.ValueChanged
+
+    End Sub
+
+
+
+    '=========================================== END OF TAB PO ==========================================
+
 End Class

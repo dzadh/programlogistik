@@ -118,7 +118,6 @@ Public Class dialogEditBarang
             Console.WriteLine("err : " & ex.ToString)
             MsgBox("data gagal disimpan")
         End Try
-
         Me.Dispose()
         Me.Close()
     End Sub
