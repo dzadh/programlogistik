@@ -44,6 +44,15 @@ Partial Class home
         Me.l_pencarian = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.gb_filterTglPo = New System.Windows.Forms.GroupBox()
+        Me.dp_filterTglPOEnd = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dp_filterTglPOStart = New System.Windows.Forms.DateTimePicker()
+        Me.cb_filterTanggalPo = New System.Windows.Forms.CheckBox()
+        Me.tb_searchPoByNomorNota = New System.Windows.Forms.TextBox()
+        Me.l_nomornotapo = New System.Windows.Forms.Label()
+        Me.l_pencarianPO = New System.Windows.Forms.Label()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.dgv_databagian = New System.Windows.Forms.DataGridView()
         Me.dgv_databarang = New System.Windows.Forms.DataGridView()
@@ -55,26 +64,20 @@ Partial Class home
         Me.DataBarangToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DataSupplierToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.l_pencarianPO = New System.Windows.Forms.Label()
-        Me.l_nomornotapo = New System.Windows.Forms.Label()
-        Me.tb_searchPoByNomorNota = New System.Windows.Forms.TextBox()
-        Me.gb_filterTglPo = New System.Windows.Forms.GroupBox()
-        Me.dp_filterTglPOEnd = New System.Windows.Forms.DateTimePicker()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.dp_filterTglPOStart = New System.Windows.Forms.DateTimePicker()
-        Me.cb_filterTanggalPo = New System.Windows.Forms.CheckBox()
+        Me.b_buatPO = New System.Windows.Forms.Button()
+        Me.b_ubahPo = New System.Windows.Forms.Button()
+        Me.b_hapusPo = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.gb_filterTanggal.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
+        Me.gb_filterTglPo.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_databagian, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_databarang, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_datasupplier, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
-        Me.gb_filterTglPo.SuspendLayout()
         Me.SuspendLayout()
         '
         'l_statusdb
@@ -143,9 +146,7 @@ Partial Class home
         '
         'b_hapusPP
         '
-        Me.b_hapusPP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.b_hapusPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.b_hapusPP.Location = New System.Drawing.Point(372, 562)
         Me.b_hapusPP.Name = "b_hapusPP"
         Me.b_hapusPP.Size = New System.Drawing.Size(75, 39)
@@ -155,9 +156,7 @@ Partial Class home
         '
         'b_ubahPP
         '
-        Me.b_ubahPP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.b_ubahPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.b_ubahPP.Location = New System.Drawing.Point(291, 562)
         Me.b_ubahPP.Name = "b_ubahPP"
         Me.b_ubahPP.Size = New System.Drawing.Size(75, 39)
@@ -167,9 +166,7 @@ Partial Class home
         '
         'b_buatPP
         '
-        Me.b_buatPP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.b_buatPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.b_buatPP.Location = New System.Drawing.Point(210, 562)
         Me.b_buatPP.Name = "b_buatPP"
         Me.b_buatPP.Size = New System.Drawing.Size(75, 39)
@@ -192,7 +189,8 @@ Partial Class home
         '
         'dp_filterDateEnd
         '
-        Me.dp_filterDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dp_filterDateEnd.CustomFormat = "dd/MM/yyyy"
+        Me.dp_filterDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dp_filterDateEnd.Location = New System.Drawing.Point(5, 70)
         Me.dp_filterDateEnd.Name = "dp_filterDateEnd"
         Me.dp_filterDateEnd.Size = New System.Drawing.Size(159, 20)
@@ -218,8 +216,8 @@ Partial Class home
         '
         'dp_filterDateStart
         '
-        Me.dp_filterDateStart.CustomFormat = ""
-        Me.dp_filterDateStart.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dp_filterDateStart.CustomFormat = "dd/MM/yyyy"
+        Me.dp_filterDateStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dp_filterDateStart.Location = New System.Drawing.Point(5, 29)
         Me.dp_filterDateStart.Name = "dp_filterDateStart"
         Me.dp_filterDateStart.Size = New System.Drawing.Size(157, 20)
@@ -295,6 +293,9 @@ Partial Class home
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.b_hapusPo)
+        Me.TabPage2.Controls.Add(Me.b_ubahPo)
+        Me.TabPage2.Controls.Add(Me.b_buatPO)
         Me.TabPage2.Controls.Add(Me.gb_filterTglPo)
         Me.TabPage2.Controls.Add(Me.cb_filterTanggalPo)
         Me.TabPage2.Controls.Add(Me.tb_searchPoByNomorNota)
@@ -308,6 +309,93 @@ Partial Class home
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Daftar PO"
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'gb_filterTglPo
+        '
+        Me.gb_filterTglPo.Controls.Add(Me.dp_filterTglPOEnd)
+        Me.gb_filterTglPo.Controls.Add(Me.Label3)
+        Me.gb_filterTglPo.Controls.Add(Me.Label4)
+        Me.gb_filterTglPo.Controls.Add(Me.dp_filterTglPOStart)
+        Me.gb_filterTglPo.Location = New System.Drawing.Point(21, 236)
+        Me.gb_filterTglPo.Name = "gb_filterTglPo"
+        Me.gb_filterTglPo.Size = New System.Drawing.Size(170, 100)
+        Me.gb_filterTglPo.TabIndex = 8
+        Me.gb_filterTglPo.TabStop = False
+        Me.gb_filterTglPo.Visible = False
+        '
+        'dp_filterTglPOEnd
+        '
+        Me.dp_filterTglPOEnd.CustomFormat = "dd/MM/yyyy"
+        Me.dp_filterTglPOEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dp_filterTglPOEnd.Location = New System.Drawing.Point(5, 70)
+        Me.dp_filterTglPOEnd.Name = "dp_filterTglPOEnd"
+        Me.dp_filterTglPOEnd.Size = New System.Drawing.Size(159, 20)
+        Me.dp_filterTglPOEnd.TabIndex = 3
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(5, 53)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(79, 13)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "sampai dengan"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(7, 10)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(32, 13)
+        Me.Label4.TabIndex = 1
+        Me.Label4.Text = "Mulai"
+        '
+        'dp_filterTglPOStart
+        '
+        Me.dp_filterTglPOStart.CustomFormat = "dd/MM/yyy"
+        Me.dp_filterTglPOStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dp_filterTglPOStart.Location = New System.Drawing.Point(5, 29)
+        Me.dp_filterTglPOStart.Name = "dp_filterTglPOStart"
+        Me.dp_filterTglPOStart.Size = New System.Drawing.Size(157, 20)
+        Me.dp_filterTglPOStart.TabIndex = 0
+        Me.dp_filterTglPOStart.Value = New Date(2021, 4, 1, 0, 0, 0, 0)
+        '
+        'cb_filterTanggalPo
+        '
+        Me.cb_filterTanggalPo.AutoSize = True
+        Me.cb_filterTanggalPo.Location = New System.Drawing.Point(21, 213)
+        Me.cb_filterTanggalPo.Name = "cb_filterTanggalPo"
+        Me.cb_filterTanggalPo.Size = New System.Drawing.Size(90, 17)
+        Me.cb_filterTanggalPo.TabIndex = 7
+        Me.cb_filterTanggalPo.Text = "Filter Tanggal"
+        Me.cb_filterTanggalPo.UseVisualStyleBackColor = True
+        '
+        'tb_searchPoByNomorNota
+        '
+        Me.tb_searchPoByNomorNota.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_searchPoByNomorNota.Location = New System.Drawing.Point(21, 81)
+        Me.tb_searchPoByNomorNota.Name = "tb_searchPoByNomorNota"
+        Me.tb_searchPoByNomorNota.Size = New System.Drawing.Size(163, 24)
+        Me.tb_searchPoByNomorNota.TabIndex = 3
+        '
+        'l_nomornotapo
+        '
+        Me.l_nomornotapo.AutoSize = True
+        Me.l_nomornotapo.Location = New System.Drawing.Point(18, 64)
+        Me.l_nomornotapo.Name = "l_nomornotapo"
+        Me.l_nomornotapo.Size = New System.Drawing.Size(64, 13)
+        Me.l_nomornotapo.TabIndex = 2
+        Me.l_nomornotapo.Text = "Nomor Nota"
+        '
+        'l_pencarianPO
+        '
+        Me.l_pencarianPO.AutoSize = True
+        Me.l_pencarianPO.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l_pencarianPO.Location = New System.Drawing.Point(18, 26)
+        Me.l_pencarianPO.Name = "l_pencarianPO"
+        Me.l_pencarianPO.Size = New System.Drawing.Size(93, 18)
+        Me.l_pencarianPO.TabIndex = 1
+        Me.l_pencarianPO.Text = "PENCARIAN"
         '
         'DataGridView2
         '
@@ -395,91 +483,35 @@ Partial Class home
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
-        'l_pencarianPO
+        'b_buatPO
         '
-        Me.l_pencarianPO.AutoSize = True
-        Me.l_pencarianPO.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.l_pencarianPO.Location = New System.Drawing.Point(18, 26)
-        Me.l_pencarianPO.Name = "l_pencarianPO"
-        Me.l_pencarianPO.Size = New System.Drawing.Size(93, 18)
-        Me.l_pencarianPO.TabIndex = 1
-        Me.l_pencarianPO.Text = "PENCARIAN"
+        Me.b_buatPO.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_buatPO.Location = New System.Drawing.Point(205, 551)
+        Me.b_buatPO.Name = "b_buatPO"
+        Me.b_buatPO.Size = New System.Drawing.Size(75, 39)
+        Me.b_buatPO.TabIndex = 9
+        Me.b_buatPO.Text = "Buat PO"
+        Me.b_buatPO.UseVisualStyleBackColor = True
         '
-        'l_nomornotapo
+        'b_ubahPo
         '
-        Me.l_nomornotapo.AutoSize = True
-        Me.l_nomornotapo.Location = New System.Drawing.Point(18, 64)
-        Me.l_nomornotapo.Name = "l_nomornotapo"
-        Me.l_nomornotapo.Size = New System.Drawing.Size(64, 13)
-        Me.l_nomornotapo.TabIndex = 2
-        Me.l_nomornotapo.Text = "Nomor Nota"
+        Me.b_ubahPo.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_ubahPo.Location = New System.Drawing.Point(286, 551)
+        Me.b_ubahPo.Name = "b_ubahPo"
+        Me.b_ubahPo.Size = New System.Drawing.Size(75, 39)
+        Me.b_ubahPo.TabIndex = 9
+        Me.b_ubahPo.Text = "Ubah PO"
+        Me.b_ubahPo.UseVisualStyleBackColor = True
         '
-        'tb_searchPoByNomorNota
+        'b_hapusPo
         '
-        Me.tb_searchPoByNomorNota.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tb_searchPoByNomorNota.Location = New System.Drawing.Point(21, 81)
-        Me.tb_searchPoByNomorNota.Name = "tb_searchPoByNomorNota"
-        Me.tb_searchPoByNomorNota.Size = New System.Drawing.Size(163, 24)
-        Me.tb_searchPoByNomorNota.TabIndex = 3
-        '
-        'gb_filterTglPo
-        '
-        Me.gb_filterTglPo.Controls.Add(Me.dp_filterTglPOEnd)
-        Me.gb_filterTglPo.Controls.Add(Me.Label3)
-        Me.gb_filterTglPo.Controls.Add(Me.Label4)
-        Me.gb_filterTglPo.Controls.Add(Me.dp_filterTglPOStart)
-        Me.gb_filterTglPo.Location = New System.Drawing.Point(21, 236)
-        Me.gb_filterTglPo.Name = "gb_filterTglPo"
-        Me.gb_filterTglPo.Size = New System.Drawing.Size(170, 100)
-        Me.gb_filterTglPo.TabIndex = 8
-        Me.gb_filterTglPo.TabStop = False
-        Me.gb_filterTglPo.Visible = False
-        '
-        'dp_filterTglPOEnd
-        '
-        Me.dp_filterTglPOEnd.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dp_filterTglPOEnd.Location = New System.Drawing.Point(5, 70)
-        Me.dp_filterTglPOEnd.Name = "dp_filterTglPOEnd"
-        Me.dp_filterTglPOEnd.Size = New System.Drawing.Size(159, 20)
-        Me.dp_filterTglPOEnd.TabIndex = 3
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(5, 53)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(79, 13)
-        Me.Label3.TabIndex = 2
-        Me.Label3.Text = "sampai dengan"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(7, 10)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(32, 13)
-        Me.Label4.TabIndex = 1
-        Me.Label4.Text = "Mulai"
-        '
-        'dp_filterTglPOStart
-        '
-        Me.dp_filterTglPOStart.CustomFormat = ""
-        Me.dp_filterTglPOStart.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dp_filterTglPOStart.Location = New System.Drawing.Point(5, 29)
-        Me.dp_filterTglPOStart.Name = "dp_filterTglPOStart"
-        Me.dp_filterTglPOStart.Size = New System.Drawing.Size(157, 20)
-        Me.dp_filterTglPOStart.TabIndex = 0
-        Me.dp_filterTglPOStart.Value = New Date(2021, 4, 1, 0, 0, 0, 0)
-        '
-        'cb_filterTanggalPo
-        '
-        Me.cb_filterTanggalPo.AutoSize = True
-        Me.cb_filterTanggalPo.Location = New System.Drawing.Point(21, 213)
-        Me.cb_filterTanggalPo.Name = "cb_filterTanggalPo"
-        Me.cb_filterTanggalPo.Size = New System.Drawing.Size(90, 17)
-        Me.cb_filterTanggalPo.TabIndex = 7
-        Me.cb_filterTanggalPo.Text = "Filter Tanggal"
-        Me.cb_filterTanggalPo.UseVisualStyleBackColor = True
+        Me.b_hapusPo.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_hapusPo.Location = New System.Drawing.Point(367, 551)
+        Me.b_hapusPo.Name = "b_hapusPo"
+        Me.b_hapusPo.Size = New System.Drawing.Size(75, 39)
+        Me.b_hapusPo.TabIndex = 9
+        Me.b_hapusPo.Text = "Hapus PO"
+        Me.b_hapusPo.UseVisualStyleBackColor = True
         '
         'home
         '
@@ -502,14 +534,14 @@ Partial Class home
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        Me.gb_filterTglPo.ResumeLayout(False)
+        Me.gb_filterTglPo.PerformLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_databagian, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_databarang, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_datasupplier, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        Me.gb_filterTglPo.ResumeLayout(False)
-        Me.gb_filterTglPo.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -555,4 +587,7 @@ Partial Class home
     Friend WithEvents Label4 As Label
     Friend WithEvents dp_filterTglPOStart As DateTimePicker
     Friend WithEvents cb_filterTanggalPo As CheckBox
+    Friend WithEvents b_hapusPo As Button
+    Friend WithEvents b_ubahPo As Button
+    Friend WithEvents b_buatPO As Button
 End Class

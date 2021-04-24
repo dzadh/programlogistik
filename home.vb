@@ -10,6 +10,7 @@ Public Class home
     Public dataSetBarang As New DataSet
     Public datasetSupplier As New DataSet
     Public dataSetPP As New DataSet
+    Public datasetPo As New DataSet
 
     Public Sub b_addtab_Click(sender As Object, e As EventArgs)
         Dim newtab As New TabPage
@@ -68,11 +69,11 @@ Public Class home
         'ambil data table po header
         sql = "SELECT * FROM po_header WHERE Tanggal BETWEEN '2021-01-1' AND '2021-02-27'"
         'sql = "SELECT * FROM po_header"
-        Dim dss As New DataSet
+
         Try
             Dim da_po As New MySqlDataAdapter(sql, conn)
-            da_po.Fill(dss, "tabel_po")
-            Me.DataGridView2.DataSource = dss.Tables("tabel_po")
+            da_po.Fill(datasetPo, "tabel_po")
+            Me.DataGridView2.DataSource = datasetPo.Tables("tabel_po")
         Catch ex As Exception
             Console.WriteLine("error : " & ex.ToString)
             MsgBox("error : " & ex.ToString)
@@ -519,7 +520,7 @@ Public Class home
         'Console.WriteLine(dp_filterDateStart.Value.ToString("yyyy-MM-dd"))
         If cb_filterTanggal.Checked Then
             dataSetPP.Clear()
-            Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
+            Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
             Dim da As New MySqlDataAdapter(query, conn)
             da.Fill(dataSetPP, "singo")
             DataGridView1.Refresh()
@@ -584,7 +585,7 @@ Public Class home
 
     '============================================== END OF TAB PP =======================================
 
-    '============================================ TAB PO STAR ===========================================
+    '============================================ TAB PO START ===========================================
     Private Sub cb_filterTanggalPo_CheckedChanged(sender As Object, e As EventArgs) Handles cb_filterTanggalPo.CheckedChanged
         If cb_filterTanggalPo.Checked Then
             gb_filterTglPo.Visible = True
@@ -594,6 +595,67 @@ Public Class home
     End Sub
 
     Private Sub dp_filterTanggalPo_ValChanged(sender As Object, e As EventArgs) Handles dp_filterTglPOStart.ValueChanged
+
+        If cb_filterTanggalPo.Checked Then
+            datasetPo.Clear()
+            Dim query As String = " SELECT * FROM po_header WHERE tanggal BETWEEN '" & dp_filterTglPOStart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterTglPOEnd.Value.ToString("yyyy-MM-dd") & "' "
+            Dim da As New MySqlDataAdapter(query, conn)
+            da.Fill(datasetPo, "tabel_po")
+            DataGridView2.Refresh()
+        End If
+    End Sub
+
+    Private Sub dp_filterTglPOEnd_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterTglPOEnd.ValueChanged
+        If cb_filterTanggalPo.Checked Then
+            datasetPo.Clear()
+            Dim query As String = "SELECT * FROM po_header WHERE tanggal BETWEEN '" & dp_filterTglPOStart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterTglPOEnd.Value.ToString("yyy-MM-dd") & "'"
+            Dim da As New MySqlDataAdapter(query, conn)
+            da.Fill(datasetPo, "tabel_po")
+            DataGridView2.Refresh()
+        End If
+    End Sub
+
+    Private Sub tb_searchPoByNomorNota_TextChanged(sender As Object, e As EventArgs) Handles tb_searchPoByNomorNota.TextChanged
+        'If cb_filterTanggal.Checked Then
+        '    dataSetPP.Tables("singo").DefaultView.RowFilter = "Nota LIKE '*" & tb_searchppbynota.Text & "*'"
+        '    DataGridView1.Refresh()
+        'Else
+        '    If String.IsNullOrEmpty(tb_searchppbybagian.Text) Then
+        '        dataSetPP.Clear()
+        '        Dim sql As String = "SELECT * FROM `pp_header` WHERE Nota LIKE '%" & tb_searchppbynota.Text & "%'"
+        '        'Console.WriteLine(sql)
+        '        Dim daa As New MySqlDataAdapter(sql, conn)
+        '        daa.Fill(dataSetPP, "singo")
+        '        DataGridView1.Refresh()
+        '    Else
+        '        dataSetPP.Tables("singo").DefaultView.RowFilter = "Nota LIKE '*" & tb_searchppbynota.Text & "*'"
+        '        DataGridView1.Refresh()
+        '    End If
+        'End If
+        If cb_filterTanggalPo.Checked Then
+            datasetPo.Tables("tabel_po").DefaultView.RowFilter = "Nota LIKE '*" & tb_searchPoByNomorNota.Text & "*'"
+            DataGridView2.Refresh()
+        Else
+            datasetPo.Clear()
+            Dim quer As String = "SELECT * FROM po_header WHERE Nota LIKE '%" & tb_searchPoByNomorNota.Text & "%'"
+            Dim da As New MySqlDataAdapter(quer, conn)
+            da.Fill(datasetPo, "tabel_po")
+            DataGridView2.Refresh()
+
+        End If
+    End Sub
+
+    Private Sub b_buatPO_Click(sender As Object, e As EventArgs) Handles b_buatPO.Click
+        Console.WriteLine("buat po clicked")
+    End Sub
+
+    Private Sub b_ubahPo_Click(sender As Object, e As EventArgs) Handles b_ubahPo.Click
+        Console.WriteLine("ubah po clicked")
+    End Sub
+
+    Private Sub b_hapusPo_Click(sender As Object, e As EventArgs) Handles b_hapusPo.Click
+        Console.WriteLine("hapus po clicked")
+        Dim quer As String = "DELETE FROM po_header WHERE nota = '" & DataGridView2.CurrentRow.Cells(0) & "'"
 
     End Sub
 
