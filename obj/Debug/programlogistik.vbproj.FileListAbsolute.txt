@@ -26,3 +26,7 @@ C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\pro
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialogEditBarang.resources
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialogSupplier.resources
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\bin\Debug\PlaceHoldingTextBox1.dll
+C:\Users\dzadh\Documents\GitHub\programlogistik\bin\Debug\programlogistik.exe.config
+C:\Users\dzadh\Documents\GitHub\programlogistik\obj\Debug\programlogistik.exe
+C:\Users\dzadh\Documents\GitHub\programlogistik\obj\Debug\programlogistik.xml
+C:\Users\dzadh\Documents\GitHub\programlogistik\obj\Debug\programlogistik.pdb
