@@ -646,7 +646,9 @@ Public Class home
     End Sub
 
     Private Sub b_buatPO_Click(sender As Object, e As EventArgs) Handles b_buatPO.Click
-        Console.WriteLine("buat po clicked")
+        'Console.WriteLine("buat po clicked")
+        Dim diapo As New dialogPO
+        diapo.Show()
     End Sub
 
     Private Sub b_ubahPo_Click(sender As Object, e As EventArgs) Handles b_ubahPo.Click
@@ -655,7 +657,7 @@ Public Class home
 
     Private Sub b_hapusPo_Click(sender As Object, e As EventArgs) Handles b_hapusPo.Click
         Console.WriteLine("hapus po clicked")
-        Dim quer As String = "DELETE FROM po_header WHERE nota = '" & DataGridView2.CurrentRow.Cells(0) & "'"
+        Dim quer As String = "DELETE FROM po_header WHERE nota ='" & DataGridView2.CurrentRow.Cells(0).Value.ToString & "'"
 
     End Sub
 
