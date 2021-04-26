@@ -108,6 +108,12 @@
     <Compile Include="dialog_editbagian.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="dialogPO.Designer.vb">
+      <DependentUpon>dialogPO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dialogPO.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="home.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dialog_editbagian.resx">
       <DependentUpon>dialog_editbagian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dialogPO.resx">
+      <DependentUpon>dialogPO.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="home.resx">
       <DependentUpon>home.vb</DependentUpon>
