@@ -39,6 +39,7 @@ Partial Class dialogPO
         Me.harga_satuan = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.no_pp = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pilihPP = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.hapus = New System.Windows.Forms.DataGridViewButtonColumn()
         CType(Me.dgv_purchaseOrder, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -69,7 +70,9 @@ Partial Class dialogPO
         '
         'dp_tanggalPO
         '
-        Me.dp_tanggalPO.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dp_tanggalPO.CustomFormat = "dd/MM/yyyy"
+        Me.dp_tanggalPO.Enabled = False
+        Me.dp_tanggalPO.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dp_tanggalPO.Location = New System.Drawing.Point(650, 71)
         Me.dp_tanggalPO.Name = "dp_tanggalPO"
         Me.dp_tanggalPO.Size = New System.Drawing.Size(125, 20)
@@ -87,10 +90,10 @@ Partial Class dialogPO
         'dgv_purchaseOrder
         '
         Me.dgv_purchaseOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_purchaseOrder.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.kode_brg, Me.nama_barang, Me.unit, Me.jumlah, Me.harga_satuan, Me.no_pp, Me.pilihPP})
+        Me.dgv_purchaseOrder.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.kode_brg, Me.nama_barang, Me.unit, Me.jumlah, Me.harga_satuan, Me.no_pp, Me.pilihPP, Me.hapus})
         Me.dgv_purchaseOrder.Location = New System.Drawing.Point(25, 114)
         Me.dgv_purchaseOrder.Name = "dgv_purchaseOrder"
-        Me.dgv_purchaseOrder.Size = New System.Drawing.Size(750, 266)
+        Me.dgv_purchaseOrder.Size = New System.Drawing.Size(812, 266)
         Me.dgv_purchaseOrder.TabIndex = 6
         '
         'b_cancel
@@ -163,13 +166,19 @@ Partial Class dialogPO
         '
         Me.pilihPP.HeaderText = ""
         Me.pilihPP.Name = "pilihPP"
-        Me.pilihPP.Width = 75
+        Me.pilihPP.Width = 50
+        '
+        'hapus
+        '
+        Me.hapus.HeaderText = ""
+        Me.hapus.Name = "hapus"
+        Me.hapus.Width = 50
         '
         'dialogPO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(787, 437)
+        Me.ClientSize = New System.Drawing.Size(849, 437)
         Me.Controls.Add(Me.tb_supplier)
         Me.Controls.Add(Me.b_save)
         Me.Controls.Add(Me.b_cancel)
@@ -204,4 +213,5 @@ Partial Class dialogPO
     Friend WithEvents harga_satuan As DataGridViewTextBoxColumn
     Friend WithEvents no_pp As DataGridViewTextBoxColumn
     Friend WithEvents pilihPP As DataGridViewButtonColumn
+    Friend WithEvents hapus As DataGridViewButtonColumn
 End Class

@@ -4,9 +4,10 @@ Public Class dialogPO
     Dim autoSupplier As New AutoCompleteStringCollection
     Dim autoBarang As New AutoCompleteStringCollection
     Public nomorPurchaseOrder As String
+    Dim lastEditedCellRow As Int16
+    Dim lastEditedCellColumn As Int16
     Public Property dgv_rincianBrgPP As Object
     Public Sub New()
-
         ' This call is required by the designer.
         InitializeComponent()
         Dim cs As String
@@ -58,10 +59,6 @@ Public Class dialogPO
         End If
     End Sub
 
-    Private Sub dgv_purchaseOrder_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_purchaseOrder.CellContentClick
-
-    End Sub
-
     Private Sub b_cancel_Click(sender As Object, e As EventArgs) Handles b_cancel.Click
         Me.Close()
     End Sub
@@ -72,34 +69,66 @@ Public Class dialogPO
         End If
     End Sub
 
-    'COPIED UNEDITET COPIED UNEDITET COPIED UNEDITET COPIED UNEDITET COPIED UNEDITET COPIED UNEDITET 
-    Private Sub DataGridView1_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgv_rincianBrgPP.EditingControlShowing
+
+    Private Sub DataGridView1_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgv_purchaseOrder.EditingControlShowing
         'Console.WriteLine(dgv_rincianBrgPP.CurrentCell)
-        Dim titleText As String = dgv_rincianBrgPP.Columns(2).HeaderText
-        If dgv_rincianBrgPP.CurrentCell.ColumnIndex = 2 Then
+        Dim titleText As String = dgv_purchaseOrder.Columns(2).HeaderText
+        If dgv_purchaseOrder.CurrentCell.ColumnIndex = 2 Then
             Dim autoText As TextBox = TryCast(e.Control, TextBox)
             If autoText IsNot Nothing Then
                 autoText.AutoCompleteMode = AutoCompleteMode.SuggestAppend
                 autoText.AutoCompleteSource = AutoCompleteSource.CustomSource
-                autoText.AutoCompleteCustomSource = a
+                autoText.AutoCompleteCustomSource = autoBarang
             End If
-            AddHandler dgv_rincianBrgPP.CellEndEdit, AddressOf fillKodeBarang
+            AddHandler dgv_purchaseOrder.CellEndEdit, AddressOf fillKodeBarang
+        Else
+            Dim text As TextBox = TryCast(e.Control, TextBox)
+            text.AutoCompleteCustomSource = Nothing
+            text.AutoCompleteSource = AutoCompleteSource.None
+            text.AutoCompleteMode = AutoCompleteMode.None
         End If
     End Sub
 
+    ' HAPUS ROW TENGAH, YANG BAWAH NOMOR TETAP, KALAU DI EDIT ERROR
+    Private Sub YourDGV_CurrentCellDirtyStateChanged(sender As Object, e As EventArgs) Handles dgv_purchaseOrder.CurrentCellDirtyStateChanged
+        If (dgv_purchaseOrder.CurrentCell.ColumnIndex = 2) Then
+            If dgv_purchaseOrder.CommitEdit(DataGridViewDataErrorContexts.Commit) Then
+                lastEditedCellRow = dgv_purchaseOrder.CurrentCell.RowIndex
+                lastEditedCellColumn = dgv_purchaseOrder.CurrentCell.ColumnIndex
+            End If
+        End If
+    End Sub
     Private Sub fillKodeBarang()
         Try
-            Dim cmd As New MySqlCommand("select kode_brg from barang where nama = '" & dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
+            Dim cmd As New MySqlCommand("select kode_brg, satuan from barang where nama = '" & dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
             Dim reader As MySqlDataReader = cmd.ExecuteReader
             While reader.Read
-                dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
+                dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
+                dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn + 1).Value = reader.GetString(1)
+                'Console.WriteLine(reader.GetString(1))
             End While
-            dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
+            dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
+            'dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 2
             reader.Close()
         Catch ex As Exception
             MsgBox("error : masukan nama barang dengan benar")
-            dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value = "NULL"
+            dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value = "NULL"
         End Try
+    End Sub
 
+    Private Sub dgv_purchaseOrder_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_purchaseOrder.CellContentClick
+        Dim senderGrid = DirectCast(sender, DataGridView)
+        If TypeOf senderGrid.Columns(e.ColumnIndex) Is DataGridViewButtonColumn AndAlso e.RowIndex >= 0 Then
+            If e.ColumnIndex = 7 Then
+                Try
+                    Console.WriteLine("hey yoo row :" & e.RowIndex & " " & dgv_purchaseOrder.CurrentRow.Cells(2).Value.ToString)
+                Catch ex As Exception
+                    Console.WriteLine("data kosong")
+                End Try
+            ElseIf e.ColumnIndex = 8 Then
+                Console.WriteLine("suppose to hapus row")
+                dgv_purchaseOrder.Rows.RemoveAt(e.RowIndex)
+            End If
+        End If
     End Sub
 End Class
