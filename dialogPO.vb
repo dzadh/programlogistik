@@ -98,9 +98,10 @@ Public Class dialogPO
             End If
         End If
     End Sub
+
     Private Sub fillKodeBarang()
         Try
-            Dim cmd As New MySqlCommand("select kode_brg, satuan from barang where nama = '" & dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
+            Dim cmd As New MySqlCommand("select kode_brg, satuan from barang where nama = """ & dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & """", conn)
             Dim reader As MySqlDataReader = cmd.ExecuteReader
             While reader.Read
                 dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
@@ -110,8 +111,20 @@ Public Class dialogPO
             dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
             'dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 2
             reader.Close()
+        Catch exc As MySqlException
+            'MsgBox("err : " & exc.ToString)
+            Dim cmdd As New MySqlCommand("select kode_brg, satuan from barang where nama = '" & dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
+            Console.WriteLine(cmdd)
+            Dim reader As MySqlDataReader = cmdd.ExecuteReader
+            While reader.Read
+                dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
+                dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn + 1).Value = reader.GetString(1)
+            End While
+            dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
+            reader.Close()
         Catch ex As Exception
             MsgBox("error : masukan nama barang dengan benar")
+            Console.WriteLine("er" & ex.GetType.ToString)
             dgv_purchaseOrder.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value = "NULL"
         End Try
     End Sub
@@ -130,5 +143,17 @@ Public Class dialogPO
                 dgv_purchaseOrder.Rows.RemoveAt(e.RowIndex)
             End If
         End If
+    End Sub
+
+    Private Sub dgv_purchaseOrder_rowcontchange(sender As Object, e As EventArgs) Handles dgv_purchaseOrder.RowsRemoved
+        For i As Int16 = 0 To dgv_purchaseOrder.Rows.Count - 2
+            'Console.WriteLine(" test """ & i & """ ska")
+            dgv_purchaseOrder.Rows(i).Cells(0).Value = i + 1
+        Next
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles b_pilihpp.Click
+        Dim diaPilPP As New pilihPermintaanPembelianDialog
+        diaPilPP.Show()
     End Sub
 End Class

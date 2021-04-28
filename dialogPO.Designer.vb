@@ -38,8 +38,8 @@ Partial Class dialogPO
         Me.jumlah = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.harga_satuan = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.no_pp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.pilihPP = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.hapus = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.b_pilihpp = New System.Windows.Forms.Button()
         CType(Me.dgv_purchaseOrder, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -90,10 +90,10 @@ Partial Class dialogPO
         'dgv_purchaseOrder
         '
         Me.dgv_purchaseOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_purchaseOrder.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.kode_brg, Me.nama_barang, Me.unit, Me.jumlah, Me.harga_satuan, Me.no_pp, Me.pilihPP, Me.hapus})
-        Me.dgv_purchaseOrder.Location = New System.Drawing.Point(25, 114)
+        Me.dgv_purchaseOrder.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.kode_brg, Me.nama_barang, Me.unit, Me.jumlah, Me.harga_satuan, Me.no_pp, Me.hapus})
+        Me.dgv_purchaseOrder.Location = New System.Drawing.Point(25, 127)
         Me.dgv_purchaseOrder.Name = "dgv_purchaseOrder"
-        Me.dgv_purchaseOrder.Size = New System.Drawing.Size(812, 266)
+        Me.dgv_purchaseOrder.Size = New System.Drawing.Size(750, 253)
         Me.dgv_purchaseOrder.TabIndex = 6
         '
         'b_cancel
@@ -118,7 +118,7 @@ Partial Class dialogPO
         '
         Me.tb_supplier.Location = New System.Drawing.Point(25, 70)
         Me.tb_supplier.Name = "tb_supplier"
-        Me.tb_supplier.Size = New System.Drawing.Size(309, 20)
+        Me.tb_supplier.Size = New System.Drawing.Size(222, 20)
         Me.tb_supplier.TabIndex = 8
         '
         'No
@@ -162,23 +162,28 @@ Partial Class dialogPO
         Me.no_pp.Name = "no_pp"
         Me.no_pp.Width = 75
         '
-        'pilihPP
-        '
-        Me.pilihPP.HeaderText = ""
-        Me.pilihPP.Name = "pilihPP"
-        Me.pilihPP.Width = 50
-        '
         'hapus
         '
         Me.hapus.HeaderText = ""
         Me.hapus.Name = "hapus"
         Me.hapus.Width = 50
         '
+        'b_pilihpp
+        '
+        Me.b_pilihpp.AutoSize = True
+        Me.b_pilihpp.Location = New System.Drawing.Point(25, 96)
+        Me.b_pilihpp.Name = "b_pilihpp"
+        Me.b_pilihpp.Size = New System.Drawing.Size(144, 23)
+        Me.b_pilihpp.TabIndex = 9
+        Me.b_pilihpp.Text = "Pilih Permintaan Pembelian"
+        Me.b_pilihpp.UseVisualStyleBackColor = True
+        '
         'dialogPO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(849, 437)
+        Me.ClientSize = New System.Drawing.Size(796, 437)
+        Me.Controls.Add(Me.b_pilihpp)
         Me.Controls.Add(Me.tb_supplier)
         Me.Controls.Add(Me.b_save)
         Me.Controls.Add(Me.b_cancel)
@@ -212,6 +217,6 @@ Partial Class dialogPO
     Friend WithEvents jumlah As DataGridViewTextBoxColumn
     Friend WithEvents harga_satuan As DataGridViewTextBoxColumn
     Friend WithEvents no_pp As DataGridViewTextBoxColumn
-    Friend WithEvents pilihPP As DataGridViewButtonColumn
     Friend WithEvents hapus As DataGridViewButtonColumn
+    Friend WithEvents b_pilihpp As Button
 End Class

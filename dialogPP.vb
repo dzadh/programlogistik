@@ -86,7 +86,7 @@ Public Class dialogPP
                 'dgv_rincianBrgPP.Rows(x).Cells(6).Value = reader.GetString(6)
                 dgv_rincianBrgPP.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6))
                 x += 1
-                Console.WriteLine(x)
+                ' Console.WriteLine(x)
             End While
             tb_bagian.Text = reader.GetString(5)
             tb_nomorPP.Text = reader.GetString(8)
