@@ -3,6 +3,9 @@ Public Class pilihPermintaanPembelianDialog
     Dim DataSetPP As New DataSet
     Dim conn As New MySqlConnection
     Dim dataSetPPDetail As New DataSet
+    Public selectedNota As String
+    Public nomorInNota(10) As String
+
     Public Sub New()
 
         ' This call is required by the designer.
@@ -70,11 +73,16 @@ Public Class pilihPermintaanPembelianDialog
     End Sub
 
     Private Sub b_pilih_Click(sender As Object, e As EventArgs) Handles b_pilih.Click
+        Dim x As Int16 = 0
         For i As Int16 = 0 To dgv_pilihPPdetail.Rows.Count - 1
             'Console.WriteLine(dgv_pilihPPdetail.Rows(i).Cells(0).Value)
             If dgv_pilihPPdetail.Rows(i).Cells(0).Value = True Then
-                Console.WriteLine(dgv_pilihPPdetail.Rows(i).Cells(3).Value.ToString)
+                'Console.WriteLine(dgv_pilihppheader.CurrentRow.Cells(0).Value.ToString & ", nomor : " & dgv_pilihPPdetail.Rows(i).Cells(1).Value.ToString & ", nama : " & dgv_pilihPPdetail.Rows(i).Cells(3).Value.ToString)
+                nomorInNota(x) = dgv_pilihPPdetail.Rows(i).Cells(1).Value.ToString
+                x += 1
             End If
         Next
+        selectedNota = dgv_pilihppheader.CurrentRow.Cells(0).Value.ToString
+        Me.Close()
     End Sub
 End Class

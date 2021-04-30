@@ -6,6 +6,11 @@ Public Class dialogPO
     Public nomorPurchaseOrder As String
     Dim lastEditedCellRow As Int16
     Dim lastEditedCellColumn As Int16
+    Public selectedNota As String
+    Dim diaPilPP As New pilihPermintaanPembelianDialog
+    'Dim diapilobj As New Object
+    Dim diapilpil As Object
+
     Public Property dgv_rincianBrgPP As Object
     Public Sub New()
         ' This call is required by the designer.
@@ -153,7 +158,13 @@ Public Class dialogPO
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles b_pilihpp.Click
-        Dim diaPilPP As New pilihPermintaanPembelianDialog
-        diaPilPP.Show()
+        diapilpil = New pilihPermintaanPembelianDialog
+        diapilpil.Show()
+        AddHandler diapilpil.FormClosed, AddressOf diapilppFormCloses
     End Sub
+
+    Private Sub diapilppFormCloses()
+        Console.WriteLine(diapilpil.selectedNota & " " & diapilpil.nomorInNota(0))
+    End Sub
+
 End Class
