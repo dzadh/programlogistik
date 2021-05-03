@@ -4,7 +4,9 @@ Public Class pilihPermintaanPembelianDialog
     Dim conn As New MySqlConnection
     Dim dataSetPPDetail As New DataSet
     Public selectedNota As String
-    Public nomorInNota(10) As String
+    Public selectedBagian As String
+    'Public nomorInNota(10) As String
+    Public noInNota As New List(Of String)
 
     Public Sub New()
 
@@ -78,11 +80,13 @@ Public Class pilihPermintaanPembelianDialog
             'Console.WriteLine(dgv_pilihPPdetail.Rows(i).Cells(0).Value)
             If dgv_pilihPPdetail.Rows(i).Cells(0).Value = True Then
                 'Console.WriteLine(dgv_pilihppheader.CurrentRow.Cells(0).Value.ToString & ", nomor : " & dgv_pilihPPdetail.Rows(i).Cells(1).Value.ToString & ", nama : " & dgv_pilihPPdetail.Rows(i).Cells(3).Value.ToString)
-                nomorInNota(x) = dgv_pilihPPdetail.Rows(i).Cells(1).Value.ToString
-                x += 1
+                'nomorInNota(x) = dgv_pilihPPdetail.Rows(i).Cells(1).Value.ToString
+                'x += 1
+                noInNota.Add(dgv_pilihPPdetail.Rows(i).Cells(1).Value.ToString)
             End If
         Next
         selectedNota = dgv_pilihppheader.CurrentRow.Cells(0).Value.ToString
+        selectedBagian = dgv_pilihppheader.CurrentRow.Cells(1).Value.ToString
         Me.Close()
     End Sub
 End Class
