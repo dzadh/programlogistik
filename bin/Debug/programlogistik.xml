@@ -87,5 +87,11 @@ Update Order Option
 Used to sort self-referenced table's rows
 </summary>
 </member>
+<member name="T:programlogistik.dialogPO">
+ <summary>
+ undone YET  po_header:  tdisksen, tdiskrp,tppnsen, tppnRP,grandtotal, user, status, item, keterangan
+             po_detail:  currency, ordere (apaitu ordere?), jumlahHarga, sisa, groupe, subgroup, statusID, flag, userid, jam
+ </summary>
+</member>
 </members>
 </doc>

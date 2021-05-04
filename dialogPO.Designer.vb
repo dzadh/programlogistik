@@ -45,7 +45,7 @@ Partial Class dialogPO
         Me.nama_barang = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.jumlah = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.harga_satuan = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.harga = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.no_pp = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ppn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.hapus = New System.Windows.Forms.DataGridViewButtonColumn()
@@ -99,7 +99,7 @@ Partial Class dialogPO
         'dgv_purchaseOrder
         '
         Me.dgv_purchaseOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_purchaseOrder.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.kode_brg, Me.nama_barang, Me.unit, Me.jumlah, Me.harga_satuan, Me.no_pp, Me.ppn, Me.hapus})
+        Me.dgv_purchaseOrder.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.kode_brg, Me.nama_barang, Me.unit, Me.jumlah, Me.harga, Me.no_pp, Me.ppn, Me.hapus})
         Me.dgv_purchaseOrder.Location = New System.Drawing.Point(25, 127)
         Me.dgv_purchaseOrder.Name = "dgv_purchaseOrder"
         Me.dgv_purchaseOrder.RowHeadersVisible = False
@@ -235,10 +235,10 @@ Partial Class dialogPO
         Me.jumlah.Name = "jumlah"
         Me.jumlah.Width = 65
         '
-        'harga_satuan
+        'harga
         '
-        Me.harga_satuan.HeaderText = "Harga Satuan"
-        Me.harga_satuan.Name = "harga_satuan"
+        Me.harga.HeaderText = "Harga Satuan"
+        Me.harga.Name = "harga"
         '
         'no_pp
         '
@@ -314,7 +314,7 @@ Partial Class dialogPO
     Friend WithEvents nama_barang As DataGridViewTextBoxColumn
     Friend WithEvents unit As DataGridViewTextBoxColumn
     Friend WithEvents jumlah As DataGridViewTextBoxColumn
-    Friend WithEvents harga_satuan As DataGridViewTextBoxColumn
+    Friend WithEvents harga As DataGridViewTextBoxColumn
     Friend WithEvents no_pp As DataGridViewTextBoxColumn
     Friend WithEvents ppn As DataGridViewTextBoxColumn
     Friend WithEvents hapus As DataGridViewButtonColumn
