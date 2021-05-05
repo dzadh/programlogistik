@@ -1,8 +1,12 @@
 ﻿Imports MySql.Data.MySqlClient
 
 ''' <summary>
-''' undone YET  po_header:  tdisksen, tdiskrp,tppnsen, tppnRP,grandtotal, user, status, item, keterangan
+''' undone YET: Nomor PO,  
+'''             po_header:  tdisksen, tdiskrp,tppnsen, tppnRP,grandtotal, user, status, item, keterangan
 '''             po_detail:  currency, ordere (apaitu ordere?), jumlahHarga, sisa, groupe, subgroup, statusID, flag, userid, jam
+'''             sisa barang yang udah di buat PO
+'''             PO selesai, PP selesai pas ngapain
+'''             
 ''' </summary>
 Public Class dialogPO
     Dim conn As New MySqlConnection
@@ -11,6 +15,11 @@ Public Class dialogPO
     Public nomorPurchaseOrder As String
     Dim lastEditedCellRow As Int16
     Dim lastEditedCellColumn As Int16
+    Dim lastEditHargaSatuanRow As Int16
+    Dim lasEditHargaSatuanCell As Int16
+    Dim grandTotal As Double
+    Dim totalHarga As Double
+    Dim totalPajak As Double
     Public selectedNota As String
     'Dim diaPilPP As New pilihPermintaanPembelianDialog
     'Dim diapilobj As New Object
@@ -72,7 +81,7 @@ Public Class dialogPO
     Private Sub b_cancel_Click(sender As Object, e As EventArgs) Handles b_cancel.Click
         Me.Close()
     End Sub
-    Private Sub dialogPO_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub dialogPO_KeyDown(ByVal sender As O bject, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.Escape Then
             'Console.WriteLine("esc pressed")
             Me.Close()
@@ -91,6 +100,8 @@ Public Class dialogPO
                 autoText.AutoCompleteCustomSource = autoBarang
             End If
             AddHandler dgv_purchaseOrder.CellEndEdit, AddressOf fillKodeBarang
+        ElseIf dgv_purchaseOrder.CurrentCell.ColumnIndex = 5 Then
+            AddHandler dgv_purchaseOrder.CellEndEdit, AddressOf hargaSatuanFill
         Else
             Dim text As TextBox = TryCast(e.Control, TextBox)
             text.AutoCompleteCustomSource = Nothing
@@ -107,6 +118,33 @@ Public Class dialogPO
                 lastEditedCellColumn = dgv_purchaseOrder.CurrentCell.ColumnIndex
             End If
         End If
+        If (dgv_purchaseOrder.CurrentCell.ColumnIndex = 5) Then
+            If dgv_purchaseOrder.CommitEdit(DataGridViewDataErrorContexts.Commit) Then
+                lastEditHargaSatuanRow = dgv_purchaseOrder.CurrentCell.RowIndex
+                lasEditHargaSatuanCell = dgv_purchaseOrder.CurrentCell.ColumnIndex
+            End If
+        End If
+    End Sub
+
+    Private Sub hargaSatuanFill()
+        Dim harga As Double
+        totalHarga = 0
+        totalPajak = 0
+        grandTotal = 0
+        For x As Int16 = 0 To dgv_purchaseOrder.Rows.Count - 2
+            Try
+                harga = dgv_purchaseOrder.Rows(x).Cells(5).Value * Convert.ToDecimal(dgv_purchaseOrder.Rows(x).Cells(4).Value)
+                totalHarga += harga
+                totalPajak += harga * Convert.ToDouble(dgv_purchaseOrder.Rows(x).Cells(7).Value) / 100
+            Catch ex As Exception
+                harga = dgv_purchaseOrder.Rows(x).Cells(5).Value * Convert.ToDecimal(dgv_purchaseOrder.Rows(x).Cells(4).Value)
+                totalHarga += harga
+                Console.WriteLine("err : " & ex.ToString)
+            End Try
+        Next
+        tb_pajak.Text = totalPajak
+        tb_totalHarga.Text = totalHarga
+        tb_grandTotal.Text = totalPajak + totalHarga
     End Sub
 
     Private Sub fillKodeBarang()
@@ -152,6 +190,7 @@ Public Class dialogPO
             ElseIf e.ColumnIndex = 8 Then
                 Console.WriteLine("suppose to hapus row")
                 dgv_purchaseOrder.Rows.RemoveAt(e.RowIndex)
+                hargaSatuanFill()
             End If
         End If
     End Sub
@@ -204,8 +243,6 @@ Public Class dialogPO
         Catch ex As Exception
             Console.WriteLine(ex.ToString)
         End Try
-
-
     End Sub
 
     Private Sub b_save_Click(sender As Object, e As EventArgs) Handles b_save.Click
@@ -243,7 +280,7 @@ Public Class dialogPO
             reader.Close()
         Catch ex As Exception 'DURUNG JELAS PALING NULL REFRENCE -> BUAT YANG NULL REFENCE KASIH NULL AJA
             Console.WriteLine(ex.ToString)
-            MsgBox("err : " & ex.ToString)
+            'MsgBox("err : " & ex.ToString)
             reader.Close()
             'MsgBox("err : " & ex.ToString)
         End Try
@@ -258,11 +295,12 @@ Public Class dialogPO
             cmd_poheader.CommandText = quer_poheader
             cmd_poheader.ExecuteNonQuery()
         Catch ex As Exception
-            MsgBox("err : " & ex.ToString)
+            'MsgBox("err : " & ex.ToString)
             Console.WriteLine("err : " & ex.ToString)
         End Try
 
-        '=========== SAMPAI SINIIII ========================
+        '===================== SAMPAI SINIIII ========================
+        Dim cmd_podetail As New MySqlCommand
         For i As Int16 = 0 To rowCount - 2
             Try
                 Dim noseri = 0
@@ -279,12 +317,16 @@ Public Class dialogPO
                 'Console.WriteLine(dgv_purchaseOrder.Rows(i).Cells("No").Value & " " & dgv_purchaseOrder.Rows(i).Cells(1).Value & " " & dgv_purchaseOrder.Rows(i).Cells(2).Value)
                 Dim quer_podetail As String = "INSERT INTO `po_detail`(`Nota`, `Tanggal`, `NoPP`, `Kode_supl`, `SNama`, `Bagian`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `noseri`, `Curr`, `Harga`, `Qty`, `Jumlah`, `ordere`, `Sisa`, `Groupe`, `Subgroup`, `StatusD`, `Flag`, `UserID`, `Jam`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & dgv_purchaseOrder.Rows(i).Cells("no_pp").Value & "','" & kode_supl & "','" & namaSupplier & "','" & tb_bagian.Text & "','" & i + 1 & "','" & dgv_purchaseOrder.Rows(i).Cells("kode_brg").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("nama_barang").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("unit").Value & "','" & noseri & "','" & currency & "','" & dgv_purchaseOrder.Rows(i).Cells("harga").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("jumlah").Value & "','" & jumlahHarga & "','" & ordere & "','" & sisa & "','" & groupe & "','" & subgroup & "','" & statusid & "','" & flag & "','" & userid & "', '" & jam & "')"
                 Console.WriteLine(quer_podetail)
-
+                cmd_podetail.Connection = conn
+                cmd_podetail.CommandText = quer_podetail
+                cmd_podetail.ExecuteNonQuery()
             Catch ex As Exception
                 Console.WriteLine(ex.ToString)
                 MsgBox("err : " & ex.ToString)
             End Try
         Next
+        tr.Commit()
+        Me.Close()
     End Sub
 
 
