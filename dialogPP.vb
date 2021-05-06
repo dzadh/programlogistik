@@ -75,7 +75,7 @@ Public Class dialogPP
             Dim cmd As New MySqlCommand("select nomor, kode_brg, nama, satuan, qty, bagian, keterangan, tanggal, nota from pp_detail where nota = '" & nomorNota & "'", conn)
             Dim reader As MySqlDataReader = cmd.ExecuteReader
             Dim x As Int16 = 0
-            Console.WriteLine("hey yoo")
+            'Console.WriteLine("hey yoo")
             While reader.Read
                 'dgv_rincianBrgPP.Rows(x).Cells(0).Value = reader.GetString(0)
                 'dgv_rincianBrgPP.Rows(x).Cells(1).Value = reader.GetString(1)
@@ -146,10 +146,12 @@ Public Class dialogPP
         End If
     End Sub
 
+    '=================== APA INII ==================
     Private Sub editedCell(sel As DataGridViewTextBoxCell)
         'Console.WriteLine(sel.RowIndex & " " & sel.ColumnIndex)
         Dim cmd As New MySqlCommand("select kode_brg from barang where nama =")
     End Sub
+    '================== HAAHHH APAA? =================
 
     Private Sub fillKodeBarang()
         Try

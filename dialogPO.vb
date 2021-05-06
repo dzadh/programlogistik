@@ -1,7 +1,7 @@
 ﻿Imports MySql.Data.MySqlClient
 
 ''' <summary>
-''' undone YET: Nomor PO,  
+''' undone YET: Nomor PO buat PO, cara bayar
 '''             po_header:  tdisksen, tdiskrp,tppnsen, tppnRP,grandtotal, user, status, item, keterangan
 '''             po_detail:  currency, ordere (apaitu ordere?), jumlahHarga, sisa, groupe, subgroup, statusID, flag, userid, jam
 '''             sisa barang yang udah di buat PO
@@ -21,6 +21,9 @@ Public Class dialogPO
     Dim totalHarga As Double
     Dim totalPajak As Double
     Public selectedNota As String
+    Public tppnsen As Int16
+    Dim stat As boo
+
     'Dim diaPilPP As New pilihPermintaanPembelianDialog
     'Dim diapilobj As New Object
     Dim diapilpil As pilihPermintaanPembelianDialog
@@ -73,15 +76,43 @@ Public Class dialogPO
         If String.IsNullOrEmpty(nomorPurchaseOrder) Then
             tb_nomorPO.Text = "1010000"
             tb_nomorPO.Enabled = False
+            stat = True
         Else
-            Console.WriteLine("singo")
+            tb_nomorPO.Text = nomorPurchaseOrder
+            tb_nomorPO.Enabled = False
+            Dim quer As String = "SELECT Nota, Tanggal, Bagian ,Nama ,Total ,TPPNsen, TPPNRp, GTotal FROM `po_header` WHERE Nota ='" & nomorPurchaseOrder & "'"
+            Console.WriteLine(quer)
+            Dim cmd As New MySqlCommand(quer, conn)
+            Dim reader As MySqlDataReader = cmd.ExecuteReader
+            While reader.Read
+                tb_nomorPO.Text = reader.GetString(0)
+                dp_tanggalPO.Text = reader.GetString(1)
+                tb_bagian.Text = reader.GetString(2)
+                tb_supplier.Text = reader.GetString(3)
+                tb_totalHarga.Text = reader.GetString(4)
+                tppnsen = reader.GetString(5)
+                tb_pajak.Text = reader.GetString(6)
+                tb_grandTotal.Text = reader.GetString(7)
+            End While
+            tb_nomorPO.Enabled = False
+            reader.Close()
+
+            Dim quer_isi As String = "SELECT Nomor, Kode_Brg, Nama, Satuan, Qty, Harga, NoPP FROM `po_detail` WHERE Nota = '" & nomorPurchaseOrder & "' ORDER BY `Nomor` ASC"
+            'Console.WriteLine(quer_isi)
+            Dim cmd_isi As New MySqlCommand(quer_isi, conn)
+            Dim pembaca As MySqlDataReader = cmd_isi.ExecuteReader
+
+            While pembaca.Read
+                dgv_purchaseOrder.Rows.Add(pembaca.GetString(0), pembaca.GetString(1), pembaca.GetString(2), pembaca.GetString(3), pembaca.GetString(4), pembaca.GetString(5), pembaca.GetString(6))
+            End While
+            stat = False
         End If
     End Sub
 
     Private Sub b_cancel_Click(sender As Object, e As EventArgs) Handles b_cancel.Click
         Me.Close()
     End Sub
-    Private Sub dialogPO_KeyDown(ByVal sender As O bject, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub dialogPO_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.Escape Then
             'Console.WriteLine("esc pressed")
             Me.Close()
@@ -265,67 +296,132 @@ Public Class dialogPO
         Dim keterangan As String = "ini keterangan"
         Dim status = 1
         Dim user = "singo"
-        Dim cmd_supplier As New MySqlCommand("select kode_supl, alamat, telpon, fax, contact, npwp, hari from supplier where nama = '" & namaSupplier & "'", conn)
-        Dim reader As MySqlDataReader = cmd_supplier.ExecuteReader
-        Try
-            While reader.Read
-                kode_supl = reader.GetString(0)
-                alamat = reader.GetString(1)
-                telp = reader.GetString(2)
-                fax = reader.GetString(3)
-                contact = reader.GetString(4)
-                npwp = reader.GetString(5)
-                hari = reader.GetString(6)
-            End While
-            reader.Close()
-        Catch ex As Exception 'DURUNG JELAS PALING NULL REFRENCE -> BUAT YANG NULL REFENCE KASIH NULL AJA
-            Console.WriteLine(ex.ToString)
-            'MsgBox("err : " & ex.ToString)
-            reader.Close()
-            'MsgBox("err : " & ex.ToString)
-        End Try
-        Dim quer_poheader As String = "INSERT INTO `po_header`(`Nota`, `Tanggal`, `NoPP`, `CaraBayar`, `Bagian`, `Kode_Supl`, `Nama`, `alamat`, `Telp`, `Fax`, `Attn`, `NPWP`, `Hari`, `JthTempo`, `Item`, `Total`, `TDiskSen`, `TDiskRp`, `STotal`, `TPPNsen`, `TPPNRp`, `GTotal`, `Keterangan`, `Status`, `UserID`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & diapilpil.selectedNota & "','" & caraBayar & "','" & tb_bagian.Text & "','" & kode_supl & "','" & namaSupplier & "','" & alamat & "','" & telp & "','" & fax & "','" & contact & "','" & npwp & "','" & hari & "','" & jatuhTempo.ToString("yyyy-MM-dd") & "','" & item & "','" & tb_totalHarga.Text & "','" & tdiskSen & "','" & tdiskRp & "','" & sTotalHarga & "','" & TPPNsen & "','" & TPPNRp & "','" & tb_grandTotal.Text & "','" & keterangan & "','" & status & "','" & user & "')"
-        '.WriteLine(quer_poheader)
-        Dim cmd_poheader As New MySqlCommand
-        Dim tr As MySqlTransaction
-        tr = conn.BeginTransaction
 
-        Try
-            cmd_poheader.Connection = conn
-            cmd_poheader.CommandText = quer_poheader
-            cmd_poheader.ExecuteNonQuery()
-        Catch ex As Exception
-            'MsgBox("err : " & ex.ToString)
-            Console.WriteLine("err : " & ex.ToString)
-        End Try
-
-        '===================== SAMPAI SINIIII ========================
-        Dim cmd_podetail As New MySqlCommand
-        For i As Int16 = 0 To rowCount - 2
+        If stat Then
+            Dim cmd_supplier As New MySqlCommand("select kode_supl, alamat, telpon, fax, contact, npwp, hari from supplier where nama = '" & namaSupplier & "'", conn)
+            Dim reader As MySqlDataReader = cmd_supplier.ExecuteReader
             Try
-                Dim noseri = 0
-                Dim currency = "Rp"
-                Dim jumlahHarga As Double = 0.0
-                Dim ordere As Double = 0.0
-                Dim sisa = 0
-                Dim groupe As String = ""
-                Dim subgroup As String = "subgroup"
-                Dim statusid As String = ""
-                Dim flag = 0
-                Dim jam = ""
-                Dim userid As String = "singo"
-                'Console.WriteLine(dgv_purchaseOrder.Rows(i).Cells("No").Value & " " & dgv_purchaseOrder.Rows(i).Cells(1).Value & " " & dgv_purchaseOrder.Rows(i).Cells(2).Value)
-                Dim quer_podetail As String = "INSERT INTO `po_detail`(`Nota`, `Tanggal`, `NoPP`, `Kode_supl`, `SNama`, `Bagian`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `noseri`, `Curr`, `Harga`, `Qty`, `Jumlah`, `ordere`, `Sisa`, `Groupe`, `Subgroup`, `StatusD`, `Flag`, `UserID`, `Jam`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & dgv_purchaseOrder.Rows(i).Cells("no_pp").Value & "','" & kode_supl & "','" & namaSupplier & "','" & tb_bagian.Text & "','" & i + 1 & "','" & dgv_purchaseOrder.Rows(i).Cells("kode_brg").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("nama_barang").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("unit").Value & "','" & noseri & "','" & currency & "','" & dgv_purchaseOrder.Rows(i).Cells("harga").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("jumlah").Value & "','" & jumlahHarga & "','" & ordere & "','" & sisa & "','" & groupe & "','" & subgroup & "','" & statusid & "','" & flag & "','" & userid & "', '" & jam & "')"
-                Console.WriteLine(quer_podetail)
-                cmd_podetail.Connection = conn
-                cmd_podetail.CommandText = quer_podetail
-                cmd_podetail.ExecuteNonQuery()
-            Catch ex As Exception
+                While reader.Read
+                    kode_supl = reader.GetString(0)
+                    alamat = reader.GetString(1)
+                    telp = reader.GetString(2)
+                    fax = reader.GetString(3)
+                    contact = reader.GetString(4)
+                    npwp = reader.GetString(5)
+                    hari = reader.GetString(6)
+                End While
+                reader.Close()
+            Catch ex As Exception 'DURUNG JELAS PALING NULL REFRENCE -> BUAT YANG NULL REFENCE KASIH NULL AJA
                 Console.WriteLine(ex.ToString)
-                MsgBox("err : " & ex.ToString)
+                'MsgBox("err : " & ex.ToString)
+                reader.Close()
+                'MsgBox("err : " & ex.ToString)
             End Try
-        Next
-        tr.Commit()
+            Dim quer_poheader As String = "INSERT INTO `po_header`(`Nota`, `Tanggal`, `NoPP`, `CaraBayar`, `Bagian`, `Kode_Supl`, `Nama`, `alamat`, `Telp`, `Fax`, `Attn`, `NPWP`, `Hari`, `JthTempo`, `Item`, `Total`, `TDiskSen`, `TDiskRp`, `STotal`, `TPPNsen`, `TPPNRp`, `GTotal`, `Keterangan`, `Status`, `UserID`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & diapilpil.selectedNota & "','" & caraBayar & "','" & tb_bagian.Text & "','" & kode_supl & "','" & namaSupplier & "','" & alamat & "','" & telp & "','" & fax & "','" & contact & "','" & npwp & "','" & hari & "','" & jatuhTempo.ToString("yyyy-MM-dd") & "','" & item & "','" & tb_totalHarga.Text & "','" & tdiskSen & "','" & tdiskRp & "','" & sTotalHarga & "','" & TPPNsen & "','" & TPPNRp & "','" & tb_grandTotal.Text & "','" & keterangan & "','" & status & "','" & user & "')"
+            '.WriteLine(quer_poheader)
+            Dim cmd_poheader As New MySqlCommand
+            Dim tr As MySqlTransaction
+            tr = conn.BeginTransaction
+
+            Try
+                cmd_poheader.Connection = conn
+                cmd_poheader.CommandText = quer_poheader
+                cmd_poheader.ExecuteNonQuery()
+            Catch ex As Exception
+                'MsgBox("err : " & ex.ToString)
+                Console.WriteLine("err : " & ex.ToString)
+            End Try
+
+            '===================== SAMPAI SINIIII ========================
+            Dim cmd_podetail As New MySqlCommand
+            For i As Int16 = 0 To rowCount - 2
+                Try
+                    Dim noseri = 0
+                    Dim currency = "Rp"
+                    Dim jumlahHarga As Double = 0.0
+                    Dim ordere As Double = 0.0
+                    Dim sisa = 0
+                    Dim groupe As String = ""
+                    Dim subgroup As String = "subgroup"
+                    Dim statusid As String = ""
+                    Dim flag = 0
+                    Dim jam = ""
+                    Dim userid As String = "singo"
+                    'Console.WriteLine(dgv_purchaseOrder.Rows(i).Cells("No").Value & " " & dgv_purchaseOrder.Rows(i).Cells(1).Value & " " & dgv_purchaseOrder.Rows(i).Cells(2).Value)
+                    Dim quer_podetail As String = "INSERT INTO `po_detail`(`Nota`, `Tanggal`, `NoPP`, `Kode_supl`, `SNama`, `Bagian`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `noseri`, `Curr`, `Harga`, `Qty`, `Jumlah`, `ordere`, `Sisa`, `Groupe`, `Subgroup`, `StatusD`, `Flag`, `UserID`, `Jam`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & dgv_purchaseOrder.Rows(i).Cells("no_pp").Value & "','" & kode_supl & "','" & namaSupplier & "','" & tb_bagian.Text & "','" & i + 1 & "','" & dgv_purchaseOrder.Rows(i).Cells("kode_brg").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("nama_barang").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("unit").Value & "','" & noseri & "','" & currency & "','" & dgv_purchaseOrder.Rows(i).Cells("harga").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("jumlah").Value & "','" & jumlahHarga & "','" & ordere & "','" & sisa & "','" & groupe & "','" & subgroup & "','" & statusid & "','" & flag & "','" & userid & "', '" & jam & "')"
+                    Console.WriteLine(quer_podetail)
+                    cmd_podetail.Connection = conn
+                    cmd_podetail.CommandText = quer_podetail
+                    cmd_podetail.ExecuteNonQuery()
+                Catch ex As Exception
+                    Console.WriteLine(ex.ToString)
+                    MsgBox("err : " & ex.ToString)
+                End Try
+            Next
+            tr.Commit()
+        Else
+            '==================================== EDIT PO ===========================================
+            Dim cmd_supplier As New MySqlCommand("select kode_supl, alamat, telpon, fax, contact, npwp, hari from supplier where nama = '" & namaSupplier & "'", conn)
+            Dim reader As MySqlDataReader = cmd_supplier.ExecuteReader
+            Try
+                While reader.Read
+                    kode_supl = reader.GetString(0)
+                    alamat = reader.GetString(1)
+                    telp = reader.GetString(2)
+                    fax = reader.GetString(3)
+                    contact = reader.GetString(4)
+                    npwp = reader.GetString(5)
+                    hari = reader.GetString(6)
+                End While
+                reader.Close()
+            Catch ex As Exception 'DURUNG JELAS PALING NULL REFRENCE -> BUAT YANG NULL REFENCE KASIH NULL AJA
+                Console.WriteLine(ex.ToString)
+                'MsgBox("err : " & ex.ToString)
+                reader.Close()
+            End Try
+            'Dim quer_poheader As String = "INSERT INTO `po_header`(`Nota`, `Tanggal`, `NoPP`, `CaraBayar`, `Bagian`, `Kode_Supl`, `Nama`, `alamat`, `Telp`, `Fax`, `Attn`, `NPWP`, `Hari`, `JthTempo`, `Item`, `Total`, `TDiskSen`, `TDiskRp`, `STotal`, `TPPNsen`, `TPPNRp`, `GTotal`, `Keterangan`, `Status`, `UserID`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & diapilpil.selectedNota & "','" & caraBayar & "','" & tb_bagian.Text & "','" & kode_supl & "','" & namaSupplier & "','" & alamat & "','" & telp & "','" & fax & "','" & contact & "','" & npwp & "','" & hari & "','" & jatuhTempo.ToString("yyyy-MM-dd") & "','" & item & "','" & tb_totalHarga.Text & "','" & tdiskSen & "','" & tdiskRp & "','" & sTotalHarga & "','" & TPPNsen & "','" & TPPNRp & "','" & tb_grandTotal.Text & "','" & keterangan & "','" & status & "','" & user & "')"
+            Dim quer_poheader As String = "UPDATE `po_header` SET `Tanggal`='" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "',`NoPP`='" & tb_nomorPO.Text & "',`CaraBayar`='" & caraBayar & "',`Bagian`='" & tb_bagian.Text & "',`Kode_Supl`='" & kode_supl & "',`Nama`='" & namaSupplier & "',`alamat`='" & alamat & "',`Telp`='" & telp & "',`Fax`='" & fax & "',`Attn`='" & contact & "',`NPWP`='" & npwp & "',`Hari`='" & hari & "',`JthTempo`='" & jatuhTempo & "',`Item`='" & item & "',`Total`='" & totalHarga & "',`TDiskSen`='" & tdiskSen & "',`TDiskRp`='" & tdiskRp & "',`STotal`='" & sTotalHarga & "',`TPPNsen`='" & TPPNsen & "',`TPPNRp`='" & TPPNRp & "',`GTotal`='" & grandTotal & "',`Keterangan`='" & keterangan & "',`Status`='" & status & "',`UserID`='" & user & "' WHERE nota = '" & tb_nomorPO.Text & "'"
+            '.WriteLine(quer_poheader)
+            Dim cmd_poheader As New MySqlCommand
+            Dim tr As MySqlTransaction
+            tr = conn.BeginTransaction
+
+            Try
+                cmd_poheader.Connection = conn
+                cmd_poheader.CommandText = quer_poheader
+                cmd_poheader.ExecuteNonQuery()
+            Catch ex As Exception
+                'MsgBox("err : " & ex.ToString)
+                Console.WriteLine("err : " & ex.ToString)
+            End Try
+            Dim cmd_podetail As New MySqlCommand
+            For i As Int16 = 0 To rowCount - 2
+                Try
+                    Dim noseri = 0
+                    Dim currency = "Rp"
+                    Dim jumlahHarga As Double = 0.0
+                    Dim ordere As Double = 0.0
+                    Dim sisa = 0
+                    Dim groupe As String = ""
+                    Dim subgroup As String = "subgroup"
+                    Dim statusid As String = ""
+                    Dim flag = 0
+                    Dim jam = ""
+                    Dim userid As String = "singo"
+                    'Console.WriteLine(dgv_purchaseOrder.Rows(i).Cells("No").Value & " " & dgv_purchaseOrder.Rows(i).Cells(1).Value & " " & dgv_purchaseOrder.Rows(i).Cells(2).Value)
+                    Dim quer_podetail As String = "INSERT INTO `po_detail`(`Nota`, `Tanggal`, `NoPP`, `Kode_supl`, `SNama`, `Bagian`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `noseri`, `Curr`, `Harga`, `Qty`, `Jumlah`, `ordere`, `Sisa`, `Groupe`, `Subgroup`, `StatusD`, `Flag`, `UserID`, `Jam`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & dgv_purchaseOrder.Rows(i).Cells("no_pp").Value & "','" & kode_supl & "','" & namaSupplier & "','" & tb_bagian.Text & "','" & i + 1 & "','" & dgv_purchaseOrder.Rows(i).Cells("kode_brg").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("nama_barang").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("unit").Value & "','" & noseri & "','" & currency & "','" & dgv_purchaseOrder.Rows(i).Cells("harga").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("jumlah").Value & "','" & jumlahHarga & "','" & ordere & "','" & sisa & "','" & groupe & "','" & subgroup & "','" & statusid & "','" & flag & "','" & userid & "', '" & jam & "')"
+                    Console.WriteLine(quer_podetail)
+                    cmd_podetail.Connection = conn
+                    cmd_podetail.CommandText = quer_podetail
+                    cmd_podetail.ExecuteNonQuery()
+                Catch ex As Exception
+                    Console.WriteLine(ex.ToString)
+                    MsgBox("err : " & ex.ToString)
+                End Try
+            Next
+            tr.Commit()
+        End If
+
         Me.Close()
     End Sub
 

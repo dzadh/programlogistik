@@ -652,7 +652,9 @@ Public Class home
     End Sub
 
     Private Sub b_ubahPo_Click(sender As Object, e As EventArgs) Handles b_ubahPo.Click
-        Console.WriteLine("ubah po clicked")
+        'Console.WriteLine("ubah po clicked")
+        Dim diapo As New dialogPO With {.nomorPurchaseOrder = DataGridView2.CurrentRow.Cells(0).Value.ToString}
+        diapo.Show()
     End Sub
 
     Private Sub b_hapusPo_Click(sender As Object, e As EventArgs) Handles b_hapusPo.Click
