@@ -28,6 +28,15 @@ Partial Class dialogPO
         Me.dp_tanggalPO = New System.Windows.Forms.DateTimePicker()
         Me.l_tanggalPO = New System.Windows.Forms.Label()
         Me.dgv_purchaseOrder = New System.Windows.Forms.DataGridView()
+        Me.No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.kode_brg = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.nama_barang = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.jumlah = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.harga = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.no_pp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ppn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.hapus = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.b_cancel = New System.Windows.Forms.Button()
         Me.b_save = New System.Windows.Forms.Button()
         Me.tb_supplier = New System.Windows.Forms.TextBox()
@@ -40,15 +49,8 @@ Partial Class dialogPO
         Me.Label3 = New System.Windows.Forms.Label()
         Me.tb_totalHarga = New System.Windows.Forms.TextBox()
         Me.tb_grandTotal = New System.Windows.Forms.TextBox()
-        Me.No = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.kode_brg = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.nama_barang = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.jumlah = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.harga = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.no_pp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ppn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.hapus = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.tb_keterangan = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.dgv_purchaseOrder, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -105,6 +107,61 @@ Partial Class dialogPO
         Me.dgv_purchaseOrder.RowHeadersVisible = False
         Me.dgv_purchaseOrder.Size = New System.Drawing.Size(790, 253)
         Me.dgv_purchaseOrder.TabIndex = 6
+        '
+        'No
+        '
+        Me.No.HeaderText = "No"
+        Me.No.Name = "No"
+        Me.No.Width = 46
+        '
+        'kode_brg
+        '
+        Me.kode_brg.HeaderText = "Kode Barang"
+        Me.kode_brg.Name = "kode_brg"
+        '
+        'nama_barang
+        '
+        Me.nama_barang.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.nama_barang.HeaderText = "Nama Barang"
+        Me.nama_barang.Name = "nama_barang"
+        '
+        'unit
+        '
+        Me.unit.HeaderText = "Unit"
+        Me.unit.Name = "unit"
+        Me.unit.Width = 50
+        '
+        'jumlah
+        '
+        Me.jumlah.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.jumlah.HeaderText = "Jumlah"
+        Me.jumlah.Name = "jumlah"
+        Me.jumlah.Width = 65
+        '
+        'harga
+        '
+        Me.harga.HeaderText = "Harga Satuan"
+        Me.harga.Name = "harga"
+        '
+        'no_pp
+        '
+        Me.no_pp.HeaderText = "No PP"
+        Me.no_pp.Name = "no_pp"
+        Me.no_pp.Width = 75
+        '
+        'ppn
+        '
+        Me.ppn.HeaderText = "ppn (dalam %)"
+        Me.ppn.Name = "ppn"
+        Me.ppn.Width = 98
+        '
+        'hapus
+        '
+        Me.hapus.HeaderText = "hapus"
+        Me.hapus.Name = "hapus"
+        Me.hapus.Text = ""
+        Me.hapus.ToolTipText = "hapus"
+        Me.hapus.Width = 50
         '
         'b_cancel
         '
@@ -205,66 +262,30 @@ Partial Class dialogPO
         Me.tb_grandTotal.Size = New System.Drawing.Size(136, 20)
         Me.tb_grandTotal.TabIndex = 17
         '
-        'No
+        'tb_keterangan
         '
-        Me.No.HeaderText = "No"
-        Me.No.Name = "No"
-        Me.No.Width = 46
+        Me.tb_keterangan.Location = New System.Drawing.Point(25, 412)
+        Me.tb_keterangan.Multiline = True
+        Me.tb_keterangan.Name = "tb_keterangan"
+        Me.tb_keterangan.Size = New System.Drawing.Size(351, 70)
+        Me.tb_keterangan.TabIndex = 18
         '
-        'kode_brg
+        'Label4
         '
-        Me.kode_brg.HeaderText = "Kode Barang"
-        Me.kode_brg.Name = "kode_brg"
-        '
-        'nama_barang
-        '
-        Me.nama_barang.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.nama_barang.HeaderText = "Nama Barang"
-        Me.nama_barang.Name = "nama_barang"
-        '
-        'unit
-        '
-        Me.unit.HeaderText = "Unit"
-        Me.unit.Name = "unit"
-        Me.unit.Width = 50
-        '
-        'jumlah
-        '
-        Me.jumlah.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.jumlah.HeaderText = "Jumlah"
-        Me.jumlah.Name = "jumlah"
-        Me.jumlah.Width = 65
-        '
-        'harga
-        '
-        Me.harga.HeaderText = "Harga Satuan"
-        Me.harga.Name = "harga"
-        '
-        'no_pp
-        '
-        Me.no_pp.HeaderText = "No PP"
-        Me.no_pp.Name = "no_pp"
-        Me.no_pp.Width = 75
-        '
-        'ppn
-        '
-        Me.ppn.HeaderText = "ppn (dalam %)"
-        Me.ppn.Name = "ppn"
-        Me.ppn.Width = 98
-        '
-        'hapus
-        '
-        Me.hapus.HeaderText = "hapus"
-        Me.hapus.Name = "hapus"
-        Me.hapus.Text = ""
-        Me.hapus.ToolTipText = "hapus"
-        Me.hapus.Width = 50
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(22, 396)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(62, 13)
+        Me.Label4.TabIndex = 19
+        Me.Label4.Text = "Ketarangan"
         '
         'dialogPO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(827, 546)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.tb_keterangan)
         Me.Controls.Add(Me.tb_grandTotal)
         Me.Controls.Add(Me.tb_totalHarga)
         Me.Controls.Add(Me.Label3)
@@ -318,4 +339,6 @@ Partial Class dialogPO
     Friend WithEvents no_pp As DataGridViewTextBoxColumn
     Friend WithEvents ppn As DataGridViewTextBoxColumn
     Friend WithEvents hapus As DataGridViewButtonColumn
+    Friend WithEvents tb_keterangan As TextBox
+    Friend WithEvents Label4 As Label
 End Class

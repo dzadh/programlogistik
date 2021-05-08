@@ -658,12 +658,23 @@ Public Class home
     End Sub
 
     Private Sub b_hapusPo_Click(sender As Object, e As EventArgs) Handles b_hapusPo.Click
-        Console.WriteLine("hapus po clicked")
-        Dim quer As String = "DELETE FROM po_header WHERE nota ='" & DataGridView2.CurrentRow.Cells(0).Value.ToString & "'"
+        'Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PP nomor " & DataGridView1.CurrentRow.Cells(0).Value.ToString & " ?", MsgBoxStyle.OkCancel)
+        Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PO nomot " & DataGridView2.CurrentRow.Cells(0).Value.ToString & "?", MsgBoxStyle.OkCancel)
 
+        If dialog_result = 1 Then
+            Dim quer As String = "DELETE FROM po_header WHERE nota ='" & DataGridView2.CurrentRow.Cells(0).Value.ToString & "'"
+            Dim quer_detail As String = "DELETE FROM `po_detail` WHERE Nota = '" & DataGridView2.CurrentRow.Cells(0).Value.ToString & "'"
+            Dim cmd As New MySqlCommand(quer, conn)
+            Dim cmdd As New MySqlCommand(quer_detail, conn)
+            Try
+                cmd.ExecuteNonQuery()
+                cmdd.ExecuteNonQuery()
+            Catch ex As Exception
+                Console.WriteLine(ex.ToString)
+            End Try
+        End If
+        DataGridView2.Refresh()
     End Sub
-
-
 
     '=========================================== END OF TAB PO ==========================================
 

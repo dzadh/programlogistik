@@ -22,7 +22,7 @@ Public Class dialogPO
     Dim totalPajak As Double
     Public selectedNota As String
     Public tppnsen As Int16
-    Dim stat As boo
+    Dim stat As Boolean
 
     'Dim diaPilPP As New pilihPermintaanPembelianDialog
     'Dim diapilobj As New Object
@@ -80,7 +80,7 @@ Public Class dialogPO
         Else
             tb_nomorPO.Text = nomorPurchaseOrder
             tb_nomorPO.Enabled = False
-            Dim quer As String = "SELECT Nota, Tanggal, Bagian ,Nama ,Total ,TPPNsen, TPPNRp, GTotal FROM `po_header` WHERE Nota ='" & nomorPurchaseOrder & "'"
+            Dim quer As String = "SELECT Nota, Tanggal, Bagian ,Nama ,Total ,TPPNsen, TPPNRp, GTotal, keterangan FROM `po_header` WHERE Nota ='" & nomorPurchaseOrder & "'"
             Console.WriteLine(quer)
             Dim cmd As New MySqlCommand(quer, conn)
             Dim reader As MySqlDataReader = cmd.ExecuteReader
@@ -93,6 +93,7 @@ Public Class dialogPO
                 tppnsen = reader.GetString(5)
                 tb_pajak.Text = reader.GetString(6)
                 tb_grandTotal.Text = reader.GetString(7)
+                tb_keterangan.Text = reader.GetString(8)
             End While
             tb_nomorPO.Enabled = False
             reader.Close()
@@ -103,8 +104,9 @@ Public Class dialogPO
             Dim pembaca As MySqlDataReader = cmd_isi.ExecuteReader
 
             While pembaca.Read
-                dgv_purchaseOrder.Rows.Add(pembaca.GetString(0), pembaca.GetString(1), pembaca.GetString(2), pembaca.GetString(3), pembaca.GetString(4), pembaca.GetString(5), pembaca.GetString(6))
+                dgv_purchaseOrder.Rows.Add(pembaca.GetString(0), pembaca.GetString(1), pembaca.GetString(2), pembaca.GetString(3), pembaca.GetString(4), pembaca.GetString(5), pembaca.GetString(6), tppnsen)
             End While
+            pembaca.Close()
             stat = False
         End If
     End Sub
@@ -256,8 +258,8 @@ Public Class dialogPO
         Next
         quer += ")"
         Dim cmd As MySqlCommand = New MySqlCommand(quer, conn)
+        Dim reader As MySqlDataReader = cmd.ExecuteReader
         Try
-            Dim reader As MySqlDataReader = cmd.ExecuteReader
             Dim i As Int16 = dgv_purchaseOrder.RowCount - 1
             While reader.Read
                 dgv_purchaseOrder.Rows.Add()
@@ -273,6 +275,7 @@ Public Class dialogPO
             reader.Close()
         Catch ex As Exception
             Console.WriteLine(ex.ToString)
+            reader.Close()
         End Try
     End Sub
 
@@ -290,10 +293,10 @@ Public Class dialogPO
         Dim item As Int16 = 0
         Dim tdiskSen = 0
         Dim tdiskRp = 0
-        Dim TPPNsen = 0
-        Dim TPPNRp = 0
+        Dim TPPNsen = dgv_purchaseOrder.Rows(0).Cells(7).Value
+        Dim TPPNRp = tb_pajak.Text
         Dim sTotalHarga = 0
-        Dim keterangan As String = "ini keterangan"
+        Dim keterangan As String = tb_keterangan.Text
         Dim status = 1
         Dim user = "singo"
 
@@ -332,7 +335,6 @@ Public Class dialogPO
                 Console.WriteLine("err : " & ex.ToString)
             End Try
 
-            '===================== SAMPAI SINIIII ========================
             Dim cmd_podetail As New MySqlCommand
             For i As Int16 = 0 To rowCount - 2
                 Try
@@ -353,14 +355,22 @@ Public Class dialogPO
                     cmd_podetail.Connection = conn
                     cmd_podetail.CommandText = quer_podetail
                     cmd_podetail.ExecuteNonQuery()
+                    MsgBox("data berhasil disimpan..")
                 Catch ex As Exception
                     Console.WriteLine(ex.ToString)
                     MsgBox("err : " & ex.ToString)
                 End Try
             Next
+
             tr.Commit()
         Else
             '==================================== EDIT PO ===========================================
+            Dim cmd_hpsisi As New MySqlCommand("DELETE FROM `po_detail` WHERE Nota = '" & tb_nomorPO.Text & "'", conn)
+            Try
+                cmd_hpsisi.ExecuteNonQuery()
+            Catch ex As Exception
+                Console.WriteLine(ex.ToString)
+            End Try
             Dim cmd_supplier As New MySqlCommand("select kode_supl, alamat, telpon, fax, contact, npwp, hari from supplier where nama = '" & namaSupplier & "'", conn)
             Dim reader As MySqlDataReader = cmd_supplier.ExecuteReader
             Try
@@ -410,10 +420,13 @@ Public Class dialogPO
                     Dim userid As String = "singo"
                     'Console.WriteLine(dgv_purchaseOrder.Rows(i).Cells("No").Value & " " & dgv_purchaseOrder.Rows(i).Cells(1).Value & " " & dgv_purchaseOrder.Rows(i).Cells(2).Value)
                     Dim quer_podetail As String = "INSERT INTO `po_detail`(`Nota`, `Tanggal`, `NoPP`, `Kode_supl`, `SNama`, `Bagian`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `noseri`, `Curr`, `Harga`, `Qty`, `Jumlah`, `ordere`, `Sisa`, `Groupe`, `Subgroup`, `StatusD`, `Flag`, `UserID`, `Jam`) VALUES ('" & tb_nomorPO.Text & "','" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "','" & dgv_purchaseOrder.Rows(i).Cells("no_pp").Value & "','" & kode_supl & "','" & namaSupplier & "','" & tb_bagian.Text & "','" & i + 1 & "','" & dgv_purchaseOrder.Rows(i).Cells("kode_brg").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("nama_barang").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("unit").Value & "','" & noseri & "','" & currency & "','" & dgv_purchaseOrder.Rows(i).Cells("harga").Value & "','" & dgv_purchaseOrder.Rows(i).Cells("jumlah").Value & "','" & jumlahHarga & "','" & ordere & "','" & sisa & "','" & groupe & "','" & subgroup & "','" & statusid & "','" & flag & "','" & userid & "', '" & jam & "')"
+                    'Dim quer_podetail As String = "UPDATE `po_detail` SET `Tanggal`='" & dp_tanggalPO.Value.ToString("yyyy-MM-dd") & "',`NoPP`='" & dgv_purchaseOrder.Rows(i).Cells("no_pp").Value & "',`Kode_supl`='" & kode_supl & "',`SNama`='" & namaSupplier & "',`Bagian`='" & tb_bagian.Text & "',`Kode_Brg`='" & dgv_purchaseOrder.Rows(i).Cells("kode_brg").Value & "',`Nama`='" & dgv_purchaseOrder.Rows(i).Cells("nama_barang").Value & "',`Satuan`='" & dgv_purchaseOrder.Rows(i).Cells("unit").Value & "',`noseri`='" & noseri & "',`Curr`='" & currency & "',`Harga`='" & dgv_purchaseOrder.Rows(i).Cells("harga").Value & "',`Qty`='" & dgv_purchaseOrder.Rows(i).Cells("jumlah").Value & "',`Jumlah`='" & jumlahHarga & "',`ordere`='" & ordere & "',`Sisa`='" & sisa & "',`Groupe`='" & groupe & "',`Subgroup`='" & subgroup & "',`StatusD`='" & statusid & "',`Flag`='" & flag & "',`UserID`='" & userid & "',`Jam`='' WHERE nota = '" & tb_nomorPO.Text & "' and nomor = '" & dgv_purchaseOrder.Rows(i).Cells(0).Value & "'"
+
                     Console.WriteLine(quer_podetail)
                     cmd_podetail.Connection = conn
                     cmd_podetail.CommandText = quer_podetail
                     cmd_podetail.ExecuteNonQuery()
+                    MsgBox("data berhasil di update")
                 Catch ex As Exception
                     Console.WriteLine(ex.ToString)
                     MsgBox("err : " & ex.ToString)
@@ -421,7 +434,6 @@ Public Class dialogPO
             Next
             tr.Commit()
         End If
-
         Me.Close()
     End Sub
 

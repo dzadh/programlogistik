@@ -93,8 +93,6 @@ Public Class dialogPP
             dp_tglPermitaalPembelian.Value = reader.GetString(7)
             tb_nomorPP.Enabled = False
             reader.Close()
-
-
         End If
 
     End Sub
