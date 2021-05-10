@@ -44,6 +44,9 @@ Partial Class home
         Me.l_pencarian = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.b_hapusPo = New System.Windows.Forms.Button()
+        Me.b_ubahPo = New System.Windows.Forms.Button()
+        Me.b_buatPO = New System.Windows.Forms.Button()
         Me.gb_filterTglPo = New System.Windows.Forms.GroupBox()
         Me.dp_filterTglPOEnd = New System.Windows.Forms.DateTimePicker()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -64,9 +67,6 @@ Partial Class home
         Me.DataBarangToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DataSupplierToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.b_buatPO = New System.Windows.Forms.Button()
-        Me.b_ubahPo = New System.Windows.Forms.Button()
-        Me.b_hapusPo = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.gb_filterTanggal.SuspendLayout()
@@ -147,7 +147,7 @@ Partial Class home
         'b_hapusPP
         '
         Me.b_hapusPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.b_hapusPP.Location = New System.Drawing.Point(372, 562)
+        Me.b_hapusPP.Location = New System.Drawing.Point(371, 562)
         Me.b_hapusPP.Name = "b_hapusPP"
         Me.b_hapusPP.Size = New System.Drawing.Size(75, 39)
         Me.b_hapusPP.TabIndex = 7
@@ -157,7 +157,7 @@ Partial Class home
         'b_ubahPP
         '
         Me.b_ubahPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.b_ubahPP.Location = New System.Drawing.Point(291, 562)
+        Me.b_ubahPP.Location = New System.Drawing.Point(290, 562)
         Me.b_ubahPP.Name = "b_ubahPP"
         Me.b_ubahPP.Size = New System.Drawing.Size(75, 39)
         Me.b_ubahPP.TabIndex = 7
@@ -167,7 +167,7 @@ Partial Class home
         'b_buatPP
         '
         Me.b_buatPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.b_buatPP.Location = New System.Drawing.Point(210, 562)
+        Me.b_buatPP.Location = New System.Drawing.Point(209, 562)
         Me.b_buatPP.Name = "b_buatPP"
         Me.b_buatPP.Size = New System.Drawing.Size(75, 39)
         Me.b_buatPP.TabIndex = 7
@@ -310,6 +310,36 @@ Partial Class home
         Me.TabPage2.Text = "Daftar PO"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'b_hapusPo
+        '
+        Me.b_hapusPo.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_hapusPo.Location = New System.Drawing.Point(371, 562)
+        Me.b_hapusPo.Name = "b_hapusPo"
+        Me.b_hapusPo.Size = New System.Drawing.Size(75, 39)
+        Me.b_hapusPo.TabIndex = 9
+        Me.b_hapusPo.Text = "Hapus PO"
+        Me.b_hapusPo.UseVisualStyleBackColor = True
+        '
+        'b_ubahPo
+        '
+        Me.b_ubahPo.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_ubahPo.Location = New System.Drawing.Point(290, 562)
+        Me.b_ubahPo.Name = "b_ubahPo"
+        Me.b_ubahPo.Size = New System.Drawing.Size(75, 39)
+        Me.b_ubahPo.TabIndex = 9
+        Me.b_ubahPo.Text = "Ubah PO"
+        Me.b_ubahPo.UseVisualStyleBackColor = True
+        '
+        'b_buatPO
+        '
+        Me.b_buatPO.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_buatPO.Location = New System.Drawing.Point(209, 562)
+        Me.b_buatPO.Name = "b_buatPO"
+        Me.b_buatPO.Size = New System.Drawing.Size(75, 39)
+        Me.b_buatPO.TabIndex = 9
+        Me.b_buatPO.Text = "Buat PO"
+        Me.b_buatPO.UseVisualStyleBackColor = True
+        '
         'gb_filterTglPo
         '
         Me.gb_filterTglPo.Controls.Add(Me.dp_filterTglPOEnd)
@@ -373,7 +403,7 @@ Partial Class home
         'tb_searchPoByNomorNota
         '
         Me.tb_searchPoByNomorNota.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tb_searchPoByNomorNota.Location = New System.Drawing.Point(21, 81)
+        Me.tb_searchPoByNomorNota.Location = New System.Drawing.Point(20, 73)
         Me.tb_searchPoByNomorNota.Name = "tb_searchPoByNomorNota"
         Me.tb_searchPoByNomorNota.Size = New System.Drawing.Size(163, 24)
         Me.tb_searchPoByNomorNota.TabIndex = 3
@@ -381,7 +411,7 @@ Partial Class home
         'l_nomornotapo
         '
         Me.l_nomornotapo.AutoSize = True
-        Me.l_nomornotapo.Location = New System.Drawing.Point(18, 64)
+        Me.l_nomornotapo.Location = New System.Drawing.Point(17, 56)
         Me.l_nomornotapo.Name = "l_nomornotapo"
         Me.l_nomornotapo.Size = New System.Drawing.Size(64, 13)
         Me.l_nomornotapo.TabIndex = 2
@@ -391,7 +421,7 @@ Partial Class home
         '
         Me.l_pencarianPO.AutoSize = True
         Me.l_pencarianPO.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.l_pencarianPO.Location = New System.Drawing.Point(18, 26)
+        Me.l_pencarianPO.Location = New System.Drawing.Point(17, 17)
         Me.l_pencarianPO.Name = "l_pencarianPO"
         Me.l_pencarianPO.Size = New System.Drawing.Size(93, 18)
         Me.l_pencarianPO.TabIndex = 1
@@ -403,7 +433,7 @@ Partial Class home
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(205, 6)
+        Me.DataGridView2.Location = New System.Drawing.Point(210, 17)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DataGridView2.Size = New System.Drawing.Size(1120, 539)
@@ -412,30 +442,30 @@ Partial Class home
         'dgv_databagian
         '
         Me.dgv_databagian.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.dgv_databagian.Location = New System.Drawing.Point(6, 6)
+        Me.dgv_databagian.Location = New System.Drawing.Point(210, 17)
         Me.dgv_databagian.Name = "dgv_databagian"
         Me.dgv_databagian.ReadOnly = True
         Me.dgv_databagian.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_databagian.Size = New System.Drawing.Size(803, 290)
+        Me.dgv_databagian.Size = New System.Drawing.Size(1120, 539)
         Me.dgv_databagian.TabIndex = 0
         '
         'dgv_databarang
         '
         Me.dgv_databarang.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.dgv_databarang.Location = New System.Drawing.Point(6, 6)
+        Me.dgv_databarang.Location = New System.Drawing.Point(210, 17)
         Me.dgv_databarang.Name = "dgv_databarang"
         Me.dgv_databarang.ReadOnly = True
         Me.dgv_databarang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_databarang.Size = New System.Drawing.Size(803, 290)
+        Me.dgv_databarang.Size = New System.Drawing.Size(1120, 539)
         Me.dgv_databarang.TabIndex = 0
         '
         'dgv_datasupplier
         '
-        Me.dgv_datasupplier.Location = New System.Drawing.Point(7, 0)
+        Me.dgv_datasupplier.Location = New System.Drawing.Point(210, 17)
         Me.dgv_datasupplier.Name = "dgv_datasupplier"
         Me.dgv_datasupplier.ReadOnly = True
         Me.dgv_datasupplier.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_datasupplier.Size = New System.Drawing.Size(803, 290)
+        Me.dgv_datasupplier.Size = New System.Drawing.Size(1120, 539)
         Me.dgv_datasupplier.TabIndex = 0
         '
         'MenuStrip1
@@ -482,36 +512,6 @@ Partial Class home
         '
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
-        '
-        'b_buatPO
-        '
-        Me.b_buatPO.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.b_buatPO.Location = New System.Drawing.Point(205, 551)
-        Me.b_buatPO.Name = "b_buatPO"
-        Me.b_buatPO.Size = New System.Drawing.Size(75, 39)
-        Me.b_buatPO.TabIndex = 9
-        Me.b_buatPO.Text = "Buat PO"
-        Me.b_buatPO.UseVisualStyleBackColor = True
-        '
-        'b_ubahPo
-        '
-        Me.b_ubahPo.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.b_ubahPo.Location = New System.Drawing.Point(286, 551)
-        Me.b_ubahPo.Name = "b_ubahPo"
-        Me.b_ubahPo.Size = New System.Drawing.Size(75, 39)
-        Me.b_ubahPo.TabIndex = 9
-        Me.b_ubahPo.Text = "Ubah PO"
-        Me.b_ubahPo.UseVisualStyleBackColor = True
-        '
-        'b_hapusPo
-        '
-        Me.b_hapusPo.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.b_hapusPo.Location = New System.Drawing.Point(367, 551)
-        Me.b_hapusPo.Name = "b_hapusPo"
-        Me.b_hapusPo.Size = New System.Drawing.Size(75, 39)
-        Me.b_hapusPo.TabIndex = 9
-        Me.b_hapusPo.Text = "Hapus PO"
-        Me.b_hapusPo.UseVisualStyleBackColor = True
         '
         'home
         '

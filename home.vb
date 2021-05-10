@@ -80,7 +80,6 @@ Public Class home
         End Try
     End Sub
 
-
     'suppose to be tabcontrolex1
     Private Sub b_tambahtab2_Click(sender As Object, e As EventArgs) Handles b_tambahtab2.Click
         Dim newtab As New TabPage
@@ -236,29 +235,48 @@ Public Class home
         Dim tambahBarang As New Button
         Dim editBarang As New Button
         Dim hapusBarang As New Button
+        Dim ukuran As New Size(75, 39)
 
         tabDataBarang.Name = "tabelBarang"
         tabDataBarang.Text = "Tabel Barang"
         dgv_databarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left + AnchorStyles.Right + AnchorStyles.Top
 
+        Dim pencarianLabel As New Label
+        pencarianLabel.Text = "PENCARIAN"
+        pencarianLabel.Location = New Point(17, 17)
+        pencarianLabel.Size = New Size(93, 18)
+        pencarianLabel.Font = New Font("Microsoft Sans Serif", 11.25)
+
+        Dim l_searchbyname As New Label
+        l_searchbyname.Text = "Nama Barang"
+        l_searchbyname.Location = New Point(18, 45)
+
+        Dim tb_searchbarangbyname As New TextBox
+        tb_searchbarangbyname.Location = New Point(20, 62)
+        tb_searchbarangbyname.Font = New Font("Microsoft Sans Serif", 11)
+
         closeButton.Name = "closeButton"
         closeButton.Text = "Tutup Tab"
-        closeButton.Location = New Point(6, 302)
+        closeButton.Location = New Point(210, 562)
+        closeButton.Size = ukuran
         closeButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         tambahBarang.Name = "tambahBarang"
         tambahBarang.Text = "Tambah Barang"
-        tambahBarang.Location = New Point(91, 302)
+        tambahBarang.Location = New Point(291, 562)
+        tambahBarang.Size = ukuran
         tambahBarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         editBarang.Name = "editBarang"
         editBarang.Text = "Edit Barang"
-        editBarang.Location = New Point(176, 302)
+        editBarang.Location = New Point(372, 562)
+        editBarang.Size = ukuran
         editBarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         hapusBarang.Name = "hapusBarang"
         hapusBarang.Text = "Hapus Barang"
-        hapusBarang.Location = New Point(261, 302)
+        hapusBarang.Location = New Point(453, 562)
+        hapusBarang.Size = ukuran
         hapusBarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         Me.TabControl1.TabPages.Add(tabDataBarang)
@@ -268,6 +286,8 @@ Public Class home
         tabDataBarang.Controls.Add(editBarang)
         tabDataBarang.Controls.Add(hapusBarang)
         tabDataBarang.Controls.Add(dgv_databarang)
+        tabDataBarang.Controls.Add(pencarianLabel)
+        tabDataBarang.Controls.Add(tb_searchbarangbyname)
 
         'Dim sql As String = "SELECT KODE_BRG, NAMA,SATUAN,Stock,rak,TglBeli,HargaBeli,HargaPokok,RpJumlah FROM `barang`"
         Dim sql As String = "SELECT * FROM barang"
@@ -675,6 +695,8 @@ Public Class home
         End If
         DataGridView2.Refresh()
     End Sub
+
+
 
     '=========================================== END OF TAB PO ==========================================
 
