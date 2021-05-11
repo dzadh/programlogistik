@@ -12,6 +12,9 @@ Public Class home
     Public dataSetPP As New DataSet
     Public datasetPo As New DataSet
 
+    Dim tb_searchbarangbyname As New TextBox
+    Dim tb_searchbarangByNomor As New TextBox
+
     Public Sub b_addtab_Click(sender As Object, e As EventArgs)
         Dim newtab As New TabPage
         Dim newtextbox As New TextBox
@@ -101,6 +104,8 @@ Public Class home
     End Sub
     ' end of suppose to be tabcontrolex1
 
+
+    '=============================== TAB ADATA BAGIAN ========================================
     Friend Sub DataBagianToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBagianToolStripMenuItem.Click
         Dim newtab As New TabPage
         Dim newtextbox As New TextBox
@@ -227,6 +232,8 @@ Public Class home
             Console.WriteLine("error : " & ex.ToString)
         End Try
     End Sub
+    '============================== END OF TAB DATA BAGIAN ================================
+
     '============================== DAFTAR BARANG ===========================================
 
     Private Sub DataBarangToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBarangToolStripMenuItem.Click
@@ -239,7 +246,9 @@ Public Class home
 
         tabDataBarang.Name = "tabelBarang"
         tabDataBarang.Text = "Tabel Barang"
+        tabDataBarang.UseVisualStyleBackColor = True
         dgv_databarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left + AnchorStyles.Right + AnchorStyles.Top
+
 
         Dim pencarianLabel As New Label
         pencarianLabel.Text = "PENCARIAN"
@@ -250,10 +259,26 @@ Public Class home
         Dim l_searchbyname As New Label
         l_searchbyname.Text = "Nama Barang"
         l_searchbyname.Location = New Point(18, 45)
+        l_searchbyname.Size = New Size(100, 13)
 
-        Dim tb_searchbarangbyname As New TextBox
+
         tb_searchbarangbyname.Location = New Point(20, 62)
+        tb_searchbarangbyname.Size = New Size(163, 24)
         tb_searchbarangbyname.Font = New Font("Microsoft Sans Serif", 11)
+
+        Dim l_searchbynomorbarang As New Label
+        l_searchbynomorbarang.Text = "Nomor Barang"
+        l_searchbynomorbarang.Location = New Point(18, 95)
+        l_searchbynomorbarang.Size = New Size(100, 13)
+
+        tb_searchbarangByNomor.Location = New Point(20, 113)
+        tb_searchbarangByNomor.Size = New Size(163, 24)
+        tb_searchbarangByNomor.Font = New Font("Microsoft Sans Serif", 11)
+
+        Dim b_caribarang As New Button
+        b_caribarang.Text = "Cari"
+        b_caribarang.Location = New Point(108, 143)
+        b_caribarang.Size = New Size(75, 23)
 
         closeButton.Name = "closeButton"
         closeButton.Text = "Tutup Tab"
@@ -287,7 +312,11 @@ Public Class home
         tabDataBarang.Controls.Add(hapusBarang)
         tabDataBarang.Controls.Add(dgv_databarang)
         tabDataBarang.Controls.Add(pencarianLabel)
+        tabDataBarang.Controls.Add(l_searchbyname)
         tabDataBarang.Controls.Add(tb_searchbarangbyname)
+        tabDataBarang.Controls.Add(l_searchbynomorbarang)
+        tabDataBarang.Controls.Add(tb_searchbarangByNomor)
+        tabDataBarang.Controls.Add(b_caribarang)
 
         'Dim sql As String = "SELECT KODE_BRG, NAMA,SATUAN,Stock,rak,TglBeli,HargaBeli,HargaPokok,RpJumlah FROM `barang`"
         Dim sql As String = "SELECT * FROM barang"
@@ -305,6 +334,7 @@ Public Class home
         AddHandler tambahBarang.Click, AddressOf tambahBarang_Clicked
         AddHandler editBarang.Click, AddressOf editBarang_Clicked
         AddHandler hapusBarang.Click, AddressOf hapusBarang_clicked
+        AddHandler b_caribarang.Click, AddressOf cariBarang
     End Sub
 
     Private Sub closeTabDataBarang()
@@ -367,6 +397,30 @@ Public Class home
             Console.WriteLine("err : " & ex.ToString)
             MsgBox("err : " & ex.ToString)
         End Try
+    End Sub
+
+    Private Sub cariBarang()
+        Dim quer As String
+        Console.WriteLine(String.IsNullOrEmpty(tb_searchbarangbyname.Text) & " " & String.IsNullOrEmpty(tb_searchbarangByNomor.Text))
+
+        If String.IsNullOrEmpty(tb_searchbarangbyname.Text) = False And String.IsNullOrEmpty(tb_searchbarangByNomor.Text) = True Then
+            quer = "select * from barang where nama like '%" & tb_searchbarangbyname.Text & "%'"
+        ElseIf String.IsNullOrEmpty(tb_searchbarangByNomor.Text) = False And String.IsNullOrEmpty(tb_searchbarangbyname.Text) = True Then
+            quer = "select * from barang where kode_brg like '%" & tb_searchbarangByNomor.Text & "%'"
+        Else
+            quer = "select * from barang where nama like  '%" & tb_searchbarangbyname.Text & "%' or kode_brg like '%" & tb_searchbarangByNomor.Text & "%'"
+        End If
+        Console.WriteLine(quer)
+        Try
+            Dim da_barang As New MySqlDataAdapter(quer, conn)
+            dataSetBarang.Clear()
+            da_barang.Fill(dataSetBarang, "tabel_barang")
+            dgv_databarang.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("err : " & ex.ToString)
+            MsgBox("err : " & ex.ToString)
+        End Try
+
     End Sub
 
     '==================================== END OF DAFTAR BARANG =================================
