@@ -14,6 +14,8 @@ Public Class home
 
     Dim tb_searchbarangbyname As New TextBox
     Dim tb_searchbarangByNomor As New TextBox
+    Dim tb_cariNamaDivisi As New TextBox
+    Dim tb_cariNamaSupplier As New TextBox
 
     Public Sub b_addtab_Click(sender As Object, e As EventArgs)
         Dim newtab As New TabPage
@@ -104,7 +106,6 @@ Public Class home
     End Sub
     ' end of suppose to be tabcontrolex1
 
-
     '=============================== TAB ADATA BAGIAN ========================================
     Friend Sub DataBagianToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBagianToolStripMenuItem.Click
         Dim newtab As New TabPage
@@ -114,30 +115,51 @@ Public Class home
         'Dim dgv_databagian As New DataGridView
         Dim tambahButton As New Button
         Dim hapusButton As New Button
-
+        Dim ukuran As New Size(75, 39)
 
         newtab.Name = "TabelBagian"
-        newtab.Text = "Tabel Bagian" & tabcount.ToString & "     "
+        newtab.Text = "Tabel Bagian"
         newbutt.Name = "newtab" & tabcount.ToString
-        newbutt.Text = "Close Tab" & tabcount.ToString
-        newbutt.Location = New Point(6, 302)
+        newbutt.Text = "Tutup Tab"
+        newbutt.Location = New Point(210, 562)
+        newbutt.Size = ukuran
         newbutt.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
         newbutt.AutoSize = True
 
         editButton.Name = "editButton"
-        editButton.Location = New Point(90, 302)
+        editButton.Location = New Point(372, 562)
+        editButton.Size = ukuran
         editButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
         editButton.Text = "Edit"
 
         tambahButton.Name = "tambahButton"
-        tambahButton.Location = New Point(175, 302)
+        tambahButton.Location = New Point(291, 562)
+        tambahButton.Size = ukuran
         tambahButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
         tambahButton.Text = "Tambah"
 
         hapusButton.Name = "hapusButton"
-        hapusButton.Location = New Point(260, 302)
+        hapusButton.Location = New Point(453, 562)
         hapusButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+        hapusButton.Size = ukuran
         hapusButton.Text = "Hapus"
+
+        Dim searchLabel As New Label
+        searchLabel.Text = "PENCARIAN"
+        searchLabel.Location = New Point(17, 17)
+        searchLabel.Size = New Size(93, 18)
+        searchLabel.Font = New Font("Microsoft Sans Serif", 11.25)
+
+        Dim cariNamaDivisi_label As New Label
+        cariNamaDivisi_label.Text = "Nama Divisi"
+        cariNamaDivisi_label.Location = New Point(18, 45)
+        cariNamaDivisi_label.Size = New Size(100, 13)
+
+
+        tb_cariNamaDivisi.Location = New Point(20, 62)
+        tb_cariNamaDivisi.Size = New Size(163, 24)
+        tb_cariNamaDivisi.Font = New Font("Microsoft Sans Serif", 11)
+
 
         'dgv_databagian.Location = New Point(6, 6)
         'dgv_databagian.Size = New Size(803, 290)
@@ -154,6 +176,9 @@ Public Class home
         newtab.Controls.Add(editButton)
         newtab.Controls.Add(tambahButton)
         newtab.Controls.Add(hapusButton)
+        newtab.Controls.Add(searchLabel)
+        newtab.Controls.Add(cariNamaDivisi_label)
+        newtab.Controls.Add(tb_cariNamaDivisi)
 
         Me.TabControl1.SelectedIndex = Me.TabControl1.TabCount - 1
         Dim Sql As String = "SELECT * FROM `tblbagian`"
@@ -170,6 +195,7 @@ Public Class home
         AddHandler editButton.Click, AddressOf editButtonClicked
         AddHandler tambahButton.Click, AddressOf tambahButtonClicked
         AddHandler hapusButton.Click, AddressOf hapusButtonClicked
+        AddHandler tb_cariNamaDivisi.TextChanged, AddressOf cariNamaDivisi
     End Sub
 
     Private Sub hapusButtonClicked()
@@ -232,10 +258,22 @@ Public Class home
             Console.WriteLine("error : " & ex.ToString)
         End Try
     End Sub
+
+    Private Sub cariNamaDivisi()
+        Dim quer As String = "SELECT *  FROM `tblbagian` WHERE `Bagian` LIKE '%" & tb_cariNamaDivisi.Text & "%' ORDER BY `kode` ASC"
+        Try
+            dss.Clear()
+            Dim da_bagian As New MySqlDataAdapter(quer, conn)
+            da_bagian.Fill(dss, "tabel_po")
+            dgv_databagian.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("err : " & ex.ToString)
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
     '============================== END OF TAB DATA BAGIAN ================================
 
     '============================== DAFTAR BARANG ===========================================
-
     Private Sub DataBarangToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBarangToolStripMenuItem.Click
         Dim tabDataBarang As New TabPage
         Dim closeButton As New Button
@@ -433,6 +471,7 @@ Public Class home
         Dim tambahSupplier As New Button
         Dim editSupplier As New Button
         Dim hapusSupplier As New Button
+        Dim ukuran As New Size(75, 23)
 
         tabDataSupplier.Name = "tableSupplier"
         tabDataSupplier.Text = "Tabel Supplier"
@@ -440,23 +479,43 @@ Public Class home
 
         closeDataSupplier.Name = "closeDataSupplier"
         closeDataSupplier.Text = "Tutup tab"
-        closeDataSupplier.Location = New Point(6, 302)
+        closeDataSupplier.Location = New Point(210, 562)
+        closeDataSupplier.Size = ukuran
         closeDataSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         tambahSupplier.Name = "tambahSupplier"
         tambahSupplier.Text = "Tambah Supplier"
-        tambahSupplier.Location = New Point(91, 302)
+        tambahSupplier.Location = New Point(291, 562)
+        tambahSupplier.Size = ukuran
         tambahSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         editSupplier.Name = "editSupplier"
         editSupplier.Text = "Edit Supplier"
-        editSupplier.Location = New Point(176, 302)
+        editSupplier.Location = New Point(372, 562)
+        editSupplier.Size = ukuran
         editSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         hapusSupplier.Name = "hapusSupplier"
         hapusSupplier.Text = "Hapus Supplier"
-        hapusSupplier.Location = New Point(261, 302)
+        hapusSupplier.Location = New Point(453, 562)
+        hapusSupplier.Size = ukuran
         hapusSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+
+        Dim l_pencarian As New Label
+        l_pencarian.Text = "PENCARIAN"
+        l_pencarian.Location = New Point(17, 17)
+        l_pencarian.Size = New Size(93, 18)
+        l_pencarian.Font = New Font("microsoft sans serif", 11.25)
+
+        Dim l_cariNamaSupplier As New Label
+        l_cariNamaSupplier.Text = "Nama Supplier"
+        l_cariNamaSupplier.Location = New Point(18, 45)
+        l_cariNamaSupplier.Size = New Size(100, 13)
+
+
+        tb_cariNamaSupplier.Location = New Point(20, 62)
+        tb_cariNamaSupplier.Size = New Size(163, 24)
+        tb_cariNamaSupplier.Font = New Font("microsoft sans serif", 11)
 
         Me.TabControl1.TabPages.Add(tabDataSupplier)
         Me.TabControl1.SelectedIndex = TabControl1.TabCount - 1
@@ -466,6 +525,9 @@ Public Class home
         tabDataSupplier.Controls.Add(tambahSupplier)
         tabDataSupplier.Controls.Add(editSupplier)
         tabDataSupplier.Controls.Add(hapusSupplier)
+        tabDataSupplier.Controls.Add(l_pencarian)
+        tabDataSupplier.Controls.Add(l_cariNamaSupplier)
+        tabDataSupplier.Controls.Add(tb_cariNamaSupplier)
 
         Dim sql As String = "SELECT * FROM supplier"
         Try
@@ -482,6 +544,7 @@ Public Class home
         AddHandler tambahSupplier.Click, AddressOf tambahSupplier_clicked
         AddHandler editSupplier.Click, AddressOf editSupplier_clicked
         AddHandler hapusSupplier.Click, AddressOf hapusSupplier_clicked
+        AddHandler tb_cariNamaSupplier.TextChanged, AddressOf cariNamaSuppier
 
     End Sub
 
@@ -540,6 +603,10 @@ Public Class home
             Console.WriteLine("err : " & ex.ToString)
             MsgBox("err : " & ex.ToString)
         End Try
+    End Sub
+
+    Private Sub cariNamaSuppier()
+        Console.WriteLine("cari nama supplier")
     End Sub
     '=========================================== END OF DAFTAR SUPPLIER ===================================
 

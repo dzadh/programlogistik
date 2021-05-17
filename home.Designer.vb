@@ -23,6 +23,7 @@ Partial Class home
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(home))
         Me.l_statusdb = New System.Windows.Forms.Label()
         Me.l_status = New System.Windows.Forms.Label()
         Me.b_tambahtab2 = New System.Windows.Forms.Button()
@@ -523,6 +524,7 @@ Partial Class home
         Me.Controls.Add(Me.l_status)
         Me.Controls.Add(Me.l_statusdb)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "home"
         Me.Text = " "
