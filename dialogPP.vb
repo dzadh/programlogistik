@@ -153,10 +153,11 @@ Public Class dialogPP
 
     Private Sub fillKodeBarang()
         Try
-            Dim cmd As New MySqlCommand("select kode_brg from barang where nama = '" & dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
+            Dim cmd As New MySqlCommand("select kode_brg, satuan from barang where nama = '" & dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
             Dim reader As MySqlDataReader = cmd.ExecuteReader
             While reader.Read
                 dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
+                dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn + 1).Value = reader.GetString(1)
             End While
             dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
             reader.Close()

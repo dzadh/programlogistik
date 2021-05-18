@@ -58,6 +58,20 @@ Partial Class home
         Me.l_nomornotapo = New System.Windows.Forms.Label()
         Me.l_pencarianPO = New System.Windows.Forms.Label()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.b_hapusbtb = New System.Windows.Forms.Button()
+        Me.b_ubahbtb = New System.Windows.Forms.Button()
+        Me.b_buatbtb = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.dp_filterbtbend = New System.Windows.Forms.DateTimePicker()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.dp_filterbtbstart = New System.Windows.Forms.DateTimePicker()
+        Me.cb_filterTanggalBTB = New System.Windows.Forms.CheckBox()
+        Me.tb_cariNomorNotaBTB = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.DataGridView3 = New System.Windows.Forms.DataGridView()
         Me.dgv_databagian = New System.Windows.Forms.DataGridView()
         Me.dgv_databarang = New System.Windows.Forms.DataGridView()
         Me.dgv_datasupplier = New System.Windows.Forms.DataGridView()
@@ -75,6 +89,9 @@ Partial Class home
         Me.TabPage2.SuspendLayout()
         Me.gb_filterTglPo.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage3.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_databagian, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_databarang, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_datasupplier, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -117,6 +134,7 @@ Partial Class home
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.ItemSize = New System.Drawing.Size(149, 26)
         Me.TabControl1.Location = New System.Drawing.Point(30, 48)
         Me.TabControl1.Name = "TabControl1"
@@ -147,7 +165,7 @@ Partial Class home
         '
         'b_hapusPP
         '
-        Me.b_hapusPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_hapusPP.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.b_hapusPP.Location = New System.Drawing.Point(371, 562)
         Me.b_hapusPP.Name = "b_hapusPP"
         Me.b_hapusPP.Size = New System.Drawing.Size(75, 39)
@@ -157,7 +175,7 @@ Partial Class home
         '
         'b_ubahPP
         '
-        Me.b_ubahPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_ubahPP.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.b_ubahPP.Location = New System.Drawing.Point(290, 562)
         Me.b_ubahPP.Name = "b_ubahPP"
         Me.b_ubahPP.Size = New System.Drawing.Size(75, 39)
@@ -167,7 +185,7 @@ Partial Class home
         '
         'b_buatPP
         '
-        Me.b_buatPP.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_buatPP.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.b_buatPP.Location = New System.Drawing.Point(209, 562)
         Me.b_buatPP.Name = "b_buatPP"
         Me.b_buatPP.Size = New System.Drawing.Size(75, 39)
@@ -288,8 +306,9 @@ Partial Class home
         Me.DataGridView1.Location = New System.Drawing.Point(210, 17)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(1120, 539)
+        Me.DataGridView1.Size = New System.Drawing.Size(1084, 539)
         Me.DataGridView1.TabIndex = 0
         '
         'TabPage2
@@ -308,7 +327,7 @@ Partial Class home
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(1300, 607)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Daftar PO"
+        Me.TabPage2.Text = "Daftar Purchase Order"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'b_hapusPo
@@ -436,9 +455,159 @@ Partial Class home
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Location = New System.Drawing.Point(210, 17)
         Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.RowHeadersVisible = False
         Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DataGridView2.Size = New System.Drawing.Size(1120, 539)
         Me.DataGridView2.TabIndex = 0
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.b_hapusbtb)
+        Me.TabPage3.Controls.Add(Me.b_ubahbtb)
+        Me.TabPage3.Controls.Add(Me.b_buatbtb)
+        Me.TabPage3.Controls.Add(Me.GroupBox1)
+        Me.TabPage3.Controls.Add(Me.cb_filterTanggalBTB)
+        Me.TabPage3.Controls.Add(Me.tb_cariNomorNotaBTB)
+        Me.TabPage3.Controls.Add(Me.Label7)
+        Me.TabPage3.Controls.Add(Me.Label8)
+        Me.TabPage3.Controls.Add(Me.DataGridView3)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 30)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(1300, 607)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Daftar Barang Terima Barang"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'b_hapusbtb
+        '
+        Me.b_hapusbtb.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_hapusbtb.Location = New System.Drawing.Point(371, 556)
+        Me.b_hapusbtb.Name = "b_hapusbtb"
+        Me.b_hapusbtb.Size = New System.Drawing.Size(75, 39)
+        Me.b_hapusbtb.TabIndex = 15
+        Me.b_hapusbtb.Text = "Hapus BTB"
+        Me.b_hapusbtb.UseVisualStyleBackColor = True
+        '
+        'b_ubahbtb
+        '
+        Me.b_ubahbtb.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_ubahbtb.Location = New System.Drawing.Point(290, 556)
+        Me.b_ubahbtb.Name = "b_ubahbtb"
+        Me.b_ubahbtb.Size = New System.Drawing.Size(75, 39)
+        Me.b_ubahbtb.TabIndex = 16
+        Me.b_ubahbtb.Text = "Ubah BTB"
+        Me.b_ubahbtb.UseVisualStyleBackColor = True
+        '
+        'b_buatbtb
+        '
+        Me.b_buatbtb.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.b_buatbtb.Location = New System.Drawing.Point(209, 556)
+        Me.b_buatbtb.Name = "b_buatbtb"
+        Me.b_buatbtb.Size = New System.Drawing.Size(75, 39)
+        Me.b_buatbtb.TabIndex = 17
+        Me.b_buatbtb.Text = "Buat BTB"
+        Me.b_buatbtb.UseVisualStyleBackColor = True
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.dp_filterbtbend)
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.dp_filterbtbstart)
+        Me.GroupBox1.Location = New System.Drawing.Point(21, 225)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(170, 100)
+        Me.GroupBox1.TabIndex = 14
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Visible = False
+        '
+        'dp_filterbtbend
+        '
+        Me.dp_filterbtbend.CustomFormat = "dd/MM/yyyy"
+        Me.dp_filterbtbend.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dp_filterbtbend.Location = New System.Drawing.Point(5, 70)
+        Me.dp_filterbtbend.Name = "dp_filterbtbend"
+        Me.dp_filterbtbend.Size = New System.Drawing.Size(159, 20)
+        Me.dp_filterbtbend.TabIndex = 3
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(5, 53)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(79, 13)
+        Me.Label5.TabIndex = 2
+        Me.Label5.Text = "sampai dengan"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(7, 10)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(32, 13)
+        Me.Label6.TabIndex = 1
+        Me.Label6.Text = "Mulai"
+        '
+        'dp_filterbtbstart
+        '
+        Me.dp_filterbtbstart.CustomFormat = "dd/MM/yyy"
+        Me.dp_filterbtbstart.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dp_filterbtbstart.Location = New System.Drawing.Point(5, 29)
+        Me.dp_filterbtbstart.Name = "dp_filterbtbstart"
+        Me.dp_filterbtbstart.Size = New System.Drawing.Size(157, 20)
+        Me.dp_filterbtbstart.TabIndex = 0
+        Me.dp_filterbtbstart.Value = New Date(2021, 4, 1, 0, 0, 0, 0)
+        '
+        'cb_filterTanggalBTB
+        '
+        Me.cb_filterTanggalBTB.AutoSize = True
+        Me.cb_filterTanggalBTB.Location = New System.Drawing.Point(21, 202)
+        Me.cb_filterTanggalBTB.Name = "cb_filterTanggalBTB"
+        Me.cb_filterTanggalBTB.Size = New System.Drawing.Size(90, 17)
+        Me.cb_filterTanggalBTB.TabIndex = 13
+        Me.cb_filterTanggalBTB.Text = "Filter Tanggal"
+        Me.cb_filterTanggalBTB.UseVisualStyleBackColor = True
+        '
+        'tb_cariNomorNotaBTB
+        '
+        Me.tb_cariNomorNotaBTB.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_cariNomorNotaBTB.Location = New System.Drawing.Point(20, 62)
+        Me.tb_cariNomorNotaBTB.Name = "tb_cariNomorNotaBTB"
+        Me.tb_cariNomorNotaBTB.Size = New System.Drawing.Size(163, 24)
+        Me.tb_cariNomorNotaBTB.TabIndex = 12
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(17, 45)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(64, 13)
+        Me.Label7.TabIndex = 11
+        Me.Label7.Text = "Nomor Nota"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(17, 6)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(93, 18)
+        Me.Label8.TabIndex = 10
+        Me.Label8.Text = "PENCARIAN"
+        '
+        'DataGridView3
+        '
+        Me.DataGridView3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView3.Location = New System.Drawing.Point(210, 6)
+        Me.DataGridView3.Name = "DataGridView3"
+        Me.DataGridView3.RowHeadersVisible = False
+        Me.DataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView3.Size = New System.Drawing.Size(1084, 539)
+        Me.DataGridView3.TabIndex = 9
         '
         'dgv_databagian
         '
@@ -539,6 +708,11 @@ Partial Class home
         Me.gb_filterTglPo.ResumeLayout(False)
         Me.gb_filterTglPo.PerformLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_databagian, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_databarang, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_datasupplier, System.ComponentModel.ISupportInitialize).EndInit()
@@ -592,4 +766,18 @@ Partial Class home
     Friend WithEvents b_hapusPo As Button
     Friend WithEvents b_ubahPo As Button
     Friend WithEvents b_buatPO As Button
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents dp_filterbtbend As DateTimePicker
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents dp_filterbtbstart As DateTimePicker
+    Friend WithEvents cb_filterTanggalBTB As CheckBox
+    Friend WithEvents tb_cariNomorNotaBTB As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents DataGridView3 As DataGridView
+    Friend WithEvents b_hapusbtb As Button
+    Friend WithEvents b_ubahbtb As Button
+    Friend WithEvents b_buatbtb As Button
 End Class

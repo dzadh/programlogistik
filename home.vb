@@ -11,6 +11,7 @@ Public Class home
     Public datasetSupplier As New DataSet
     Public dataSetPP As New DataSet
     Public datasetPo As New DataSet
+    Public datasetBTB As New DataSet
 
     Dim tb_searchbarangbyname As New TextBox
     Dim tb_searchbarangByNomor As New TextBox
@@ -83,27 +84,38 @@ Public Class home
             Console.WriteLine("error : " & ex.ToString)
             MsgBox("error : " & ex.ToString)
         End Try
+
+        sql = "SELECT * FROM `btb_header`"
+        Try
+            Dim da_btb As New MySqlDataAdapter(sql, conn)
+            da_btb.Fill(datasetBTB, "dataset_btb")
+            Me.DataGridView3.DataSource = datasetBTB.Tables("dataset_btb")
+        Catch ex As Exception
+            Console.WriteLine("error : " & ex.ToString)
+            MsgBox("error : " & ex.ToString)
+        End Try
+
     End Sub
 
     'suppose to be tabcontrolex1
-    Private Sub b_tambahtab2_Click(sender As Object, e As EventArgs) Handles b_tambahtab2.Click
-        Dim newtab As New TabPage
-        Dim newtextbox As New TextBox
-        Dim newbutt As New Button
-        newtab.Name = "New Tab " & tabcount.ToString
-        newtab.Text = "Tambah PP " & tabcount.ToString & "     "
-        newbutt.Name = "newtab" & tabcount.ToString
-        newbutt.Text = "Close Newtab" & tabcount.ToString
-        newbutt.Location = New Point(20, 30)
-        newbutt.AutoSize = True
-        newtextbox.Text = "New textbox on new tab " & tabcount.ToString
-        tabcount += 1
-        AddHandler newbutt.Click, AddressOf newbutt_click
-        Me.TabControl1.Controls.Add(newtab)
-        newtab.Controls.Add(newtextbox)
-        newtab.Controls.Add(newbutt)
-        Me.TabControl1.SelectedIndex = Me.TabControl1.TabCount - 1
-    End Sub
+    'Private Sub b_tambahtab2_Click(sender As Object, e As EventArgs) Handles b_tambahtab2.Click
+    '    Dim newtab As New TabPage
+    '    Dim newtextbox As New TextBox
+    '    Dim newbutt As New Button
+    '    newtab.Name = "New Tab " & tabcount.ToString
+    '    newtab.Text = "Tambah PP " & tabcount.ToString & "     "
+    '    newbutt.Name = "newtab" & tabcount.ToString
+    '    newbutt.Text = "Close Newtab" & tabcount.ToString
+    '    newbutt.Location = New Point(20, 30)
+    '    newbutt.AutoSize = True
+    '    newtextbox.Text = "New textbox on new tab " & tabcount.ToString
+    '    tabcount += 1
+    '    AddHandler newbutt.Click, AddressOf newbutt_click
+    '    Me.TabControl1.Controls.Add(newtab)
+    '    newtab.Controls.Add(newtextbox)
+    '    newtab.Controls.Add(newbutt)
+    '    Me.TabControl1.SelectedIndex = Me.TabControl1.TabCount - 1
+    'End Sub
     ' end of suppose to be tabcontrolex1
 
     '=============================== TAB ADATA BAGIAN ========================================
@@ -116,6 +128,8 @@ Public Class home
         Dim tambahButton As New Button
         Dim hapusButton As New Button
         Dim ukuran As New Size(75, 39)
+
+        dgv_databagian.RowHeadersVisible = False
 
         newtab.Name = "TabelBagian"
         newtab.Text = "Tabel Bagian"
@@ -281,6 +295,8 @@ Public Class home
         Dim editBarang As New Button
         Dim hapusBarang As New Button
         Dim ukuran As New Size(75, 39)
+
+        dgv_databarang.RowHeadersVisible = False
 
         tabDataBarang.Name = "tabelBarang"
         tabDataBarang.Text = "Tabel Barang"
@@ -471,7 +487,9 @@ Public Class home
         Dim tambahSupplier As New Button
         Dim editSupplier As New Button
         Dim hapusSupplier As New Button
-        Dim ukuran As New Size(75, 23)
+        Dim ukuran As New Size(75, 39)
+
+        dgv_datasupplier.RowHeadersVisible = False
 
         tabDataSupplier.Name = "tableSupplier"
         tabDataSupplier.Text = "Tabel Supplier"
@@ -566,7 +584,6 @@ Public Class home
         AddHandler diasupp.Disposed, AddressOf diasuppDisposed
     End Sub
 
-
     Private Sub hapusSupplier_clicked() 'BELUM MENGHPUS MASIH DI COMMENT
         Dim namaSupp = dgv_datasupplier.CurrentRow.Cells(1).Value.ToString
         Dim kodeSupp = dgv_datasupplier.CurrentRow.Cells(0).Value.ToString
@@ -606,7 +623,17 @@ Public Class home
     End Sub
 
     Private Sub cariNamaSuppier()
-        Console.WriteLine("cari nama supplier")
+        'Console.WriteLine("cari nama supplier")
+        Dim quer As String = "SELECT *  FROM `supplier` WHERE `NAMA` LIKE '%" & tb_cariNamaSupplier.Text & "%'"
+        Try
+            datasetSupplier.Clear()
+            Dim da_supplier As New MySqlDataAdapter(quer, conn)
+            da_supplier.Fill(datasetSupplier, "data_supplier")
+            dgv_datasupplier.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("error : " & ex.ToString)
+            MsgBox(ex.ToString)
+        End Try
     End Sub
     '=========================================== END OF DAFTAR SUPPLIER ===================================
 
@@ -723,7 +750,6 @@ Public Class home
         End If
     End Sub
 
-
     '============================================== END OF TAB PP =======================================
 
     '============================================ TAB PO START ===========================================
@@ -821,4 +847,22 @@ Public Class home
 
     '=========================================== END OF TAB PO ==========================================
 
+    '============================================== TAB BTB =============================================
+
+    Private Sub tb_cariNomorNotaBTB_TextChanged(sender As Object, e As EventArgs) Handles tb_cariNomorNotaBTB.TextChanged
+        Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Nota` LIKE '%" & tb_cariNomorNotaBTB.Text & "%'"
+        Try
+            datasetBTB.Clear()
+            Dim da_btb As New MySqlDataAdapter(quer, conn)
+            da_btb.Fill(datasetBTB, "dataset_btb")
+            DataGridView3.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("error : " & ex.ToString)
+            MsgBox("error : " & ex.ToString)
+        End Try
+    End Sub
+
+
+
+    '=========================================== END OF TAB BTB =========================================
 End Class
