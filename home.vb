@@ -169,7 +169,6 @@ Public Class home
         cariNamaDivisi_label.Location = New Point(18, 45)
         cariNamaDivisi_label.Size = New Size(100, 13)
 
-
         tb_cariNamaDivisi.Location = New Point(20, 62)
         tb_cariNamaDivisi.Size = New Size(163, 24)
         tb_cariNamaDivisi.Font = New Font("Microsoft Sans Serif", 11)
@@ -808,9 +807,10 @@ Public Class home
             Dim da As New MySqlDataAdapter(quer, conn)
             da.Fill(datasetPo, "tabel_po")
             DataGridView2.Refresh()
-
         End If
     End Sub
+
+
 
     Private Sub b_buatPO_Click(sender As Object, e As EventArgs) Handles b_buatPO.Click
         'Console.WriteLine("buat po clicked")
@@ -850,19 +850,103 @@ Public Class home
     '============================================== TAB BTB =============================================
 
     Private Sub tb_cariNomorNotaBTB_TextChanged(sender As Object, e As EventArgs) Handles tb_cariNomorNotaBTB.TextChanged
-        Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Nota` LIKE '%" & tb_cariNomorNotaBTB.Text & "%'"
-        Try
-            datasetBTB.Clear()
-            Dim da_btb As New MySqlDataAdapter(quer, conn)
-            da_btb.Fill(datasetBTB, "dataset_btb")
+        If cb_filterTanggalBTB.Checked Then
+            'dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian Like '*" & tb_searchppbybagian.Text & "*'"
+            'DataGridView1.Refresh()
+            datasetBTB.Tables("dataset_btb").DefaultView.RowFilter = "nota like '*" & tb_cariNomorNotaBTB.Text & "*'"
             DataGridView3.Refresh()
-        Catch ex As Exception
-            Console.WriteLine("error : " & ex.ToString)
-            MsgBox("error : " & ex.ToString)
-        End Try
+        Else
+            Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Nota` LIKE '%" & tb_cariNomorNotaBTB.Text & "%'"
+            Try
+                datasetBTB.Clear()
+                Dim da_btb As New MySqlDataAdapter(quer, conn)
+                da_btb.Fill(datasetBTB, "dataset_btb")
+                DataGridView3.Refresh()
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+        End If
     End Sub
 
+    Private Sub cb_filterTanggalBTB_CheckedChanged(sender As Object, e As EventArgs) Handles cb_filterTanggalBTB.CheckedChanged
+        If cb_filterTanggalBTB.Checked Then
+            gb_filterTglBtb.Visible = True
+        Else
+            gb_filterTglBtb.Visible = False
+        End If
+    End Sub
 
+    Private Sub dp_filterbtbstart_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterbtbstart.ValueChanged
+        If cb_filterTanggalBTB.Checked Then
+            datasetBTB.Clear()
+            Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Tanggal` BETWEEN '" & dp_filterbtbstart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterbtbend.Value.ToString("yyyy-MM-dd") & "'"
+            Try
+                Dim da As New MySqlDataAdapter(quer, conn)
+                da.Fill(datasetBTB, "dataset_btb")
+                DataGridView3.Refresh()
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+        End If
+    End Sub
+
+    Private Sub dp_filterbtbend_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterbtbend.ValueChanged
+        If cb_filterTanggalBTB.Checked Then
+            datasetBTB.Clear()
+            Dim quer As String = "select * from btb_header where tanggal between '" & dp_filterbtbstart.Value.ToString("yyyy-MM-dd") & "' and '" & dp_filterbtbend.Value.ToString("yyyy-MM-dd") & "' "
+            Try
+                Dim da As New MySqlDataAdapter(quer, conn)
+                da.Fill(datasetBTB, "dataset_btb")
+                DataGridView3.Refresh()
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+        End If
+    End Sub
+
+    Private Sub cb_cariNamaSupplier(sender As Object, e As EventArgs) Handles tb_caribtbNamaSupplier.TextChanged
+        If cb_filterTanggalBTB.Checked Then
+            'dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian Like '*" & tb_searchppbybagian.Text & "*'"
+            'DataGridView1.Refresh()
+            datasetBTB.Tables("dataset_btb").DefaultView.RowFilter = "NAMA LIKE '*" & tb_caribtbNamaSupplier.Text & "*'"
+            DataGridView3.Refresh()
+        Else
+            Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Nama` LIKE '%" & tb_caribtbNamaSupplier.Text & "%'"
+            Try
+                datasetBTB.Clear()
+                Dim da_btb As New MySqlDataAdapter(quer, conn)
+                da_btb.Fill(datasetBTB, "dataset_btb")
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+            DataGridView3.Refresh()
+        End If
+    End Sub
+
+    'Private Sub dp_filtermulai_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterDateStart.ValueChanged
+    '    'Console.WriteLine(dp_filterDateStart.Value.ToString("yyyy-MM-dd"))
+    '    If cb_filterTanggal.Checked Then
+    '        dataSetPP.Clear()
+    '        Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
+    '        Dim da As New MySqlDataAdapter(query, conn)
+    '        da.Fill(dataSetPP, "singo")
+    '        DataGridView1.Refresh()
+    '    End If
+
+    'End Sub
+    'Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterDateEnd.ValueChanged
+    '    If cb_filterTanggal.Checked Then
+    '        dataSetPP.Clear()
+    '        Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
+    '        Dim da As New MySqlDataAdapter(query, conn)
+    '        da.Fill(dataSetPP, "singo")
+    '        DataGridView1.Refresh()
+    '    End If
+    'End Sub
 
     '=========================================== END OF TAB BTB =========================================
 End Class

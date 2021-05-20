@@ -59,10 +59,12 @@ Partial Class home
         Me.l_pencarianPO = New System.Windows.Forms.Label()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.tb_caribtbNamaSupplier = New System.Windows.Forms.TextBox()
         Me.b_hapusbtb = New System.Windows.Forms.Button()
         Me.b_ubahbtb = New System.Windows.Forms.Button()
         Me.b_buatbtb = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.gb_filterTglBtb = New System.Windows.Forms.GroupBox()
         Me.dp_filterbtbend = New System.Windows.Forms.DateTimePicker()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -90,7 +92,7 @@ Partial Class home
         Me.gb_filterTglPo.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
+        Me.gb_filterTglBtb.SuspendLayout()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_databagian, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_databarang, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -462,10 +464,12 @@ Partial Class home
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.Label9)
+        Me.TabPage3.Controls.Add(Me.tb_caribtbNamaSupplier)
         Me.TabPage3.Controls.Add(Me.b_hapusbtb)
         Me.TabPage3.Controls.Add(Me.b_ubahbtb)
         Me.TabPage3.Controls.Add(Me.b_buatbtb)
-        Me.TabPage3.Controls.Add(Me.GroupBox1)
+        Me.TabPage3.Controls.Add(Me.gb_filterTglBtb)
         Me.TabPage3.Controls.Add(Me.cb_filterTanggalBTB)
         Me.TabPage3.Controls.Add(Me.tb_cariNomorNotaBTB)
         Me.TabPage3.Controls.Add(Me.Label7)
@@ -478,6 +482,23 @@ Partial Class home
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Daftar Barang Terima Barang"
         Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(17, 108)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(76, 13)
+        Me.Label9.TabIndex = 19
+        Me.Label9.Text = "Nama Supplier"
+        '
+        'tb_caribtbNamaSupplier
+        '
+        Me.tb_caribtbNamaSupplier.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_caribtbNamaSupplier.Location = New System.Drawing.Point(20, 126)
+        Me.tb_caribtbNamaSupplier.Name = "tb_caribtbNamaSupplier"
+        Me.tb_caribtbNamaSupplier.Size = New System.Drawing.Size(163, 24)
+        Me.tb_caribtbNamaSupplier.TabIndex = 18
         '
         'b_hapusbtb
         '
@@ -509,18 +530,18 @@ Partial Class home
         Me.b_buatbtb.Text = "Buat BTB"
         Me.b_buatbtb.UseVisualStyleBackColor = True
         '
-        'GroupBox1
+        'gb_filterTglBtb
         '
-        Me.GroupBox1.Controls.Add(Me.dp_filterbtbend)
-        Me.GroupBox1.Controls.Add(Me.Label5)
-        Me.GroupBox1.Controls.Add(Me.Label6)
-        Me.GroupBox1.Controls.Add(Me.dp_filterbtbstart)
-        Me.GroupBox1.Location = New System.Drawing.Point(21, 225)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(170, 100)
-        Me.GroupBox1.TabIndex = 14
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Visible = False
+        Me.gb_filterTglBtb.Controls.Add(Me.dp_filterbtbend)
+        Me.gb_filterTglBtb.Controls.Add(Me.Label5)
+        Me.gb_filterTglBtb.Controls.Add(Me.Label6)
+        Me.gb_filterTglBtb.Controls.Add(Me.dp_filterbtbstart)
+        Me.gb_filterTglBtb.Location = New System.Drawing.Point(21, 225)
+        Me.gb_filterTglBtb.Name = "gb_filterTglBtb"
+        Me.gb_filterTglBtb.Size = New System.Drawing.Size(170, 100)
+        Me.gb_filterTglBtb.TabIndex = 14
+        Me.gb_filterTglBtb.TabStop = False
+        Me.gb_filterTglBtb.Visible = False
         '
         'dp_filterbtbend
         '
@@ -710,8 +731,8 @@ Partial Class home
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.gb_filterTglBtb.ResumeLayout(False)
+        Me.gb_filterTglBtb.PerformLayout()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_databagian, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_databarang, System.ComponentModel.ISupportInitialize).EndInit()
@@ -767,7 +788,7 @@ Partial Class home
     Friend WithEvents b_ubahPo As Button
     Friend WithEvents b_buatPO As Button
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents gb_filterTglBtb As GroupBox
     Friend WithEvents dp_filterbtbend As DateTimePicker
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
@@ -780,4 +801,6 @@ Partial Class home
     Friend WithEvents b_hapusbtb As Button
     Friend WithEvents b_ubahbtb As Button
     Friend WithEvents b_buatbtb As Button
+    Friend WithEvents Label9 As Label
+    Friend WithEvents tb_caribtbNamaSupplier As TextBox
 End Class
