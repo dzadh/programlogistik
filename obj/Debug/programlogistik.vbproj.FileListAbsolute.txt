@@ -29,3 +29,4 @@ C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\pro
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialogPP.resources
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialogPO.resources
 C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.pilihPermintaanPembelianDialog.resources
+C:\Users\Win 10\onedrive\dokumen\visual studio 2015\Projects\programlogistik\programlogistik\obj\Debug\programlogistik.dialogBtb.resources

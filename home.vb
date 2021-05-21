@@ -927,26 +927,14 @@ Public Class home
         End If
     End Sub
 
-    'Private Sub dp_filtermulai_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterDateStart.ValueChanged
-    '    'Console.WriteLine(dp_filterDateStart.Value.ToString("yyyy-MM-dd"))
-    '    If cb_filterTanggal.Checked Then
-    '        dataSetPP.Clear()
-    '        Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
-    '        Dim da As New MySqlDataAdapter(query, conn)
-    '        da.Fill(dataSetPP, "singo")
-    '        DataGridView1.Refresh()
-    '    End If
+    Private Sub b_buatbtb_Click(sender As Object, e As EventArgs) Handles b_buatbtb.Click
+        Dim diabtb As New dialogBtb
+        diabtb.Show()
+    End Sub
 
-    'End Sub
-    'Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterDateEnd.ValueChanged
-    '    If cb_filterTanggal.Checked Then
-    '        dataSetPP.Clear()
-    '        Dim query As String = "SELECT * FROM `pp_header` WHERE Tanggal BETWEEN '" & dp_filterDateStart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterDateEnd.Value.ToString("yyyy-MM-dd") & "'"
-    '        Dim da As New MySqlDataAdapter(query, conn)
-    '        da.Fill(dataSetPP, "singo")
-    '        DataGridView1.Refresh()
-    '    End If
-    'End Sub
-
+    Private Sub b_editbtb_click(sender As Object, e As EventArgs) Handles b_ubahbtb.Click
+        Dim diabtb As New dialogBtb With {.nomorPurchaseOrder = DataGridView3.CurrentRow.Cells(0).Value.ToString}
+        diabtb.Show()
+    End Sub
     '=========================================== END OF TAB BTB =========================================
 End Class

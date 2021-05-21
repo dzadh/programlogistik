@@ -84,6 +84,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dblogistikDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="dialogBtb.Designer.vb">
+      <DependentUpon>dialogBtb.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dialogBtb.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="dialogEditBarang.Designer.vb">
       <DependentUpon>dialogEditBarang.vb</DependentUpon>
     </Compile>
@@ -144,6 +150,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="dialogBtb.resx">
+      <DependentUpon>dialogBtb.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dialogEditBarang.resx">
       <DependentUpon>dialogEditBarang.vb</DependentUpon>
     </EmbeddedResource>
