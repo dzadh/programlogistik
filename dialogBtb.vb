@@ -148,6 +148,6 @@ Public Class dialogBtb
         Dim noPp = tb_noPP.Text
         Dim tanggal = dp_tanggalbtb.Value.ToString("yyyy-MM-dd")
         Dim supplier = tb_supplier.Text
-
+        Dim keterangan = tb_keterangan.Text
     End Sub
 End Class

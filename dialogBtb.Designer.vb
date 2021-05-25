@@ -46,6 +46,8 @@ Partial Class dialogBtb
         Me.dp_tanggalbtb = New System.Windows.Forms.DateTimePicker()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.tb_keterangan = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.tb_telp = New System.Windows.Forms.TextBox()
         CType(Me.dgv_dialogbtb, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -125,7 +127,7 @@ Partial Class dialogBtb
         '
         'b_pilihPO
         '
-        Me.b_pilihPO.Location = New System.Drawing.Point(16, 94)
+        Me.b_pilihPO.Location = New System.Drawing.Point(252, 121)
         Me.b_pilihPO.Name = "b_pilihPO"
         Me.b_pilihPO.Size = New System.Drawing.Size(94, 23)
         Me.b_pilihPO.TabIndex = 9
@@ -234,11 +236,29 @@ Partial Class dialogBtb
         Me.tb_keterangan.Size = New System.Drawing.Size(285, 20)
         Me.tb_keterangan.TabIndex = 15
         '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(255, 54)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(31, 13)
+        Me.Label7.TabIndex = 16
+        Me.Label7.Text = "Telp."
+        '
+        'tb_telp
+        '
+        Me.tb_telp.Location = New System.Drawing.Point(256, 70)
+        Me.tb_telp.Name = "tb_telp"
+        Me.tb_telp.Size = New System.Drawing.Size(100, 20)
+        Me.tb_telp.TabIndex = 17
+        '
         'dialogBtb
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(859, 498)
+        Me.Controls.Add(Me.tb_telp)
+        Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.tb_keterangan)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.dp_tanggalbtb)
@@ -288,4 +308,6 @@ Partial Class dialogBtb
     Friend WithEvents harga As DataGridViewTextBoxColumn
     Friend WithEvents jumlah As DataGridViewTextBoxColumn
     Friend WithEvents noPp As DataGridViewTextBoxColumn
+    Friend WithEvents Label7 As Label
+    Friend WithEvents tb_telp As TextBox
 End Class
