@@ -87,6 +87,12 @@ Update Order Option
 Used to sort self-referenced table's rows
 </summary>
 </member>
+<member name="T:programlogistik.dialogBtb">
+ <summary>
+ undone : buat bukti terima barang : auto nomer btb
+         
+ </summary>
+</member>
 <member name="T:programlogistik.dialogPO">
  <summary>
  undone YET: Nomor PO buat PO, cara bayar

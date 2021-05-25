@@ -933,7 +933,7 @@ Public Class home
     End Sub
 
     Private Sub b_editbtb_click(sender As Object, e As EventArgs) Handles b_ubahbtb.Click
-        Dim diabtb As New dialogBtb With {.nomorPurchaseOrder = DataGridView3.CurrentRow.Cells(0).Value.ToString}
+        Dim diabtb As New dialogBtb With {.nomorBuktiTerimaBarang = DataGridView3.CurrentRow.Cells(0).Value.ToString}
         diabtb.Show()
     End Sub
     '=========================================== END OF TAB BTB =========================================
