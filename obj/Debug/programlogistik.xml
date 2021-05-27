@@ -90,6 +90,7 @@ Used to sort self-referenced table's rows
 <member name="T:programlogistik.dialogBtb">
  <summary>
  undone : buat bukti terima barang : auto nomer btb
+         - save btb userid, group, subgroup, ordere, sisa belum konek sama PO po sisa belum konek PP
          
  </summary>
 </member>

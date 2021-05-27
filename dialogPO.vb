@@ -257,9 +257,10 @@ Public Class dialogPO
             End If
         Next
         quer += ")"
-        Dim cmd As MySqlCommand = New MySqlCommand(quer, conn)
-        Dim reader As MySqlDataReader = cmd.ExecuteReader
+
         Try
+            Dim cmd As MySqlCommand = New MySqlCommand(quer, conn)
+            Dim reader As MySqlDataReader = cmd.ExecuteReader
             Dim i As Int16 = dgv_purchaseOrder.RowCount - 1
             While reader.Read
                 dgv_purchaseOrder.Rows.Add()
@@ -274,8 +275,8 @@ Public Class dialogPO
             End While
             reader.Close()
         Catch ex As Exception
-            Console.WriteLine(ex.ToString)
-            reader.Close()
+            Console.WriteLine("error diapilpp form close: " & ex.ToString)
+
         End Try
     End Sub
 

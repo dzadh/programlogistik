@@ -48,6 +48,8 @@ Partial Class dialogBtb
         Me.tb_keterangan = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.tb_telp = New System.Windows.Forms.TextBox()
+        Me.tb_bagian = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         CType(Me.dgv_dialogbtb, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -112,7 +114,7 @@ Partial Class dialogBtb
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(13, 54)
+        Me.Label4.Location = New System.Drawing.Point(13, 78)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(45, 13)
         Me.Label4.TabIndex = 7
@@ -120,16 +122,16 @@ Partial Class dialogBtb
         '
         'tb_supplier
         '
-        Me.tb_supplier.Location = New System.Drawing.Point(16, 71)
+        Me.tb_supplier.Location = New System.Drawing.Point(16, 95)
         Me.tb_supplier.Name = "tb_supplier"
         Me.tb_supplier.Size = New System.Drawing.Size(233, 20)
         Me.tb_supplier.TabIndex = 8
         '
         'b_pilihPO
         '
-        Me.b_pilihPO.Location = New System.Drawing.Point(252, 121)
+        Me.b_pilihPO.Location = New System.Drawing.Point(255, 122)
         Me.b_pilihPO.Name = "b_pilihPO"
-        Me.b_pilihPO.Size = New System.Drawing.Size(94, 23)
+        Me.b_pilihPO.Size = New System.Drawing.Size(101, 23)
         Me.b_pilihPO.TabIndex = 9
         Me.b_pilihPO.Text = "Pilih PO"
         Me.b_pilihPO.UseVisualStyleBackColor = True
@@ -239,7 +241,7 @@ Partial Class dialogBtb
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(255, 54)
+        Me.Label7.Location = New System.Drawing.Point(255, 79)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(31, 13)
         Me.Label7.TabIndex = 16
@@ -247,16 +249,34 @@ Partial Class dialogBtb
         '
         'tb_telp
         '
-        Me.tb_telp.Location = New System.Drawing.Point(256, 70)
+        Me.tb_telp.Location = New System.Drawing.Point(256, 95)
         Me.tb_telp.Name = "tb_telp"
         Me.tb_telp.Size = New System.Drawing.Size(100, 20)
         Me.tb_telp.TabIndex = 17
+        '
+        'tb_bagian
+        '
+        Me.tb_bagian.Location = New System.Drawing.Point(68, 124)
+        Me.tb_bagian.Name = "tb_bagian"
+        Me.tb_bagian.Size = New System.Drawing.Size(181, 20)
+        Me.tb_bagian.TabIndex = 18
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(13, 127)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(49, 13)
+        Me.Label8.TabIndex = 19
+        Me.Label8.Text = "Bagian : "
         '
         'dialogBtb
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(859, 498)
+        Me.Controls.Add(Me.Label8)
+        Me.Controls.Add(Me.tb_bagian)
         Me.Controls.Add(Me.tb_telp)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.tb_keterangan)
@@ -310,4 +330,6 @@ Partial Class dialogBtb
     Friend WithEvents noPp As DataGridViewTextBoxColumn
     Friend WithEvents Label7 As Label
     Friend WithEvents tb_telp As TextBox
+    Friend WithEvents tb_bagian As TextBox
+    Friend WithEvents Label8 As Label
 End Class

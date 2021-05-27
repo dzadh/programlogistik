@@ -1,6 +1,7 @@
 ﻿Imports MySql.Data.MySqlClient
 ''' <summary>
 ''' undone : buat bukti terima barang : auto nomer btb
+'''         - save btb userid, group, subgroup, ordere, sisa belum konek sama PO po sisa belum konek PP
 '''         
 ''' </summary>
 Public Class dialogBtb
@@ -8,6 +9,8 @@ Public Class dialogBtb
     Dim autoBarang As New AutoCompleteStringCollection
     Dim autoSupplier As New AutoCompleteStringCollection
     Public nomorBuktiTerimaBarang As String
+    Dim kodeSupplier As String
+    Dim alamatSupplier As String
     Public Sub New()
 
         ' This call is required by the designer.
@@ -50,6 +53,7 @@ Public Class dialogBtb
         tb_supplier.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         tb_supplier.AutoCompleteSource = AutoCompleteSource.CustomSource
         tb_supplier.AutoCompleteCustomSource = autoSupplier
+
         ' Add any initialization after the InitializeComponent() call.
     End Sub
 
@@ -60,7 +64,7 @@ Public Class dialogBtb
             tb_notabtb.Enabled = False
         Else
             l_judulDialog.Text = "Edit Bukti Terima Barang"
-            Dim quer As String = "select nopp, nopo, tanggal, nama, catatan from btb_header where nota = '" & nomorBuktiTerimaBarang & "'"
+            Dim quer As String = "select nopp, nopo, tanggal, nama, catatan, bagian, telpon from btb_header where nota = '" & nomorBuktiTerimaBarang & "'"
             Console.WriteLine(quer)
             Try
                 Dim cmd As New MySqlCommand(quer, conn)
@@ -72,6 +76,8 @@ Public Class dialogBtb
                     dp_tanggalbtb.Value = reader.GetString(2)
                     tb_supplier.Text = reader.GetString(3)
                     tb_keterangan.Text = reader.GetString(4)
+                    tb_bagian.Text = reader.GetString(5)
+                    tb_telp.Text = reader.GetString(6)
                 End While
                 reader.Close()
             Catch ex As Exception
@@ -137,8 +143,29 @@ Public Class dialogBtb
                 dgv_dialogbtb.CurrentRow.Cells(0).Value = reader.GetString(0)
                 dgv_dialogbtb.CurrentRow.Cells(2).Value = reader.GetString(1)
             End While
+            reader.Close()
         Catch ex As Exception
-            Console.WriteLine("error : " & ex.ToString)
+            Console.WriteLine("error autofill barang : " & ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub autoFillDetailSupplier() Handles tb_supplier.LostFocus
+        Dim quer As String = "select telpon,kode_supl, alamat from supplier where nama like '%" & tb_supplier.Text & "%'"
+        Console.WriteLine(quer)
+        Dim cmd As New MySqlCommand(quer, conn)
+        Dim reader As MySqlDataReader = cmd.ExecuteReader
+        Try
+            While reader.Read
+                If String.IsNullOrEmpty(reader.GetString(0)) = 0 Then
+                    tb_telp.Text = reader.GetString(0)
+                End If
+                kodeSupplier = reader.GetString(1)
+                alamatSupplier = reader.GetString(2)
+            End While
+            reader.Close()
+        Catch ex As Exception
+            Console.WriteLine("error autofill supplier : " & ex.ToString)
+            reader.Close()
         End Try
     End Sub
 
@@ -149,5 +176,50 @@ Public Class dialogBtb
         Dim tanggal = dp_tanggalbtb.Value.ToString("yyyy-MM-dd")
         Dim supplier = tb_supplier.Text
         Dim keterangan = tb_keterangan.Text
+        Dim telp = tb_telp.Text
+        Dim bagian = tb_bagian.Text
+        Dim userId = "singo"
+        Dim status = "quo"
+        Dim ordere = 101
+        Dim sisa = 101
+
+        Dim quer_insert As String = "INSERT INTO `btb_header`(`Nota`, `Tanggal`, `NoPP`, `NoPO`, `Bagian`, `Kode_supl`, `Nama`, `Alamat`, `Telpon`, `NoSJ`, `Catatan`, `UserID`, `Status`) VALUES ('" & notabtb & "','" & tanggal & "','" & noPp & "','" & noPo & "','" & bagian & "','" & kodeSupplier & "','" & supplier & "','" & alamatSupplier & "','" & telp & "','SJ12','" & keterangan & "','" & userId & "','" & status & "')"
+        Console.WriteLine(quer_insert)
+        Dim cmd_inserbtbheader As New MySqlCommand
+        Dim tr As MySqlTransaction
+        tr = conn.BeginTransaction
+        Try
+            cmd_inserbtbheader.Connection = conn
+            cmd_inserbtbheader.CommandText = quer_insert
+            cmd_inserbtbheader.ExecuteNonQuery()
+        Catch ex As Exception
+            Console.WriteLine("error insert btb header :" & ex.ToString)
+        End Try
+
+        Dim cmd_btbdetail As New MySqlCommand
+        cmd_btbdetail.Connection = conn
+        For i As Int16 = 0 To dgv_dialogbtb.RowCount - 2
+            Try
+                Dim no_barang = dgv_dialogbtb.Rows(i).Cells(0).Value.ToString
+                Dim nama_barang = dgv_dialogbtb.Rows(i).Cells(1).Value.ToString
+                Dim satuan = dgv_dialogbtb.Rows(i).Cells(2).Value.ToString
+                Dim terima = dgv_dialogbtb.Rows(i).Cells(3).Value.ToString
+                Dim harga = dgv_dialogbtb.Rows(i).Cells(4).Value.ToString
+                Dim jumlah = dgv_dialogbtb.Rows(i).Cells(5).Value.ToString
+                'Dim ordere = 1
+
+                Dim quer_btbdetail As String = "INSERT INTO `btb_detail`(`Nota`, `Tanggal`, `NoPP`, `NoPO`, `Bagian`, `Kode_supl`, `Suplier`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `HargaBeli`, `Ordere`, `PO_Qty`, `Qty`, `Sisa`, `Jumlah`, `Keterangan`, `groupe`, `subgroup`, `UserID`, `Jam`) VALUES ('" & notabtb & "','" & tanggal & "','" & noPp & "','" & noPo & "','" & bagian & "','" & kodeSupplier & "','" & supplier & "','" & i + 1 & "','" & no_barang & "','" & nama_barang & "','" & satuan & "','" & harga & "','" & ordere & "','" & ordere & "','" & terima & "','" & sisa & "','" & jumlah & "','" & keterangan & "','','','" & userId & "','')"
+                Console.WriteLine("query btb detail : " & quer_btbdetail)
+                cmd_btbdetail.CommandText = quer_btbdetail
+                cmd_btbdetail.ExecuteNonQuery()
+            Catch ex As Exception
+                Console.WriteLine("error insert btb detail : " & ex.ToString)
+            End Try
+        Next
+        tr.Commit()
+    End Sub
+
+    Private Sub b_pilihPO_Click(sender As Object, e As EventArgs) Handles b_pilihPO.Click
+
     End Sub
 End Class
