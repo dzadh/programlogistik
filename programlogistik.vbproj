@@ -120,6 +120,12 @@
     <Compile Include="dialogPO.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pilihPurchaseOrderDialog.Designer.vb">
+      <DependentUpon>pilihPurchaseOrderDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pilihPurchaseOrderDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="home.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dialogPO.resx">
       <DependentUpon>dialogPO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pilihPurchaseOrderDialog.resx">
+      <DependentUpon>pilihPurchaseOrderDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="home.resx">
       <DependentUpon>home.vb</DependentUpon>

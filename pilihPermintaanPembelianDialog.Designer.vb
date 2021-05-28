@@ -77,7 +77,7 @@ Partial Class pilihPermintaanPembelianDialog
         'l_tanggal
         '
         Me.l_tanggal.AutoSize = True
-        Me.l_tanggal.Location = New System.Drawing.Point(12, 15)
+        Me.l_tanggal.Location = New System.Drawing.Point(15, 13)
         Me.l_tanggal.Name = "l_tanggal"
         Me.l_tanggal.Size = New System.Drawing.Size(46, 13)
         Me.l_tanggal.TabIndex = 2
@@ -204,7 +204,7 @@ Partial Class pilihPermintaanPembelianDialog
         Me.Controls.Add(Me.b_pilih)
         Me.Controls.Add(Me.dgv_pilihppheader)
         Me.Name = "pilihPermintaanPembelianDialog"
-        Me.Text = "pilihPermintaanPembelianDialog"
+        Me.Text = "Pilih Permintaan Pembelian"
         CType(Me.dgv_pilihppheader, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_pilihPPdetail, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

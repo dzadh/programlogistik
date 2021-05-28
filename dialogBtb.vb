@@ -11,6 +11,8 @@ Public Class dialogBtb
     Public nomorBuktiTerimaBarang As String
     Dim kodeSupplier As String
     Dim alamatSupplier As String
+
+    Dim diaPilOr As pilihPurchaseOrderDialog
     Public Sub New()
 
         ' This call is required by the designer.
@@ -101,6 +103,7 @@ Public Class dialogBtb
             tb_notabtb.Enabled = False
             Console.WriteLine(nomorBuktiTerimaBarang)
         End If
+        'Console.WriteLine(TimeOfDay.ToString("h:mm:ss"))
     End Sub
 
     Private Sub close_dialog(sender As Object, e As EventArgs) Handles b_cancel.Click
@@ -206,9 +209,10 @@ Public Class dialogBtb
                 Dim terima = dgv_dialogbtb.Rows(i).Cells(3).Value.ToString
                 Dim harga = dgv_dialogbtb.Rows(i).Cells(4).Value.ToString
                 Dim jumlah = dgv_dialogbtb.Rows(i).Cells(5).Value.ToString
+                Dim time = TimeOfDay.ToString("h:mm:ss")
                 'Dim ordere = 1
 
-                Dim quer_btbdetail As String = "INSERT INTO `btb_detail`(`Nota`, `Tanggal`, `NoPP`, `NoPO`, `Bagian`, `Kode_supl`, `Suplier`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `HargaBeli`, `Ordere`, `PO_Qty`, `Qty`, `Sisa`, `Jumlah`, `Keterangan`, `groupe`, `subgroup`, `UserID`, `Jam`) VALUES ('" & notabtb & "','" & tanggal & "','" & noPp & "','" & noPo & "','" & bagian & "','" & kodeSupplier & "','" & supplier & "','" & i + 1 & "','" & no_barang & "','" & nama_barang & "','" & satuan & "','" & harga & "','" & ordere & "','" & ordere & "','" & terima & "','" & sisa & "','" & jumlah & "','" & keterangan & "','','','" & userId & "','')"
+                Dim quer_btbdetail As String = "INSERT INTO `btb_detail`(`Nota`, `Tanggal`, `NoPP`, `NoPO`, `Bagian`, `Kode_supl`, `Suplier`, `Nomor`, `Kode_Brg`, `Nama`, `Satuan`, `HargaBeli`, `Ordere`, `PO_Qty`, `Qty`, `Sisa`, `Jumlah`, `Keterangan`, `groupe`, `subgroup`, `UserID`, `Jam`) VALUES ('" & notabtb & "','" & tanggal & "','" & noPp & "','" & noPo & "','" & bagian & "','" & kodeSupplier & "','" & supplier & "','" & i + 1 & "','" & no_barang & "','" & nama_barang & "','" & satuan & "','" & harga & "','" & ordere & "','" & ordere & "','" & terima & "','" & sisa & "','" & jumlah & "','" & keterangan & "','','','" & userId & "','" & time & "')"
                 Console.WriteLine("query btb detail : " & quer_btbdetail)
                 cmd_btbdetail.CommandText = quer_btbdetail
                 cmd_btbdetail.ExecuteNonQuery()
@@ -217,9 +221,11 @@ Public Class dialogBtb
             End Try
         Next
         tr.Commit()
+        Me.Close()
     End Sub
 
     Private Sub b_pilihPO_Click(sender As Object, e As EventArgs) Handles b_pilihPO.Click
-
+        diaPilOr = New pilihPurchaseOrderDialog
+        diaPilOr.Show()
     End Sub
 End Class

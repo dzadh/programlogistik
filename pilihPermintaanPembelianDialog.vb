@@ -38,7 +38,6 @@ Public Class pilihPermintaanPembelianDialog
             Console.WriteLine(ex.ToString)
             MsgBox("error : " & ex.ToString)
         End Try
-
     End Sub
 
     Private Sub dgv_pilihPPheader_changeSelected(sender As Object, e As EventArgs) Handles dgv_pilihppheader.SelectionChanged
