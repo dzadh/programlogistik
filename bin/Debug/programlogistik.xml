@@ -87,5 +87,22 @@ Update Order Option
 Used to sort self-referenced table's rows
 </summary>
 </member>
+<member name="T:programlogistik.dialogBtb">
+ <summary>
+ undone : buat bukti terima barang : auto nomer btb
+         - save btb userid, group, subgroup, ordere, sisa belum konek sama PO po sisa belum konek PP
+         
+ </summary>
+</member>
+<member name="T:programlogistik.dialogPO">
+ <summary>
+ undone YET: Nomor PO buat PO, cara bayar
+             po_header:  tdisksen, tdiskrp,tppnsen, tppnRP,grandtotal, user, status, item, keterangan
+             po_detail:  currency, ordere (apaitu ordere?), jumlahHarga, sisa, groupe, subgroup, statusID, flag, userid, jam
+             sisa barang yang udah di buat PO
+             PO selesai, PP selesai pas ngapain
+             
+ </summary>
+</member>
 </members>
 </doc>

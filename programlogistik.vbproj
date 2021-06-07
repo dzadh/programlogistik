@@ -84,6 +84,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dblogistikDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="dialogBtb.Designer.vb">
+      <DependentUpon>dialogBtb.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dialogBtb.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="dialogEditBarang.Designer.vb">
       <DependentUpon>dialogEditBarang.vb</DependentUpon>
     </Compile>
@@ -108,6 +114,18 @@
     <Compile Include="dialog_editbagian.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="dialogPO.Designer.vb">
+      <DependentUpon>dialogPO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dialogPO.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pilihPurchaseOrderDialog.Designer.vb">
+      <DependentUpon>pilihPurchaseOrderDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pilihPurchaseOrderDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="home.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -130,8 +148,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="pilihPermintaanPembelianDialog.Designer.vb">
+      <DependentUpon>pilihPermintaanPembelianDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pilihPermintaanPembelianDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="dialogBtb.resx">
+      <DependentUpon>dialogBtb.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dialogEditBarang.resx">
       <DependentUpon>dialogEditBarang.vb</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +171,12 @@
     <EmbeddedResource Include="dialog_editbagian.resx">
       <DependentUpon>dialog_editbagian.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="dialogPO.resx">
+      <DependentUpon>dialogPO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pilihPurchaseOrderDialog.resx">
+      <DependentUpon>pilihPurchaseOrderDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="home.resx">
       <DependentUpon>home.vb</DependentUpon>
     </EmbeddedResource>
@@ -152,6 +185,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pilihPermintaanPembelianDialog.resx">
+      <DependentUpon>pilihPermintaanPembelianDialog.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

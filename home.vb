@@ -11,6 +11,12 @@ Public Class home
     Public datasetSupplier As New DataSet
     Public dataSetPP As New DataSet
     Public datasetPo As New DataSet
+    Public datasetBTB As New DataSet
+
+    Dim tb_searchbarangbyname As New TextBox
+    Dim tb_searchbarangByNomor As New TextBox
+    Dim tb_cariNamaDivisi As New TextBox
+    Dim tb_cariNamaSupplier As New TextBox
 
     Public Sub b_addtab_Click(sender As Object, e As EventArgs)
         Dim newtab As New TabPage
@@ -78,30 +84,41 @@ Public Class home
             Console.WriteLine("error : " & ex.ToString)
             MsgBox("error : " & ex.ToString)
         End Try
-    End Sub
 
+        sql = "SELECT * FROM `btb_header`"
+        Try
+            Dim da_btb As New MySqlDataAdapter(sql, conn)
+            da_btb.Fill(datasetBTB, "dataset_btb")
+            Me.DataGridView3.DataSource = datasetBTB.Tables("dataset_btb")
+        Catch ex As Exception
+            Console.WriteLine("error : " & ex.ToString)
+            MsgBox("error : " & ex.ToString)
+        End Try
+
+    End Sub
 
     'suppose to be tabcontrolex1
-    Private Sub b_tambahtab2_Click(sender As Object, e As EventArgs) Handles b_tambahtab2.Click
-        Dim newtab As New TabPage
-        Dim newtextbox As New TextBox
-        Dim newbutt As New Button
-        newtab.Name = "New Tab " & tabcount.ToString
-        newtab.Text = "Tambah PP " & tabcount.ToString & "     "
-        newbutt.Name = "newtab" & tabcount.ToString
-        newbutt.Text = "Close Newtab" & tabcount.ToString
-        newbutt.Location = New Point(20, 30)
-        newbutt.AutoSize = True
-        newtextbox.Text = "New textbox on new tab " & tabcount.ToString
-        tabcount += 1
-        AddHandler newbutt.Click, AddressOf newbutt_click
-        Me.TabControl1.Controls.Add(newtab)
-        newtab.Controls.Add(newtextbox)
-        newtab.Controls.Add(newbutt)
-        Me.TabControl1.SelectedIndex = Me.TabControl1.TabCount - 1
-    End Sub
+    'Private Sub b_tambahtab2_Click(sender As Object, e As EventArgs) Handles b_tambahtab2.Click
+    '    Dim newtab As New TabPage
+    '    Dim newtextbox As New TextBox
+    '    Dim newbutt As New Button
+    '    newtab.Name = "New Tab " & tabcount.ToString
+    '    newtab.Text = "Tambah PP " & tabcount.ToString & "     "
+    '    newbutt.Name = "newtab" & tabcount.ToString
+    '    newbutt.Text = "Close Newtab" & tabcount.ToString
+    '    newbutt.Location = New Point(20, 30)
+    '    newbutt.AutoSize = True
+    '    newtextbox.Text = "New textbox on new tab " & tabcount.ToString
+    '    tabcount += 1
+    '    AddHandler newbutt.Click, AddressOf newbutt_click
+    '    Me.TabControl1.Controls.Add(newtab)
+    '    newtab.Controls.Add(newtextbox)
+    '    newtab.Controls.Add(newbutt)
+    '    Me.TabControl1.SelectedIndex = Me.TabControl1.TabCount - 1
+    'End Sub
     ' end of suppose to be tabcontrolex1
 
+    '=============================== TAB ADATA BAGIAN ========================================
     Friend Sub DataBagianToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBagianToolStripMenuItem.Click
         Dim newtab As New TabPage
         Dim newtextbox As New TextBox
@@ -110,30 +127,52 @@ Public Class home
         'Dim dgv_databagian As New DataGridView
         Dim tambahButton As New Button
         Dim hapusButton As New Button
+        Dim ukuran As New Size(75, 39)
 
+        dgv_databagian.RowHeadersVisible = False
 
         newtab.Name = "TabelBagian"
-        newtab.Text = "Tabel Bagian" & tabcount.ToString & "     "
+        newtab.Text = "Tabel Bagian"
         newbutt.Name = "newtab" & tabcount.ToString
-        newbutt.Text = "Close Tab" & tabcount.ToString
-        newbutt.Location = New Point(6, 302)
+        newbutt.Text = "Tutup Tab"
+        newbutt.Location = New Point(210, 562)
+        newbutt.Size = ukuran
         newbutt.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
         newbutt.AutoSize = True
 
         editButton.Name = "editButton"
-        editButton.Location = New Point(90, 302)
+        editButton.Location = New Point(372, 562)
+        editButton.Size = ukuran
         editButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
         editButton.Text = "Edit"
 
         tambahButton.Name = "tambahButton"
-        tambahButton.Location = New Point(175, 302)
+        tambahButton.Location = New Point(291, 562)
+        tambahButton.Size = ukuran
         tambahButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
         tambahButton.Text = "Tambah"
 
         hapusButton.Name = "hapusButton"
-        hapusButton.Location = New Point(260, 302)
+        hapusButton.Location = New Point(453, 562)
         hapusButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+        hapusButton.Size = ukuran
         hapusButton.Text = "Hapus"
+
+        Dim searchLabel As New Label
+        searchLabel.Text = "PENCARIAN"
+        searchLabel.Location = New Point(17, 17)
+        searchLabel.Size = New Size(93, 18)
+        searchLabel.Font = New Font("Microsoft Sans Serif", 11.25)
+
+        Dim cariNamaDivisi_label As New Label
+        cariNamaDivisi_label.Text = "Nama Divisi"
+        cariNamaDivisi_label.Location = New Point(18, 45)
+        cariNamaDivisi_label.Size = New Size(100, 13)
+
+        tb_cariNamaDivisi.Location = New Point(20, 62)
+        tb_cariNamaDivisi.Size = New Size(163, 24)
+        tb_cariNamaDivisi.Font = New Font("Microsoft Sans Serif", 11)
+
 
         'dgv_databagian.Location = New Point(6, 6)
         'dgv_databagian.Size = New Size(803, 290)
@@ -150,6 +189,9 @@ Public Class home
         newtab.Controls.Add(editButton)
         newtab.Controls.Add(tambahButton)
         newtab.Controls.Add(hapusButton)
+        newtab.Controls.Add(searchLabel)
+        newtab.Controls.Add(cariNamaDivisi_label)
+        newtab.Controls.Add(tb_cariNamaDivisi)
 
         Me.TabControl1.SelectedIndex = Me.TabControl1.TabCount - 1
         Dim Sql As String = "SELECT * FROM `tblbagian`"
@@ -166,6 +208,7 @@ Public Class home
         AddHandler editButton.Click, AddressOf editButtonClicked
         AddHandler tambahButton.Click, AddressOf tambahButtonClicked
         AddHandler hapusButton.Click, AddressOf hapusButtonClicked
+        AddHandler tb_cariNamaDivisi.TextChanged, AddressOf cariNamaDivisi
     End Sub
 
     Private Sub hapusButtonClicked()
@@ -228,37 +271,90 @@ Public Class home
             Console.WriteLine("error : " & ex.ToString)
         End Try
     End Sub
-    '============================== DAFTAR BARANG ===========================================
 
+    Private Sub cariNamaDivisi()
+        Dim quer As String = "SELECT *  FROM `tblbagian` WHERE `Bagian` LIKE '%" & tb_cariNamaDivisi.Text & "%' ORDER BY `kode` ASC"
+        Try
+            dss.Clear()
+            Dim da_bagian As New MySqlDataAdapter(quer, conn)
+            da_bagian.Fill(dss, "tabel_po")
+            dgv_databagian.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("err : " & ex.ToString)
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
+    '============================== END OF TAB DATA BAGIAN ================================
+
+    '============================== DAFTAR BARANG ===========================================
     Private Sub DataBarangToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DataBarangToolStripMenuItem.Click
         Dim tabDataBarang As New TabPage
         Dim closeButton As New Button
         Dim tambahBarang As New Button
         Dim editBarang As New Button
         Dim hapusBarang As New Button
+        Dim ukuran As New Size(75, 39)
+
+        dgv_databarang.RowHeadersVisible = False
 
         tabDataBarang.Name = "tabelBarang"
         tabDataBarang.Text = "Tabel Barang"
+        tabDataBarang.UseVisualStyleBackColor = True
         dgv_databarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left + AnchorStyles.Right + AnchorStyles.Top
+
+
+        Dim pencarianLabel As New Label
+        pencarianLabel.Text = "PENCARIAN"
+        pencarianLabel.Location = New Point(17, 17)
+        pencarianLabel.Size = New Size(93, 18)
+        pencarianLabel.Font = New Font("Microsoft Sans Serif", 11.25)
+
+        Dim l_searchbyname As New Label
+        l_searchbyname.Text = "Nama Barang"
+        l_searchbyname.Location = New Point(18, 45)
+        l_searchbyname.Size = New Size(100, 13)
+
+
+        tb_searchbarangbyname.Location = New Point(20, 62)
+        tb_searchbarangbyname.Size = New Size(163, 24)
+        tb_searchbarangbyname.Font = New Font("Microsoft Sans Serif", 11)
+
+        Dim l_searchbynomorbarang As New Label
+        l_searchbynomorbarang.Text = "Nomor Barang"
+        l_searchbynomorbarang.Location = New Point(18, 95)
+        l_searchbynomorbarang.Size = New Size(100, 13)
+
+        tb_searchbarangByNomor.Location = New Point(20, 113)
+        tb_searchbarangByNomor.Size = New Size(163, 24)
+        tb_searchbarangByNomor.Font = New Font("Microsoft Sans Serif", 11)
+
+        Dim b_caribarang As New Button
+        b_caribarang.Text = "Cari"
+        b_caribarang.Location = New Point(108, 143)
+        b_caribarang.Size = New Size(75, 23)
 
         closeButton.Name = "closeButton"
         closeButton.Text = "Tutup Tab"
-        closeButton.Location = New Point(6, 302)
+        closeButton.Location = New Point(210, 562)
+        closeButton.Size = ukuran
         closeButton.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         tambahBarang.Name = "tambahBarang"
         tambahBarang.Text = "Tambah Barang"
-        tambahBarang.Location = New Point(91, 302)
+        tambahBarang.Location = New Point(291, 562)
+        tambahBarang.Size = ukuran
         tambahBarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         editBarang.Name = "editBarang"
         editBarang.Text = "Edit Barang"
-        editBarang.Location = New Point(176, 302)
+        editBarang.Location = New Point(372, 562)
+        editBarang.Size = ukuran
         editBarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         hapusBarang.Name = "hapusBarang"
         hapusBarang.Text = "Hapus Barang"
-        hapusBarang.Location = New Point(261, 302)
+        hapusBarang.Location = New Point(453, 562)
+        hapusBarang.Size = ukuran
         hapusBarang.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         Me.TabControl1.TabPages.Add(tabDataBarang)
@@ -268,6 +364,12 @@ Public Class home
         tabDataBarang.Controls.Add(editBarang)
         tabDataBarang.Controls.Add(hapusBarang)
         tabDataBarang.Controls.Add(dgv_databarang)
+        tabDataBarang.Controls.Add(pencarianLabel)
+        tabDataBarang.Controls.Add(l_searchbyname)
+        tabDataBarang.Controls.Add(tb_searchbarangbyname)
+        tabDataBarang.Controls.Add(l_searchbynomorbarang)
+        tabDataBarang.Controls.Add(tb_searchbarangByNomor)
+        tabDataBarang.Controls.Add(b_caribarang)
 
         'Dim sql As String = "SELECT KODE_BRG, NAMA,SATUAN,Stock,rak,TglBeli,HargaBeli,HargaPokok,RpJumlah FROM `barang`"
         Dim sql As String = "SELECT * FROM barang"
@@ -285,6 +387,7 @@ Public Class home
         AddHandler tambahBarang.Click, AddressOf tambahBarang_Clicked
         AddHandler editBarang.Click, AddressOf editBarang_Clicked
         AddHandler hapusBarang.Click, AddressOf hapusBarang_clicked
+        AddHandler b_caribarang.Click, AddressOf cariBarang
     End Sub
 
     Private Sub closeTabDataBarang()
@@ -349,6 +452,30 @@ Public Class home
         End Try
     End Sub
 
+    Private Sub cariBarang()
+        Dim quer As String
+        Console.WriteLine(String.IsNullOrEmpty(tb_searchbarangbyname.Text) & " " & String.IsNullOrEmpty(tb_searchbarangByNomor.Text))
+
+        If String.IsNullOrEmpty(tb_searchbarangbyname.Text) = False And String.IsNullOrEmpty(tb_searchbarangByNomor.Text) = True Then
+            quer = "select * from barang where nama like '%" & tb_searchbarangbyname.Text & "%'"
+        ElseIf String.IsNullOrEmpty(tb_searchbarangByNomor.Text) = False And String.IsNullOrEmpty(tb_searchbarangbyname.Text) = True Then
+            quer = "select * from barang where kode_brg like '%" & tb_searchbarangByNomor.Text & "%'"
+        Else
+            quer = "select * from barang where nama like  '%" & tb_searchbarangbyname.Text & "%' or kode_brg like '%" & tb_searchbarangByNomor.Text & "%'"
+        End If
+        Console.WriteLine(quer)
+        Try
+            Dim da_barang As New MySqlDataAdapter(quer, conn)
+            dataSetBarang.Clear()
+            da_barang.Fill(dataSetBarang, "tabel_barang")
+            dgv_databarang.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("err : " & ex.ToString)
+            MsgBox("err : " & ex.ToString)
+        End Try
+
+    End Sub
+
     '==================================== END OF DAFTAR BARANG =================================
 
     '==================================== TAB DAFTAR SUPPLIER ====================================
@@ -359,6 +486,9 @@ Public Class home
         Dim tambahSupplier As New Button
         Dim editSupplier As New Button
         Dim hapusSupplier As New Button
+        Dim ukuran As New Size(75, 39)
+
+        dgv_datasupplier.RowHeadersVisible = False
 
         tabDataSupplier.Name = "tableSupplier"
         tabDataSupplier.Text = "Tabel Supplier"
@@ -366,23 +496,43 @@ Public Class home
 
         closeDataSupplier.Name = "closeDataSupplier"
         closeDataSupplier.Text = "Tutup tab"
-        closeDataSupplier.Location = New Point(6, 302)
+        closeDataSupplier.Location = New Point(210, 562)
+        closeDataSupplier.Size = ukuran
         closeDataSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         tambahSupplier.Name = "tambahSupplier"
         tambahSupplier.Text = "Tambah Supplier"
-        tambahSupplier.Location = New Point(91, 302)
+        tambahSupplier.Location = New Point(291, 562)
+        tambahSupplier.Size = ukuran
         tambahSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         editSupplier.Name = "editSupplier"
         editSupplier.Text = "Edit Supplier"
-        editSupplier.Location = New Point(176, 302)
+        editSupplier.Location = New Point(372, 562)
+        editSupplier.Size = ukuran
         editSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
 
         hapusSupplier.Name = "hapusSupplier"
         hapusSupplier.Text = "Hapus Supplier"
-        hapusSupplier.Location = New Point(261, 302)
+        hapusSupplier.Location = New Point(453, 562)
+        hapusSupplier.Size = ukuran
         hapusSupplier.Anchor = AnchorStyles.Bottom + AnchorStyles.Left
+
+        Dim l_pencarian As New Label
+        l_pencarian.Text = "PENCARIAN"
+        l_pencarian.Location = New Point(17, 17)
+        l_pencarian.Size = New Size(93, 18)
+        l_pencarian.Font = New Font("microsoft sans serif", 11.25)
+
+        Dim l_cariNamaSupplier As New Label
+        l_cariNamaSupplier.Text = "Nama Supplier"
+        l_cariNamaSupplier.Location = New Point(18, 45)
+        l_cariNamaSupplier.Size = New Size(100, 13)
+
+
+        tb_cariNamaSupplier.Location = New Point(20, 62)
+        tb_cariNamaSupplier.Size = New Size(163, 24)
+        tb_cariNamaSupplier.Font = New Font("microsoft sans serif", 11)
 
         Me.TabControl1.TabPages.Add(tabDataSupplier)
         Me.TabControl1.SelectedIndex = TabControl1.TabCount - 1
@@ -392,6 +542,9 @@ Public Class home
         tabDataSupplier.Controls.Add(tambahSupplier)
         tabDataSupplier.Controls.Add(editSupplier)
         tabDataSupplier.Controls.Add(hapusSupplier)
+        tabDataSupplier.Controls.Add(l_pencarian)
+        tabDataSupplier.Controls.Add(l_cariNamaSupplier)
+        tabDataSupplier.Controls.Add(tb_cariNamaSupplier)
 
         Dim sql As String = "SELECT * FROM supplier"
         Try
@@ -408,6 +561,7 @@ Public Class home
         AddHandler tambahSupplier.Click, AddressOf tambahSupplier_clicked
         AddHandler editSupplier.Click, AddressOf editSupplier_clicked
         AddHandler hapusSupplier.Click, AddressOf hapusSupplier_clicked
+        AddHandler tb_cariNamaSupplier.TextChanged, AddressOf cariNamaSuppier
 
     End Sub
 
@@ -428,7 +582,6 @@ Public Class home
         diasupp.Show()
         AddHandler diasupp.Disposed, AddressOf diasuppDisposed
     End Sub
-
 
     Private Sub hapusSupplier_clicked() 'BELUM MENGHPUS MASIH DI COMMENT
         Dim namaSupp = dgv_datasupplier.CurrentRow.Cells(1).Value.ToString
@@ -465,6 +618,20 @@ Public Class home
         Catch ex As Exception
             Console.WriteLine("err : " & ex.ToString)
             MsgBox("err : " & ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub cariNamaSuppier()
+        'Console.WriteLine("cari nama supplier")
+        Dim quer As String = "SELECT *  FROM `supplier` WHERE `NAMA` LIKE '%" & tb_cariNamaSupplier.Text & "%'"
+        Try
+            datasetSupplier.Clear()
+            Dim da_supplier As New MySqlDataAdapter(quer, conn)
+            da_supplier.Fill(datasetSupplier, "data_supplier")
+            dgv_datasupplier.Refresh()
+        Catch ex As Exception
+            Console.WriteLine("error : " & ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
     '=========================================== END OF DAFTAR SUPPLIER ===================================
@@ -582,7 +749,6 @@ Public Class home
         End If
     End Sub
 
-
     '============================================== END OF TAB PP =======================================
 
     '============================================ TAB PO START ===========================================
@@ -641,26 +807,134 @@ Public Class home
             Dim da As New MySqlDataAdapter(quer, conn)
             da.Fill(datasetPo, "tabel_po")
             DataGridView2.Refresh()
-
         End If
     End Sub
 
+
+
     Private Sub b_buatPO_Click(sender As Object, e As EventArgs) Handles b_buatPO.Click
-        Console.WriteLine("buat po clicked")
+        'Console.WriteLine("buat po clicked")
+        Dim diapo As New dialogPO
+        diapo.Show()
     End Sub
 
     Private Sub b_ubahPo_Click(sender As Object, e As EventArgs) Handles b_ubahPo.Click
-        Console.WriteLine("ubah po clicked")
+        'Console.WriteLine("ubah po clicked")
+        Dim diapo As New dialogPO With {.nomorPurchaseOrder = DataGridView2.CurrentRow.Cells(0).Value.ToString}
+        diapo.Show()
     End Sub
 
     Private Sub b_hapusPo_Click(sender As Object, e As EventArgs) Handles b_hapusPo.Click
-        Console.WriteLine("hapus po clicked")
-        Dim quer As String = "DELETE FROM po_header WHERE nota = '" & DataGridView2.CurrentRow.Cells(0) & "'"
+        'Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PP nomor " & DataGridView1.CurrentRow.Cells(0).Value.ToString & " ?", MsgBoxStyle.OkCancel)
+        Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PO nomot " & DataGridView2.CurrentRow.Cells(0).Value.ToString & "?", MsgBoxStyle.OkCancel)
 
+        If dialog_result = 1 Then
+            Dim quer As String = "DELETE FROM po_header WHERE nota ='" & DataGridView2.CurrentRow.Cells(0).Value.ToString & "'"
+            Dim quer_detail As String = "DELETE FROM `po_detail` WHERE Nota = '" & DataGridView2.CurrentRow.Cells(0).Value.ToString & "'"
+            Dim cmd As New MySqlCommand(quer, conn)
+            Dim cmdd As New MySqlCommand(quer_detail, conn)
+            Try
+                cmd.ExecuteNonQuery()
+                cmdd.ExecuteNonQuery()
+            Catch ex As Exception
+                Console.WriteLine(ex.ToString)
+            End Try
+        End If
+        DataGridView2.Refresh()
     End Sub
 
 
 
     '=========================================== END OF TAB PO ==========================================
 
+    '============================================== TAB BTB =============================================
+
+    Private Sub tb_cariNomorNotaBTB_TextChanged(sender As Object, e As EventArgs) Handles tb_cariNomorNotaBTB.TextChanged
+        If cb_filterTanggalBTB.Checked Then
+            'dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian Like '*" & tb_searchppbybagian.Text & "*'"
+            'DataGridView1.Refresh()
+            datasetBTB.Tables("dataset_btb").DefaultView.RowFilter = "nota like '*" & tb_cariNomorNotaBTB.Text & "*'"
+            DataGridView3.Refresh()
+        Else
+            Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Nota` LIKE '%" & tb_cariNomorNotaBTB.Text & "%'"
+            Try
+                datasetBTB.Clear()
+                Dim da_btb As New MySqlDataAdapter(quer, conn)
+                da_btb.Fill(datasetBTB, "dataset_btb")
+                DataGridView3.Refresh()
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+        End If
+    End Sub
+
+    Private Sub cb_filterTanggalBTB_CheckedChanged(sender As Object, e As EventArgs) Handles cb_filterTanggalBTB.CheckedChanged
+        If cb_filterTanggalBTB.Checked Then
+            gb_filterTglBtb.Visible = True
+        Else
+            gb_filterTglBtb.Visible = False
+        End If
+    End Sub
+
+    Private Sub dp_filterbtbstart_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterbtbstart.ValueChanged
+        If cb_filterTanggalBTB.Checked Then
+            datasetBTB.Clear()
+            Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Tanggal` BETWEEN '" & dp_filterbtbstart.Value.ToString("yyyy-MM-dd") & "' AND '" & dp_filterbtbend.Value.ToString("yyyy-MM-dd") & "'"
+            Try
+                Dim da As New MySqlDataAdapter(quer, conn)
+                da.Fill(datasetBTB, "dataset_btb")
+                DataGridView3.Refresh()
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+        End If
+    End Sub
+
+    Private Sub dp_filterbtbend_ValueChanged(sender As Object, e As EventArgs) Handles dp_filterbtbend.ValueChanged
+        If cb_filterTanggalBTB.Checked Then
+            datasetBTB.Clear()
+            Dim quer As String = "select * from btb_header where tanggal between '" & dp_filterbtbstart.Value.ToString("yyyy-MM-dd") & "' and '" & dp_filterbtbend.Value.ToString("yyyy-MM-dd") & "' "
+            Try
+                Dim da As New MySqlDataAdapter(quer, conn)
+                da.Fill(datasetBTB, "dataset_btb")
+                DataGridView3.Refresh()
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+        End If
+    End Sub
+
+    Private Sub cb_cariNamaSupplier(sender As Object, e As EventArgs) Handles tb_caribtbNamaSupplier.TextChanged
+        If cb_filterTanggalBTB.Checked Then
+            'dataSetPP.Tables("singo").DefaultView.RowFilter = "Bagian Like '*" & tb_searchppbybagian.Text & "*'"
+            'DataGridView1.Refresh()
+            datasetBTB.Tables("dataset_btb").DefaultView.RowFilter = "NAMA LIKE '*" & tb_caribtbNamaSupplier.Text & "*'"
+            DataGridView3.Refresh()
+        Else
+            Dim quer As String = "SELECT *  FROM `btb_header` WHERE `Nama` LIKE '%" & tb_caribtbNamaSupplier.Text & "%'"
+            Try
+                datasetBTB.Clear()
+                Dim da_btb As New MySqlDataAdapter(quer, conn)
+                da_btb.Fill(datasetBTB, "dataset_btb")
+            Catch ex As Exception
+                Console.WriteLine("error : " & ex.ToString)
+                MsgBox("error : " & ex.ToString)
+            End Try
+            DataGridView3.Refresh()
+        End If
+    End Sub
+
+    Private Sub b_buatbtb_Click(sender As Object, e As EventArgs) Handles b_buatbtb.Click
+        Dim diabtb As New dialogBtb
+        diabtb.Show()
+    End Sub
+
+    Private Sub b_editbtb_click(sender As Object, e As EventArgs) Handles b_ubahbtb.Click
+        Dim diabtb As New dialogBtb With {.nomorBuktiTerimaBarang = DataGridView3.CurrentRow.Cells(0).Value.ToString}
+        diabtb.Show()
+    End Sub
+    '=========================================== END OF TAB BTB =========================================
 End Class

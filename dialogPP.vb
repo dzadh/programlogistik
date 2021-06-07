@@ -75,7 +75,7 @@ Public Class dialogPP
             Dim cmd As New MySqlCommand("select nomor, kode_brg, nama, satuan, qty, bagian, keterangan, tanggal, nota from pp_detail where nota = '" & nomorNota & "'", conn)
             Dim reader As MySqlDataReader = cmd.ExecuteReader
             Dim x As Int16 = 0
-            Console.WriteLine("hey yoo")
+            'Console.WriteLine("hey yoo")
             While reader.Read
                 'dgv_rincianBrgPP.Rows(x).Cells(0).Value = reader.GetString(0)
                 'dgv_rincianBrgPP.Rows(x).Cells(1).Value = reader.GetString(1)
@@ -86,15 +86,13 @@ Public Class dialogPP
                 'dgv_rincianBrgPP.Rows(x).Cells(6).Value = reader.GetString(6)
                 dgv_rincianBrgPP.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6))
                 x += 1
-                Console.WriteLine(x)
+                ' Console.WriteLine(x)
             End While
             tb_bagian.Text = reader.GetString(5)
             tb_nomorPP.Text = reader.GetString(8)
             dp_tglPermitaalPembelian.Value = reader.GetString(7)
             tb_nomorPP.Enabled = False
             reader.Close()
-
-
         End If
 
     End Sub
@@ -146,17 +144,20 @@ Public Class dialogPP
         End If
     End Sub
 
+    '=================== APA INII ==================
     Private Sub editedCell(sel As DataGridViewTextBoxCell)
         'Console.WriteLine(sel.RowIndex & " " & sel.ColumnIndex)
         Dim cmd As New MySqlCommand("select kode_brg from barang where nama =")
     End Sub
+    '================== HAAHHH APAA? =================
 
     Private Sub fillKodeBarang()
         Try
-            Dim cmd As New MySqlCommand("select kode_brg from barang where nama = '" & dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
+            Dim cmd As New MySqlCommand("select kode_brg, satuan from barang where nama = '" & dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn).Value.ToString & "'", conn)
             Dim reader As MySqlDataReader = cmd.ExecuteReader
             While reader.Read
                 dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn - 1).Value = reader.GetString(0)
+                dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(lastEditedCellColumn + 1).Value = reader.GetString(1)
             End While
             dgv_rincianBrgPP.Rows(lastEditedCellRow).Cells(0).Value = lastEditedCellRow + 1
             reader.Close()
