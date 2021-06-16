@@ -2,7 +2,7 @@
 ''' <summary>
 ''' undone : buat bukti terima barang : auto nomer btb
 '''         - save btb userid, group, subgroup, ordere, sisa belum konek sama PO po sisa belum konek PP
-'''         
+'''         - HAPUS ROWS
 ''' </summary>
 Public Class dialogBtb
     Dim conn As New MySqlConnection
@@ -101,6 +101,12 @@ Public Class dialogBtb
 
             b_pilihPO.Enabled = False
             tb_notabtb.Enabled = False
+            tb_bagian.Enabled = False
+            tb_supplier.Enabled = False
+            tb_noPP.Enabled = False
+            dp_tanggalbtb.Enabled = False
+            tb_telp.Enabled = False
+            tb_noPurchaseOrder.Enabled = False
             Console.WriteLine(nomorBuktiTerimaBarang)
         End If
         'Console.WriteLine(TimeOfDay.ToString("h:mm:ss"))
@@ -227,5 +233,69 @@ Public Class dialogBtb
     Private Sub b_pilihPO_Click(sender As Object, e As EventArgs) Handles b_pilihPO.Click
         diaPilOr = New pilihPurchaseOrderDialog
         diaPilOr.Show()
+        AddHandler diaPilOr.FormClosed, AddressOf diaPilOR_formClosed
+    End Sub
+
+    Private Sub diaPilOR_formClosed()
+        'tb_bagian.Text = diapilpil.selectedBagian
+        'Dim quer As String = "select kode_brg, nama, satuan, qty from pp_detail where nota = '" & diapilpil.selectedNota & "' and ( "
+        'For x As Int16 = 0 To diapilpil.noInNota.Count - 1
+        '    If x = 0 Then
+        '        quer += "nomor = '" & diapilpil.noInNota.Item(x) & "' "
+        '    Else
+        '        quer += "or nomor = '" & diapilpil.noInNota.Item(x) & "' "
+        '    End If
+        'Next
+        'quer += ")"
+        tb_bagian.Text = diaPilOr.selectedBagian
+        tb_noPP.Text = diaPilOr.selectedNota
+        tb_supplier.Text = diaPilOr.selectedSupplier
+        Dim quer As String = "select kode_brg, nama, satuan, harga, qty,nopp from po_detail where nota = '" & diaPilOr.selectedNota & "' and ("
+        For i As Int16 = 0 To diaPilOr.noInNota.Count - 1
+            If i = 0 Then
+                quer += "nomor = '" & diaPilOr.noInNota.Item(i) & "'"
+            Else
+                quer += "or nomor = '" & diaPilOr.noInNota.Item(i) & "'"
+            End If
+        Next
+        quer += ")"
+        Console.WriteLine(quer)
+        Try
+            Dim cmd As MySqlCommand = New MySqlCommand(quer, conn)
+            Dim reader As MySqlDataReader = cmd.ExecuteReader
+            Dim i As Int16 = dgv_dialogbtb.RowCount - 1
+            While reader.Read
+                dgv_dialogbtb.Rows.Add()
+                'dgv_dialogbtb.Rows(i).Cells(0).Value = i + 1
+                dgv_dialogbtb.Rows(i).Cells(0).Value = reader.GetString(0)
+                dgv_dialogbtb.Rows(i).Cells(1).Value = reader.GetString(1)
+                dgv_dialogbtb.Rows(i).Cells(2).Value = reader.GetString(2)
+                'dgv_dialogbtb.Rows(i).Cells(3).Value = reader.GetString(3)
+                dgv_dialogbtb.Rows(i).Cells(4).Value = reader.GetString(3)
+                dgv_dialogbtb.Rows(i).Cells(6).Value = reader.GetString(5)
+                i += 1
+            End While
+            reader.Close()
+        Catch ex As Exception
+            Console.WriteLine("error diapilor form close : " & ex.ToString)
+        End Try
+        'Try
+        '    Dim cmd As MySqlCommand = New MySqlCommand(quer, conn)
+        '    Dim reader As MySqlDataReader = cmd.ExecuteReader
+        '    Dim i As Int16 = dgv_purchaseOrder.RowCount - 1
+        '    While reader.Read
+        '        dgv_purchaseOrder.Rows.Add()
+        '        dgv_purchaseOrder.Rows(i).Cells(0).Value = i + 1
+        '        dgv_purchaseOrder.Rows(i).Cells(1).Value = reader.GetString(0)
+        '        dgv_purchaseOrder.Rows(i).Cells(2).Value = reader.GetString(1)
+        '        dgv_purchaseOrder.Rows(i).Cells(3).Value = reader.GetString(2)
+        '        dgv_purchaseOrder.Rows(i).Cells(4).Value = reader.GetString(3)
+        '        dgv_purchaseOrder.Rows(i).Cells(6).Value = diapilpil.selectedNota
+        '        i += 1
+        '    End While
+        '    reader.Close()
+        'Catch ex As Exception
+        '    Console.WriteLine("error diapilpp form close: " & ex.ToString)
+        'End Try
     End Sub
 End Class
