@@ -480,7 +480,7 @@ Partial Class home
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage3.Size = New System.Drawing.Size(1300, 607)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Daftar Barang Terima Barang"
+        Me.TabPage3.Text = "Daftar Bukti Terima Barang"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'Label9

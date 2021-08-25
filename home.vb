@@ -825,7 +825,7 @@ Public Class home
     End Sub
 
     Private Sub b_hapusPo_Click(sender As Object, e As EventArgs) Handles b_hapusPo.Click
-        'Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PP nomor " & DataGridView1.CurrentRow.Cells(0).Value.ToString & " ?", MsgBoxStyle.OkCancel)
+
         Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PO nomot " & DataGridView2.CurrentRow.Cells(0).Value.ToString & "?", MsgBoxStyle.OkCancel)
 
         If dialog_result = 1 Then
@@ -837,7 +837,7 @@ Public Class home
                 cmd.ExecuteNonQuery()
                 cmdd.ExecuteNonQuery()
             Catch ex As Exception
-                Console.WriteLine(ex.ToString)
+                Console.WriteLine("error hapus po : " & ex.ToString)
             End Try
         End If
         DataGridView2.Refresh()
@@ -935,6 +935,27 @@ Public Class home
     Private Sub b_editbtb_click(sender As Object, e As EventArgs) Handles b_ubahbtb.Click
         Dim diabtb As New dialogBtb With {.nomorBuktiTerimaBarang = DataGridView3.CurrentRow.Cells(0).Value.ToString}
         diabtb.Show()
+    End Sub
+
+    Private Sub b_hapusbtb_click(sender As Object, e As EventArgs) Handles b_hapusbtb.Click
+        'Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus PO nomot " & DataGridView2.CurrentRow.Cells(0).Value.ToString & "?", MsgBoxStyle.OkCancel)
+        Dim dialog_result As DialogResult = MsgBox("Apakah anda yakin menghapus BTB nomor " & DataGridView3.CurrentRow.Cells(0).Value.ToString & "?", MsgBoxStyle.OkCancel)
+        Dim quer As String = "DELETE FROM `btb_header` WHERE Nota = '" & DataGridView3.CurrentRow.Cells(0).Value.ToString & "'"
+        Dim quer_detail As String = "delete from btb_detail where nota = '" & DataGridView3.CurrentRow.Cells(0).Value.ToString & "'"
+        Console.WriteLine(quer)
+        Console.WriteLine(quer_detail)
+        Dim cmd As New MySqlCommand(quer, conn)
+        Dim cmdd As New MySqlCommand(quer_detail, conn)
+        If dialog_result = 1 Then
+
+            Try
+                cmd.ExecuteNonQuery()
+                cmdd.ExecuteNonQuery()
+            Catch ex As Exception
+                Console.WriteLine("error hapus btb :" & ex.ToString)
+            End Try
+        End If
+        DataGridView3.Refresh()
     End Sub
     '=========================================== END OF TAB BTB =========================================
 End Class
